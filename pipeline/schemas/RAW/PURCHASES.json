@@ -1,0 +1,45 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : false
+    },
+    "PUR_TS" : {
+        "dtype":"Timestamp",
+        "args":{
+            "nullable": false,
+            "timezone": "UTC"
+        },
+        "descr" : "purchase datetime",
+        "primary_key" : true
+    },
+    "PUR_NUM" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "number of items purchased on snap date",
+        "primary_key" : false
+    },
+    "PUR_AMT" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 10,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "purchase amount in dollar on snap date",
+        "primary_key" : false
+    }
+}

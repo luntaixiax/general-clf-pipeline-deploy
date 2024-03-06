@@ -1,0 +1,43 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : false
+    },
+    "EVENT_TS" : {
+        "dtype":"Timestamp",
+        "args":{
+            "nullable": false,
+            "timezone": "UTC"
+        },
+        "descr" : "event datetime",
+        "primary_key" : true
+    },
+    "EVENT_CD" : {
+        "dtype":"String",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "event code (O=open/answer, C=click/inbound, D=decline phone)",
+        "primary_key" : false
+    },
+    "EVENT_CHANNEL" : {
+        "dtype":"String",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "event channel (E=email, P=phone)",
+        "primary_key" : false
+    }
+}

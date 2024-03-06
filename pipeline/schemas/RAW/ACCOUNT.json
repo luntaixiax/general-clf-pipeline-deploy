@@ -1,0 +1,74 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "ACCT_ID" : {
+        "dtype":"String",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "account id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : true
+    },
+    "ACCT_TYPE_CD" : {
+        "dtype":"String",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "account type code - (CHQ,CRD,LN,SAV,MORT)",
+        "primary_key" : false
+    },
+    "END_BAL" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "balance as of snap date",
+        "primary_key" : false
+    },
+    "DR_AMT" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "debit amount on snap date",
+        "primary_key" : false
+    },
+    "CR_AMT" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "credit amount on snap date",
+        "primary_key" : false
+    },
+    "CR_LMT" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "credit limit, if a card or loan or mortgage",
+        "primary_key" : false
+    }
+}

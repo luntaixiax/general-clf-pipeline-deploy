@@ -1,0 +1,6 @@
+*.idea
+*.pyc
+secrets.toml
+*obj_storage.xml
+*.ipynb
+.vscode

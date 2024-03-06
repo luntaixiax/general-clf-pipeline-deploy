@@ -1,0 +1,22 @@
+<!--
+  https://clickhouse.uptrace.dev/clickhouse/low-memory.html#the-problem
+  https://altinity.com/blog/rescuing-clickhouse-from-the-linux-oom-killer#:~:text=ClickHouse%20tracks%20how%20much%20memory,rendezvous%20with%20the%20OOM%20killer.
+
+-->
+<clickhouse>
+
+    <max_server_memory_usage>0</max_server_memory_usage>
+    <!-- On memory constrained environments you may have to set this to value larger than 1.
+      -->
+    <max_server_memory_usage_to_ram_ratio>0.9</max_server_memory_usage_to_ram_ratio>
+
+    <!-- Simple server-wide memory profiler. Collect a stack trace at every peak allocation step (in bytes).
+         Data will be stored in system.trace_log table with query_id = empty string.
+         Zero means disabled.
+      -->
+<!--    <total_memory_profiler_step>4194304</total_memory_profiler_step>-->
+
+    <!-- 2 * number_of_cpu_cores  -->
+    <max_concurrent_queries>8</max_concurrent_queries>
+
+</clickhouse>
