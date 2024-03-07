@@ -19,7 +19,7 @@ jobs: # define two jobs, CI and CD
       - uses: actions/checkout@v3
       
       - name: list files
-        run: ls -l
+        run: ls
 
       - name: test connection to NAS
         run: ping 192.168.2.84
