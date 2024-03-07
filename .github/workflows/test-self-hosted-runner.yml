@@ -1,8 +1,8 @@
 name: test self hosted runners
 on:
-  push: # will trigger workflow when push event
-    paths:
-      - '*' # will trigger when push to this path
+  push:
+    branches:
+      - 'main'
 
 
 jobs: # define two jobs, CI and CD
