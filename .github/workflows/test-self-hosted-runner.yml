@@ -2,7 +2,7 @@ name: test self hosted runners
 on:
   push: # will trigger workflow when push event
     paths:
-      - 'fake-data-generator/**' # will trigger when push to this path
+      - '*' # will trigger when push to this path
 
 
 jobs: # define two jobs, CI and CD
@@ -10,11 +10,11 @@ jobs: # define two jobs, CI and CD
   model-build:
     runs-on: evelyn-windows
     steps:
-      - name: Dockerhub Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # - name: Dockerhub Login
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - uses: actions/checkout@v3
       
@@ -41,10 +41,10 @@ jobs: # define two jobs, CI and CD
       #     file: './backend-fastapi/meta.yaml'
       #     key-path: '["model", "docker-image-name"]'
       
-      - name: Build and push image
-        working-directory: fake-data-generator
-        run: |
-          model_hub_nm=${{ secrets.DOCKERHUB_USERNAME }}/general-clf-faker
-          docker build -t ${model_hub_nm} .
-          docker push ${model_hub_nm}
+      # - name: Build and push image
+      #   working-directory: fake-data-generator
+      #   run: |
+      #     model_hub_nm=${{ secrets.DOCKERHUB_USERNAME }}/general-clf-faker
+      #     docker build -t ${model_hub_nm} .
+      #     docker push ${model_hub_nm}
       
