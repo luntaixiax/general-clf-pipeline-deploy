@@ -20,12 +20,14 @@ jobs:
           cache: 'pip'
       
       - name: install python library
+        shell: pwsh
         working-directory: fake-data-generator
         run: |
           pip install pytest pytest-cov
           pip install -r requirements.txt
 
       - name: unit testing
+        shell: pwsh
         working-directory: fake-data-generator
         env:
           ENV: dev
@@ -38,6 +40,7 @@ jobs:
   # job2 - CI
   build-image:
     runs-on: ubuntu-latest
+    needs: unit-test  # will depend on previous step `build`
     steps:
       - uses: actions/checkout@v4
 
@@ -45,14 +48,14 @@ jobs:
         id: ver_tag
         uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
         with:
-          file: './fake-data-generator/build.yaml'
+          file: './fake-data-generator/build.yml'
           key-path: '["metadata", "version-tag"]'
 
       - name: read dockerhub model name
         id: model_nm
         uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
         with:
-          file: './fake-data-generator/build.yaml'
+          file: './fake-data-generator/build.yml'
           key-path: '["metadata", "docker-image-name"]'
 
       - name: Dockerhub Login
