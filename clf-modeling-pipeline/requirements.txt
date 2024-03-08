@@ -1,3 +1,4 @@
 luntaiDs==1.0.18
+clickhouse-connect==0.7.1
 hvac==2.1.0
 fire==0.5.0
