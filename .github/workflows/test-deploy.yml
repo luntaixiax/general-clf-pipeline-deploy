@@ -27,4 +27,5 @@ jobs:
       - name: build and push image
         working-directory: fake-data-generator
         run: |
+          model_hub_nm=${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}
           docker pull ${model_hub_nm}:${{ steps.ver_tag.outputs.data }}
