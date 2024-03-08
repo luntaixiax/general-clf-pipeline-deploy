@@ -33,5 +33,7 @@ jobs:
           port: ${{ secrets.FAKER_PORT }}
           script: |
             whoami
+            echo "$SHELL"
+            bash
             model_hub_nm=${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}
             docker pull ${model_hub_nm}:${{ steps.ver_tag.outputs.data }}
