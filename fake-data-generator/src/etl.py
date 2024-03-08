@@ -9,8 +9,9 @@ from CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
     _CurrentStream, _FutureStream, _PastStream, ExecPlan
 from CommonTools.SnapStructure.structure import SnapshotDataManagerObjStorage
 from CommonTools.utils import dt2str, str2dt
-from data_connection import S3A, DATA_BUCKET
-from model import CustFeature, AcctFeature, FakeLinearProbModel, lognormal2normal
+
+from src.data_connection import S3A, DATA_BUCKET
+from src.model import CustFeature, AcctFeature, FakeLinearProbModel, lognormal2normal
 
 SnapshotDataManagerObjStorage.setup(
     bucket = DATA_BUCKET,

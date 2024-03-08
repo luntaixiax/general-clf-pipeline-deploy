@@ -11,7 +11,8 @@ from CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
     _CurrentStream, _FutureStream, _PastStream
 from ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
 from ProviderTools.mongo.schema_manager import MongoSchemaManager
-from data_connection import CH_CONF, MONGO
+
+from src.data_connection import CH_CONF, MONGO
 
 SnapshotDataManagerCHSQL.setup(db_conf = CH_CONF)
 

@@ -2,4 +2,5 @@
 *.pyo
 *.pyd
 *.ipynb
+tests.*
 __pycache__

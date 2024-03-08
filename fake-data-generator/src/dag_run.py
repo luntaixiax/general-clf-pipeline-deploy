@@ -1,11 +1,16 @@
 import fire
 from datetime import date, timedelta
-import importlib
-import etl
 from CommonTools.utils import str2dt
 from CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
 
-def run(task_name: str, dag_date: date, day_offset: int = 0, **kws):
+from src import etl
+
+def test_run(*args, **kws):
+    print("Test Running ...")
+    print(f"args = {args}")
+    print(f"kws = {kws}")
+
+def run_pipeline(task_name: str, dag_date: date, day_offset: int = 0, **kws):
     snap_dt = str2dt(dag_date) + timedelta(day_offset)
     print(f"Running {task_name}@{snap_dt} in dettached run mode...")
     
@@ -15,6 +20,16 @@ def run(task_name: str, dag_date: date, day_offset: int = 0, **kws):
         **kws
     )
     print(f"Completed Running {task_name}@{snap_dt}!")
+
+
+TASKS = {
+    'run_pipeline' : run_pipeline,
+    'test_run' : test_run
+}
+
+def run(task: str, *args, **kws):
+    task_ = TASKS.get(task, run_pipeline)
+    task_(*args, **kws)
     
-if __name__ == '__main__': 
+if __name__ == '__main__':
     fire.Fire(run)

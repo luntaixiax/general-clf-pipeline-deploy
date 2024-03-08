@@ -1,50 +1,74 @@
-name: test self hosted runners
+name: test and build fake data generator
 on:
   push:
     branches:
       - 'main'
+    paths:
+      - "fake-data-generator/**"
 
-
-jobs: # define two jobs, CI and CD
-  # job1 - CI
-  model-build:
-    runs-on: evelyn-windows
+jobs:
+  # job1 - testing
+  unit-test:
+    runs-on: evelyn-windows # need self hosted runner as need connect to local servers
     steps:
-      # - name: Dockerhub Login
-      #   uses: docker/login-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/checkout@v4
       
-      - uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
       
-      - name: list files
-        run: ls
+      - name: install python library
+        working-directory: fake-data-generator
+        run: |
+          pip install pytest pytest-cov
+          pip install -r requirements.txt
 
-      - name: test connection to NAS
-        run: ping 192.168.2.84
+      - name: unit testing
+        working-directory: fake-data-generator
+        env:
+          ENV: dev
+          SECRET_TOML_PATH: ${{ vars.SECRET_TOML_PATH }}
+        run: |
+          echo $ENV
+          echo $SECRET_TOML_PATH
+          python -m pytest .
 
-      - name: test connection to VM
-        run: ping 192.168.2.85
+  # job2 - CI
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      # - name: read model version tag
-      #   id: ver_tag
-      #   uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
-      #   with:
-      #     file: './backend-fastapi/meta.yaml'
-      #     key-path: '["model", "version-tag"]'
+      - name: read model version tag
+        id: ver_tag
+        uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
+        with:
+          file: './fake-data-generator/build.yaml'
+          key-path: '["metadata", "version-tag"]'
 
-      # - name: read dockerhub model name
-      #   id: model_nm
-      #   uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
-      #   with:
-      #     file: './backend-fastapi/meta.yaml'
-      #     key-path: '["model", "docker-image-name"]'
+      - name: read dockerhub model name
+        id: model_nm
+        uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
+        with:
+          file: './fake-data-generator/build.yaml'
+          key-path: '["metadata", "docker-image-name"]'
+
+      - name: Dockerhub Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      # - name: Build and push image
-      #   working-directory: fake-data-generator
-      #   run: |
-      #     model_hub_nm=${{ secrets.DOCKERHUB_USERNAME }}/general-clf-faker
-      #     docker build -t ${model_hub_nm} .
-      #     docker push ${model_hub_nm}
+      - name: build and push image
+        working-directory: fake-data-generator
+        run: |
+          model_hub_nm=${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}
+          docker build -t ${model_hub_nm}:${{ steps.ver_tag.outputs.data }} .
+          docker tag ${model_hub_nm}:${{ steps.ver_tag.outputs.data }} ${model_hub_nm}:latest
+
+          docker push ${model_hub_nm}:${{ steps.ver_tag.outputs.data }}
+          docker push ${model_hub_nm}:latest
+
       

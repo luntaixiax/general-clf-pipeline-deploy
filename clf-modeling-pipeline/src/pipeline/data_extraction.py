@@ -5,9 +5,9 @@ logging.basicConfig(
 )
 from datetime import date
 from ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-from data_connection import VAULT_MOUNT_POINT, VAULT_MOUNT_PATH, DATA_BUCKET,\
+from src.data_connection import VAULT_MOUNT_POINT, VAULT_MOUNT_PATH, DATA_BUCKET,\
         get_vault_resp, get_section_from_config
-from utils import SnapTableCH
+from src.pipeline.utils import SnapTableCH
 
 def compile_obj_storage_ch_query(file_path: str) -> str:
     response = get_vault_resp(
