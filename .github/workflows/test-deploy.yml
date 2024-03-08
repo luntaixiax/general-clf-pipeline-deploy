@@ -1,0 +1,30 @@
+name: test if can deploy
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  deploy:
+    runs-on: evelyn-windows # need self hosted runner as need connect to local servers
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: read model version tag
+        id: ver_tag
+        uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
+        with:
+          file: './fake-data-generator/build.yml'
+          key-path: '["metadata", "version-tag"]'
+
+      - name: read dockerhub model name
+        id: model_nm
+        uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
+        with:
+          file: './fake-data-generator/build.yml'
+          key-path: '["metadata", "docker-image-name"]'
+
+      - name: build and push image
+        working-directory: fake-data-generator
+        run: |
+          docker pull ${model_hub_nm}:${{ steps.ver_tag.outputs.data }}
