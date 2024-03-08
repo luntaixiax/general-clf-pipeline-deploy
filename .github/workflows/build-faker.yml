@@ -5,11 +5,12 @@ on:
       - 'main'
     paths:
       - "fake-data-generator/**"
+      - ".github/workflows/build-faker.yml"
 
 jobs:
   # job1 - testing
   unit-test:
-    runs-on: evelyn-windows # need self hosted runner as need connect to local servers
+    runs-on: luntaixia-ubuntu # need self hosted runner as need connect to local servers
     steps:
       - uses: actions/checkout@v4
       
@@ -20,14 +21,12 @@ jobs:
           cache: 'pip'
       
       - name: install python library
-        shell: pwsh
         working-directory: fake-data-generator
         run: |
           pip install pytest pytest-cov
           pip install -r requirements.txt
 
       - name: unit testing
-        shell: pwsh
         working-directory: fake-data-generator
         env:
           ENV: dev
