@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: evelyn-windows # need self hosted runner as need connect to local servers
+    runs-on: luntaixia-ubuntu # need self hosted runner as need connect to local servers
     steps:
       - uses: actions/checkout@v4
 
