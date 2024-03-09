@@ -86,11 +86,9 @@ class CustFeatureSnap(SnapTableStreamGenerator):
         new_custs['SNAP_DT'] = pd.to_datetime(new_custs['SNAP_DT'], utc = True)
         new_custs['BIRTH_DT'] = pd.to_datetime(new_custs['BIRTH_DT'], utc = True)
         new_custs['SINCE_DT'] = pd.to_datetime(new_custs['SINCE_DT'], utc = True)
-
-
         # randomly drop records, for diminishing
         custs_drop = new_custs['CUST_ID'].sample(cls.CUST_DIMINISH_SPEED)
-        new_custs = new_custs[~new_custs['CUST_ID'].isin(custs_drop)].reset_index(drop=True)
+        new_custs = new_custs[~new_custs['CUST_ID'].isin(custs_drop)].reset_index(drop=True) 
 
         return new_custs
 
@@ -604,63 +602,4 @@ class ConversionEventSnap(SnapTableStreamGenerator):
 
     @classmethod
     def if_success(cls, snap_dt: date) -> bool:
-        return cls.dm.count(snap_dt) > 0
-
-if __name__ == '__main__':
-    #ConversionEventSnap.run(date(2024, 1, 21))
-    # exec = ConversionEventSnap.get_exec_plan(date(2024, 1, 21)).reduce_summary()
-    # for k, dts in exec.items():
-    #     for dt in dts:
-    #         print(k)
-    #         print(dt)
-    
-    import pymongo
-    import requests
-    from ProviderTools.airflow.api import AirflowAPI
-    from data_connection import MONGO, AIRFLOW_API
-    
-    
-    
-    def exec_plan(exec, run_dt: date) -> dict:
-        up_infos = []
-        for up in exec.upstreams:
-            up_infos.append(exec_plan(up, run_dt))
-
-        return {
-            'current': {
-                "task" : exec.obj.__name__, 
-                "lag" : (run_dt - exec.snap_dt).days
-            },
-            'upstream' : up_infos
-        }
-        
-    def update_exec_plan(mongo: pymongo.mongo_client.MongoClient, airflow_api: AirflowAPI):
-        random_date = date(2024, 1, 1)
-        exec = ConversionEventSnap.get_exec_plan(random_date)
-        plan = exec_plan(exec, random_date)
-        
-        # update to mongo
-        db = mongo['airflow']
-        collection = db['task_tree']
-        
-        content = {
-            'dag' : 'fake',
-            'plan' : plan
-        }
-        
-        collection.replace_one(
-            filter = {
-                'dag': 'fake',
-            }, # find matching record, if any
-            replacement = content,
-            upsert = True # update if found, insert if not found
-        )
-        
-        # update to airflow
-        airflow_api.upsert_variable(
-            key = 'faker_task_tree',
-            value = plan
-        )
-        
-    update_exec_plan(MONGO, AIRFLOW_API)
-        
+        return cls.dm.count(snap_dt) > 0 
