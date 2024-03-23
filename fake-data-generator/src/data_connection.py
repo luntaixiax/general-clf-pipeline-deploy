@@ -93,13 +93,37 @@ def get_airflow_api() -> AirflowAPI:
         password = response['password'],
     )
 
-DATA_BUCKET = "general-clf-pipeline-project"
 
-S3A = get_obj_storage_accessor()
-S3A.enter_bucket(DATA_BUCKET)
+    
+class Singleton (type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
 
-CH_CONF = get_warehouse_connect()
-
-MONGO = get_mongo_client()
-
-AIRFLOW_API = get_airflow_api()
+class Connection(metaclass=Singleton):
+    DATA_BUCKET = "general-clf-pipeline-project"
+    
+    def __init__(self) -> None:
+        self._s3a = get_obj_storage_accessor()
+        self._s3a.enter_bucket(self.DATA_BUCKET)
+        self._ch_conf = get_warehouse_connect()
+        self._mongo = get_mongo_client()
+        self._airflow_api = get_airflow_api()
+        
+    @property
+    def S3A(self):
+        return self._s3a
+    
+    @property
+    def CH_CONF(self):
+        return self._ch_conf
+    
+    @property
+    def MONGO(self):
+        return self._mongo
+    
+    @property
+    def AIRFLOW_API(self):
+        return self._airflow_api

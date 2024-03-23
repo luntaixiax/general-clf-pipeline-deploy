@@ -1,8 +1,6 @@
-import pymongo
 from datetime import date
-from ProviderTools.airflow.api import AirflowAPI
 from src.etl import ConversionEventSnap
-from src.data_connection import MONGO, AIRFLOW_API
+from src.data_connection import Connection
 
 
 def exec_plan(exec, run_dt: date) -> dict:
@@ -23,8 +21,9 @@ def update_exec_plan():
     exec = ConversionEventSnap.get_exec_plan(random_date)
     plan = exec_plan(exec, random_date)
     
+    connection = Connection()
     # update to mongo
-    db = MONGO['airflow']
+    db = connection.MONGO['airflow']
     collection = db['task_tree']
     
     content = {
@@ -41,7 +40,7 @@ def update_exec_plan():
     )
     
     # update to airflow
-    AIRFLOW_API.upsert_variable(
+    connection.AIRFLOW_API.upsert_variable(
         key = 'faker_task_tree',
         value = plan
     )

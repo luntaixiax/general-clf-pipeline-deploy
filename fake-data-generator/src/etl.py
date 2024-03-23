@@ -10,13 +10,13 @@ from CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
 from CommonTools.SnapStructure.structure import SnapshotDataManagerObjStorage
 from CommonTools.utils import dt2str, str2dt
 
-from src.data_connection import S3A, DATA_BUCKET
+from src.data_connection import Connection
 from src.model import CustFeature, AcctFeature, FakeLinearProbModel, lognormal2normal
 
 SnapshotDataManagerObjStorage.setup(
-    bucket = DATA_BUCKET,
+    bucket = Connection.DATA_BUCKET,
     root_dir = "/fake/data",
-    obja = S3A
+    obja = Connection().S3A
 )
 
 class CustFeatureSnap(SnapTableStreamGenerator):
@@ -123,7 +123,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
 
     @classmethod
     def init(cls, snap_dt: date) -> pd.DataFrame:
-        sdp_cust = SnapshotDataManagerObjStorage(schema='FEATURES', table='CUST')
+        sdp_cust = CustFeatureSnap.dm
         custs = sdp_cust.read(snap_dt)
 
         accts = []
@@ -150,7 +150,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
             new_accts.append(new_acct)
 
         # generate new accts for new custs
-        sdp_cust = SnapshotDataManagerObjStorage(schema='FEATURES', table='CUST')
+        sdp_cust = CustFeatureSnap.dm
         custs = sdp_cust.read(snap_dt)
         new_custs = custs[~custs['CUST_ID'].isin(last_accts['CUST_ID'])]
         for idx, new_cust in new_custs.iterrows():
@@ -181,8 +181,8 @@ class EngagementFeatureSnap(SnapTableStreamGenerator):
 
     @classmethod
     def execute(cls, snap_dt: date):
-        sdp_cust = SnapshotDataManagerObjStorage(schema='FEATURES', table='CUST')
-        sdp_acct = SnapshotDataManagerObjStorage(schema='FEATURES', table='ACCT')
+        sdp_cust = CustFeatureSnap.dm
+        sdp_acct = AcctFeatureSnap.dm
         # get feature
         cust_past = sdp_cust.read(snap_dt)  # customer feature
         past_7ds = [snap_dt - timedelta(days=d) for d in range(7)]
@@ -311,13 +311,14 @@ class EngagementEventSnap(SnapTableStreamGenerator):
     # each event df @ snap date will record future events between snap_date + 1 to snap_date + 8
     dm = SnapshotDataManagerObjStorage(schema='EVENTS', table='ENGAGE')
     upstreams = [_CurrentStream(EngagementFeatureSnap())]
+    
     @classmethod
     def load_model(cls):
         PROFILE = json.loads(
-            S3A.read_obj(remote_path='/fake/model/event/feature_standalone_profile.json')
+            Connection().S3A.read_obj(remote_path='/fake/model/event/feature_standalone_profile.json')
         )
         MODEL_COEF = json.loads(
-            S3A.read_obj(remote_path='/fake/model/event/model_coeffs.json')
+            Connection().S3A.read_obj(remote_path='/fake/model/event/model_coeffs.json')
         )
         model = FakeLinearProbModel(PROFILE, MODEL_COEF)  # TODO: add drift
         return model
@@ -325,7 +326,7 @@ class EngagementEventSnap(SnapTableStreamGenerator):
     @classmethod
     def execute(cls, snap_dt: date):
         # get features
-        sdp_feat = SnapshotDataManagerObjStorage(schema='FEATURES', table='ENGAGE_FE')
+        sdp_feat = EngagementFeatureSnap.dm
         features_df = sdp_feat.read(snap_dt)
 
         # get model
@@ -410,7 +411,7 @@ class EngagementEventFeatureSnap(SnapTableStreamGenerator):
 
     @classmethod
     def execute(cls, snap_dt: date):
-        sdp_eng_evnts = SnapshotDataManagerObjStorage(schema='EVENTS', table='ENGAGE')
+        sdp_eng_evnts = EngagementEventSnap.dm
         # events table records event during snap_dt+1 to snap_dt+8
         # so event data for snap_dt-14 contain events from snap_dt-13 to snap_dt-6
         past_14ds = [snap_dt - timedelta(days=d) for d in range(14)]
@@ -499,10 +500,10 @@ class ConversionEventSnap(SnapTableStreamGenerator):
     @classmethod
     def load_event_model(cls):
         PROFILE = json.loads(
-            S3A.read_obj(remote_path='/fake/model/event/feature_standalone_profile.json')
+            Connection().S3A.read_obj(remote_path='/fake/model/event/feature_standalone_profile.json')
         )
         MODEL_COEF = json.loads(
-            S3A.read_obj(remote_path='/fake/model/event/model_coeffs.json')
+            Connection().S3A.read_obj(remote_path='/fake/model/event/model_coeffs.json')
         )
         model = FakeLinearProbModel(PROFILE, MODEL_COEF)  # TODO: add drift
         return model
@@ -510,10 +511,10 @@ class ConversionEventSnap(SnapTableStreamGenerator):
     @classmethod
     def load_conv_model(cls):
         PROFILE = json.loads(
-            S3A.read_obj(remote_path='/fake/model/conversion/feature_standalone_profile.json')
+            Connection().S3A.read_obj(remote_path='/fake/model/conversion/feature_standalone_profile.json')
         )
         MODEL_COEF = json.loads(
-            S3A.read_obj(remote_path='/fake/model/conversion/model_coeffs.json')
+            Connection().S3A.read_obj(remote_path='/fake/model/conversion/model_coeffs.json')
         )
         model = FakeLinearProbModel(PROFILE, MODEL_COEF)  # TODO: add drift
         return model
@@ -521,9 +522,9 @@ class ConversionEventSnap(SnapTableStreamGenerator):
     @classmethod
     def execute(cls, snap_dt: date):
         # get features
-        sdp_eng_feat = SnapshotDataManagerObjStorage(schema='FEATURES', table='ENGAGE_FE')
+        sdp_eng_feat = EngagementFeatureSnap.dm
         eng_feat = sdp_eng_feat.read(snap_dt)
-        sdp_engevet_feat = SnapshotDataManagerObjStorage(schema='FEATURES', table='ENGAGE_EVENT_FE')
+        sdp_engevet_feat = EngagementEventFeatureSnap.dm
         engevet_feat = sdp_engevet_feat.read(snap_dt)
 
         # get model
