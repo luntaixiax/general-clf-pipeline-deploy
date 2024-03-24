@@ -351,7 +351,11 @@ class EngagementEventSnap(SnapTableStreamGenerator):
             np.argwhere(random_event_matrix <= daily_prob_matrix),
             columns=['CUST_IDX', 'EVENT_DAY']
         )
-        daily_event_matrix['CUST_ID'] = probs_event_next_7d.loc[daily_event_matrix['CUST_IDX'], 'CUST_ID']
+        daily_event_matrix['CUST_ID'] = (
+            features_df
+            .loc[daily_event_matrix['CUST_IDX'], 'CUST_ID']
+            .reset_index(drop = True)
+        )
         daily_event_matrix['SNAP_DT'] = snap_dt
         daily_event_matrix['SNAP_DT'] = pd.to_datetime(
                                             daily_event_matrix['SNAP_DT'],
@@ -565,6 +569,11 @@ class ConversionEventSnap(SnapTableStreamGenerator):
             columns=['CUST_IDX', 'PUR_DAY']
         )
         daily_purchase_matrix['CUST_ID'] = probs_cov_daily.loc[daily_purchase_matrix['CUST_IDX'], 'CUST_ID']
+        daily_purchase_matrix['CUST_ID'] = (
+            eng_feat
+            .loc[daily_purchase_matrix['CUST_IDX'], 'CUST_ID']
+            .reset_index(drop = True)
+        )
         daily_purchase_matrix['SNAP_DT'] = snap_dt
         daily_purchase_matrix['SNAP_DT'] = pd.to_datetime(
             daily_purchase_matrix['SNAP_DT'],
