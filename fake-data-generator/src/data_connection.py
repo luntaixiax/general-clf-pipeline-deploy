@@ -3,9 +3,9 @@ import logging
 import hvac
 import pymongo
 import toml
-from ProviderTools.aws.s3 import S3Accessor
-from ProviderTools.clickhouse.dbapi import ClickHouse
-from ProviderTools.airflow.api import AirflowAPI
+from luntaiDs.ProviderTools.aws.s3 import S3Accessor
+from luntaiDs.ProviderTools.clickhouse.dbapi import ClickHouse
+from luntaiDs.ProviderTools.airflow.api import AirflowAPI
 
 ENV = os.environ.get("ENV", "prod")
 VAULT_MOUNT_POINT = "general_clf"

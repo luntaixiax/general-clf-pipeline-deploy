@@ -1,0 +1,58 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : true
+    },
+    "DAYS_SINCE_LAST_EVENT" : {
+        "dtype":"Int8",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "days since last event happening",
+        "primary_key" : false
+    },
+    "NUM_EVENT_7D" : {
+        "dtype":"Int16",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "number of events over past 7 days",
+        "primary_key" : false
+    },
+    "RATIO_EVENT_EMAIL" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "percentage of events over past 7 days that come through email channel",
+        "primary_key" : false
+    },
+    "RATIO_EVENT_CLICK" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "percentage of events over past 7 days that are clicks",
+        "primary_key" : false
+    },
+    "RATIO_EVENT_DECLINE" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "percentage of events over past 7 days that are declines",
+        "primary_key" : false
+    }
+}

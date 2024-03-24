@@ -1,0 +1,108 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : true
+    },
+    "GENDER" : {
+        "dtype":"String",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "Male (M) or Female (F)",
+        "primary_key" : false
+    },
+    "EMAIL_DOMAIN" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "email domain part (gmail, hotmail, etc.)",
+        "primary_key" : false
+    },
+    "BLOOD_GRP" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "blood group (A+, A-, O, etc.)",
+        "primary_key" : false
+    },
+    "SUPER_CITY" : {
+        "dtype":"Boolean",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "whether a super mega city including new york, los angeles and chicago",
+        "primary_key" : false
+    },
+    "COASTAL_CITY" : {
+        "dtype":"Boolean",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "whether a coastal city including new york, los angeles and seattle",
+        "primary_key" : false
+    },
+    "MANAGER_FLG" : {
+        "dtype":"Boolean",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "whether a people manager role, including manager, senior manager, vp",
+        "primary_key" : false
+    },
+    "TECHNICAL_FLG" : {
+        "dtype":"Boolean",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "whether a technical role, including devops, internal tools and platform",
+        "primary_key" : false
+    },
+    "AGE" : {
+        "dtype":"Int8",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "age in years, taking difference from birth date and snap date",
+        "primary_key" : false
+    },
+    "TENURE" : {
+        "dtype":"Int8",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "tenure in years, taking difference from since date and snap date",
+        "primary_key" : false
+    },
+    "TOTAL_COMP" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 10,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total compensation (salary plus bonus) in dollar amount",
+        "primary_key" : false
+    },
+    "BONUS_RATIO" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "bonus as a proportion of total compensation",
+        "primary_key" : false
+    }
+}

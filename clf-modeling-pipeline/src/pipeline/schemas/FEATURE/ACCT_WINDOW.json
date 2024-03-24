@@ -1,0 +1,92 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : true
+    },
+    "MAX_NUM_ACCT_7D" : {
+        "dtype":"Int8",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "max number of debit/credit accounts over past 7 days",
+        "primary_key" : false
+    },
+    "TOTAL_FLOW_7D" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total debit and credit flows across all debit and credit account over past 7 days",
+        "primary_key" : false
+    },
+    "DEB_CRE_FLOW_7D" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "ratio between total debit flow over total credit flow over past 7 days",
+        "primary_key" : false
+    },
+    "AVG_CR_UTIL_7D" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "ratio between average credit account daily balance over max credit limit over past 7 days",
+        "primary_key" : false
+    },
+    "MAX_CR_UTIL_7D" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "ratio between max credit account daily balance over max credit limit over past 7 days",
+        "primary_key" : false
+    },
+    "AVG_DR_DEB_3D" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "ratio between total debit flow over average daily balance of debit account over past 3 days",
+        "primary_key" : false
+    },
+    "AVG_CR_DEB_3D" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "ratio between total credit flow over average daily balance of debit account over past 3 days",
+        "primary_key" : false
+    },
+    "AVG_DR_CRE_3D" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "ratio between total debit flow over average daily balance of credit account over past 3 days",
+        "primary_key" : false
+    },
+    "AVG_CR_CRE_3D" : {
+        "dtype":"Float16",
+        "args":{
+            "nullable" : false
+        },
+        "descr" : "ratio between total credit flow over average daily balance of credit account over past 3 days",
+        "primary_key" : false
+    }
+}

@@ -1,7 +1,7 @@
 import fire
 from datetime import date, timedelta
-from CommonTools.utils import str2dt
-from CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
+from luntaiDs.CommonTools.utils import str2dt
+from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
 from src import etl
 from src.utils import update_exec_plan
 

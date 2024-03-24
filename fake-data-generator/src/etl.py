@@ -5,10 +5,10 @@ import random
 import json
 import pandas as pd
 import numpy as np
-from CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
+from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
     _CurrentStream, _FutureStream, _PastStream, ExecPlan
-from CommonTools.SnapStructure.structure import SnapshotDataManagerObjStorage
-from CommonTools.utils import dt2str, str2dt
+from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerObjStorage
+from luntaiDs.CommonTools.utils import dt2str, str2dt
 
 from src.data_connection import Connection
 from src.model import CustFeature, AcctFeature, FakeLinearProbModel, lognormal2normal
@@ -351,7 +351,7 @@ class EngagementEventSnap(SnapTableStreamGenerator):
             np.argwhere(random_event_matrix <= daily_prob_matrix),
             columns=['CUST_IDX', 'EVENT_DAY']
         )
-        daily_event_matrix['CUST_ID'] = probs_event_next_7d.index[daily_event_matrix['CUST_IDX']]
+        daily_event_matrix['CUST_ID'] = probs_event_next_7d.loc[daily_event_matrix['CUST_IDX'], 'CUST_ID']
         daily_event_matrix['SNAP_DT'] = snap_dt
         daily_event_matrix['SNAP_DT'] = pd.to_datetime(
                                             daily_event_matrix['SNAP_DT'],
@@ -564,7 +564,7 @@ class ConversionEventSnap(SnapTableStreamGenerator):
             np.argwhere(random_event_matrix <= daily_prob_matrix),
             columns=['CUST_IDX', 'PUR_DAY']
         )
-        daily_purchase_matrix['CUST_ID'] = probs_cov_daily.index[daily_purchase_matrix['CUST_IDX']]
+        daily_purchase_matrix['CUST_ID'] = probs_cov_daily.loc[daily_purchase_matrix['CUST_IDX'], 'CUST_ID']
         daily_purchase_matrix['SNAP_DT'] = snap_dt
         daily_purchase_matrix['SNAP_DT'] = pd.to_datetime(
             daily_purchase_matrix['SNAP_DT'],

@@ -1,0 +1,44 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : false
+    },
+    "NUM_PUR_F7D" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "number of purchase events made over future 7 days",
+        "primary_key" : false
+    },
+    "TOTAL_PUR_NUM_F7D" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "total number of product purchased over future 7 days",
+        "primary_key" : false
+    },
+    "TOTAL_PUR_AMT_F7D" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 10,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total amount purchased over future 7 days",
+        "primary_key" : false
+    }
+}

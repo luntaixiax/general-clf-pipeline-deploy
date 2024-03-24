@@ -1,8 +1,14 @@
 import os
 os.environ['ENV'] = 'dev'
+import pytest
+from datetime import date, timedelta
+from unittest import mock
+import pandas as pd
+from pandas.api.types import is_datetime64_any_dtype
 
-def test_connect():
-    from src.data_connection import S3A, CH_CONF, MONGO, AIRFLOW_API
+@pytest.mark.skipif(os.environ.get('ENV') != 'dev',
+                    reason="not correct env")
+def test_connection():
+    from src.data_connection import Connection
     
-def test_import():
-    from src.pipeline.data_extraction import compile_obj_storage_ch_query
+    c = Connection()

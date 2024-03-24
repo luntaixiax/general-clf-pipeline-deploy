@@ -4,17 +4,17 @@ from datetime import date
 import pandas as pd
 import json
 import pathlib
-from CommonTools.utils import render_sql_from_file
-from CommonTools.dtyper import DSchema
-from CommonTools.schema_manager import BaseSchemaManager
-from CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
+from luntaiDs.CommonTools.utils import render_sql_from_file
+from luntaiDs.CommonTools.dtyper import DSchema
+from luntaiDs.CommonTools.schema_manager import BaseSchemaManager
+from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
     _CurrentStream, _FutureStream, _PastStream
-from ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-from ProviderTools.mongo.schema_manager import MongoSchemaManager
+from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
+from luntaiDs.ProviderTools.mongo.schema_manager import MongoSchemaManager
 
-from src.data_connection import CH_CONF, MONGO
+from src.data_connection import Connection
 
-SnapshotDataManagerCHSQL.setup(db_conf = CH_CONF)
+SnapshotDataManagerCHSQL.setup(db_conf = Connection().CH_CONF)
 
 class TableSchema:
     """collection of methods for writing/reading table schema
@@ -23,7 +23,7 @@ class TableSchema:
     @classmethod
     def get_schema_manager(cls) -> BaseSchemaManager:
         return MongoSchemaManager(
-            mongo_client = MONGO, 
+            mongo_client = Connection().MONGO, 
             database = 'table_schema_ch', 
             collection = 'schemas'
         )

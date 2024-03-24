@@ -4,3 +4,4 @@ secrets.toml
 *obj_storage.xml
 *.ipynb
 .vscode
+*local_test_run.py

@@ -11,12 +11,12 @@ from faker import Faker
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer
-from ModelingTools.FeatureEngineer.transformers import NamedTransformer
-from ModelingTools.FeatureEngineer.preprocessing import floatFy, nominal_categ_preprocess_pipe, \
+from luntaiDs.ModelingTools.FeatureEngineer.transformers import NamedTransformer
+from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import floatFy, nominal_categ_preprocess_pipe, \
     numeric_preprocess_pipe, ordinal_categ_preprocess_pipe, binary_preprocess_pipe
-from ModelingTools.FeatureEngineer.transformers import WeightedAverager
-from ModelingTools.utils.support import make_present_col_selector
-from ModelingTools.Explore.profiling import TabularStat
+from luntaiDs.ModelingTools.FeatureEngineer.transformers import WeightedAverager
+from luntaiDs.ModelingTools.utils.support import make_present_col_selector
+from luntaiDs.ModelingTools.Explore.profiling import TabularStat
 
 fake = Faker()
 

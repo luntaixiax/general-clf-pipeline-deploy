@@ -1,0 +1,104 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : true
+    },
+    "NUM_ACCTS_DEB" : {
+        "dtype":"Int8",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "number of debit accounts",
+        "primary_key" : false
+    },
+    "NUM_ACCTS_CRE" : {
+        "dtype":"Int8",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "number of credit accounts",
+        "primary_key" : false
+    },
+    "END_BAL_DEB" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total end balance across all debit accounts",
+        "primary_key" : false
+    },
+    "END_BAL_CRE" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total end balance across all credit accounts",
+        "primary_key" : false
+    },
+    "DR_AMT_DEB" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total debit cash flow across all debit accounts",
+        "primary_key" : false
+    },
+    "DR_AMT_CRE" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total debit cash flow across all credit accounts",
+        "primary_key" : false
+    },
+    "CR_AMT_DEB" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total credit cash flow across all debit account",
+        "primary_key" : false
+    },
+    "CR_AMT_CRE" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "total credit cash flow across all credit account",
+        "primary_key" : false
+    },
+    "CR_LMT" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 12,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "combined credit limit, if a card or loan or mortgage",
+        "primary_key" : false
+    }
+}
