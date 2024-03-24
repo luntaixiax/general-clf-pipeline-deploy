@@ -568,7 +568,6 @@ class ConversionEventSnap(SnapTableStreamGenerator):
             np.argwhere(random_event_matrix <= daily_prob_matrix),
             columns=['CUST_IDX', 'PUR_DAY']
         )
-        daily_purchase_matrix['CUST_ID'] = probs_cov_daily.loc[daily_purchase_matrix['CUST_IDX'], 'CUST_ID']
         daily_purchase_matrix['CUST_ID'] = (
             eng_feat
             .loc[daily_purchase_matrix['CUST_IDX'], 'CUST_ID']
