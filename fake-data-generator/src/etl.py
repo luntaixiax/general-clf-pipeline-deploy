@@ -396,7 +396,6 @@ class EngagementEventSnap(SnapTableStreamGenerator):
 
         daily_event_matrix = (
             daily_event_matrix
-            .reset_index()
             .drop(columns=['CUST_IDX', 'EVENT_DAY'])
         )
 
