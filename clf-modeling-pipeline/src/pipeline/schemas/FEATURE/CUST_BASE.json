@@ -13,7 +13,8 @@
             "nullable": false
         },
         "descr" : "observation snapshot date",
-        "primary_key" : true
+        "primary_key" : true,
+        "partition_key" : true
     },
     "GENDER" : {
         "dtype":"String",
@@ -98,7 +99,7 @@
         "primary_key" : false
     },
     "BONUS_RATIO" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },

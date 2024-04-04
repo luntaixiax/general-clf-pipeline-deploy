@@ -13,7 +13,8 @@
             "nullable": false
         },
         "descr" : "observation snapshot date",
-        "primary_key" : false
+        "primary_key" : false,
+        "partition_key" : true
     },
     "PUR_TS" : {
         "dtype":"Timestamp",

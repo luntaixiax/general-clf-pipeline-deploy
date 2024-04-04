@@ -1,0 +1,2608 @@
+{
+    "GENDER": {
+        "colname": "GENDER",
+        "attr": {
+            "pos_values": [
+                "M"
+            ],
+            "int_dtype": false,
+            "na_to_pos": false
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "unique": {
+                    "value": 2,
+                    "perc": 0.00019613611846621556
+                }
+            },
+            "distribution": {
+                "vcounts": {
+                    "F": 5181,
+                    "M": 5016
+                },
+                "vpercs": {
+                    "F": 0.5080906148867314,
+                    "M": 0.4919093851132686
+                }
+            },
+            "binary_distribution": {
+                "binary_vcounts": {
+                    "0": 5181,
+                    "1": 5016
+                },
+                "binary_vpercs": {
+                    "0": 0.5080906148867314,
+                    "1": 0.4919093851132686
+                }
+            }
+        },
+        "constructor": "BinaryStat"
+    },
+    "BLOOD_GRP": {
+        "colname": "BLOOD_GRP",
+        "attr": {
+            "int_dtype": false,
+            "max_categories": 25
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "unique": {
+                    "value": 8,
+                    "perc": 0.0007845444738648623
+                }
+            },
+            "distribution": {
+                "vcounts": {
+                    "B-": 1312,
+                    "B+": 1308,
+                    "O+": 1304,
+                    "AB-": 1283,
+                    "A+": 1273,
+                    "O-": 1268,
+                    "AB+": 1231,
+                    "A-": 1218
+                },
+                "vpercs": {
+                    "B-": 0.1286652937138374,
+                    "B+": 0.12827302147690497,
+                    "O+": 0.12788074923997253,
+                    "AB-": 0.1258213199960773,
+                    "A+": 0.1248406394037462,
+                    "O-": 0.12435029910758066,
+                    "AB+": 0.12072178091595567,
+                    "A-": 0.11944689614592527
+                }
+            }
+        },
+        "constructor": "NominalCategStat"
+    },
+    "OFFICE": {
+        "colname": "OFFICE",
+        "attr": {
+            "int_dtype": false,
+            "categories": [
+                "Austin",
+                "Seattle",
+                "Chicago",
+                "New York"
+            ]
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "unique": {
+                    "value": 4,
+                    "perc": 0.00039227223693243113
+                }
+            },
+            "distribution": {
+                "vcounts": {
+                    "Austin": 2586,
+                    "New York": 2582,
+                    "Chicago": 2533,
+                    "Seattle": 2496
+                },
+                "vpercs": {
+                    "Austin": 0.2536040011768167,
+                    "New York": 0.2532117289398843,
+                    "Chicago": 0.248406394037462,
+                    "Seattle": 0.24477787584583702
+                }
+            }
+        },
+        "constructor": "OrdinalCategStat"
+    },
+    "ORG": {
+        "colname": "ORG",
+        "attr": {
+            "int_dtype": false,
+            "max_categories": 25
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "unique": {
+                    "value": 5,
+                    "perc": 0.0004903402961655388
+                }
+            },
+            "distribution": {
+                "vcounts": {
+                    "Devops": 3165,
+                    "Sales": 2582,
+                    "Internal Tools": 1908,
+                    "Product": 1890,
+                    "Platform": 652
+                },
+                "vpercs": {
+                    "Devops": 0.3103854074727861,
+                    "Sales": 0.2532117289398843,
+                    "Internal Tools": 0.18711385701676964,
+                    "Product": 0.1853486319505737,
+                    "Platform": 0.06394037461998626
+                }
+            }
+        },
+        "constructor": "NominalCategStat"
+    },
+    "TITLE": {
+        "colname": "TITLE",
+        "attr": {
+            "int_dtype": false,
+            "categories": [
+                "Associate",
+                "Engineer",
+                "Senior Engineer",
+                "Manager",
+                "VP"
+            ]
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "unique": {
+                    "value": 5,
+                    "perc": 0.0004903402961655388
+                }
+            },
+            "distribution": {
+                "vcounts": {
+                    "Associate": 2582,
+                    "Manager": 2460,
+                    "Engineer": 2176,
+                    "Senior Engineer": 1544,
+                    "VP": 1435
+                },
+                "vpercs": {
+                    "Associate": 0.2532117289398843,
+                    "Manager": 0.24124742571344512,
+                    "Engineer": 0.21339609689124253,
+                    "Senior Engineer": 0.1514170834559184,
+                    "VP": 0.14072766499950967
+                }
+            }
+        },
+        "constructor": "OrdinalCategStat"
+    },
+    "AGE": {
+        "colname": "AGE",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 10,
+            "xtreme_method": null
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": null,
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 18.027397260273972,
+                    "perc_1th": 20.539068493150687,
+                    "perc_5th": 24.36986301369863,
+                    "q1": 32.657534246575345,
+                    "median": 39.038356164383565,
+                    "q3": 45.24657534246575,
+                    "perc_95th": 53.71452054794519,
+                    "perc_99th": 57.578520547945196,
+                    "maximum": 59.961643835616435,
+                    "iqr": 12.589041095890408,
+                    "range": 41.93424657534246
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 39.010214661577876,
+                    "var": 76.83987758016333,
+                    "std": 8.765835817545486,
+                    "skew": 0.011884240985328266,
+                    "kurt": -0.5976122638271977,
+                    "mad": 7.16746306475445,
+                    "cv": 0.22469514866287402,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        233,
+                        626,
+                        995,
+                        1473,
+                        1753,
+                        1806,
+                        1419,
+                        999,
+                        637,
+                        256
+                    ],
+                    "bin_edges": [
+                        18.027397260273972,
+                        22.220821917808216,
+                        26.414246575342464,
+                        30.60767123287671,
+                        34.801095890410956,
+                        38.9945205479452,
+                        43.18794520547945,
+                        47.381369863013695,
+                        51.57479452054794,
+                        55.768219178082184,
+                        59.961643835616435
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "TENURE": {
+        "colname": "TENURE",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 10,
+            "xtreme_method": null
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1,
+                    "perc": 9.806805923310778e-05
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": null,
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": -0.038356164383561646,
+                    "perc_1th": 0.17797260273972604,
+                    "perc_5th": 0.9556164383561644,
+                    "q1": 5.005479452054795,
+                    "median": 10.084931506849315,
+                    "q3": 14.978082191780821,
+                    "perc_95th": 18.997260273972604,
+                    "perc_99th": 19.77271232876712,
+                    "maximum": 19.972602739726028,
+                    "iqr": 9.972602739726026,
+                    "range": 20.01095890410959
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 10.002663421016926,
+                    "var": 33.566409859411,
+                    "std": 5.793652549075669,
+                    "skew": -0.006466271115262739,
+                    "kurt": -1.2034168801306464,
+                    "mad": 5.024484468582361,
+                    "cv": 0.5791825848910468,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        1020,
+                        1009,
+                        1003,
+                        1075,
+                        944,
+                        1013,
+                        1073,
+                        986,
+                        1030,
+                        1044
+                    ],
+                    "bin_edges": [
+                        -0.038356164383561646,
+                        1.9627397260273973,
+                        3.9638356164383564,
+                        5.964931506849316,
+                        7.966027397260275,
+                        9.967123287671233,
+                        11.968219178082194,
+                        13.969315068493152,
+                        15.970410958904111,
+                        17.97150684931507,
+                        19.972602739726028
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "TOTAL_COMP": {
+        "colname": "TOTAL_COMP",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 10,
+            "xtreme_method": null
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": null,
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 69000.0,
+                    "perc_1th": 71500.0,
+                    "perc_5th": 75500.0,
+                    "q1": 94500.0,
+                    "median": 139500.0,
+                    "q3": 166000.0,
+                    "perc_95th": 252000.0,
+                    "perc_99th": 284500.0,
+                    "maximum": 300000.0,
+                    "iqr": 71500.0,
+                    "range": 231000.0
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 142273.1195449642,
+                    "var": 2541253124.957559,
+                    "std": 50410.8433271807,
+                    "skew": 0.7948730494933839,
+                    "kurt": 0.5114004434904382,
+                    "mad": 39056.76163303621,
+                    "cv": 0.35430706503809806,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        2396,
+                        752,
+                        1827,
+                        2058,
+                        1824,
+                        287,
+                        265,
+                        309,
+                        294,
+                        185
+                    ],
+                    "bin_edges": [
+                        69000.0,
+                        92100.0,
+                        115200.0,
+                        138300.0,
+                        161400.0,
+                        184500.0,
+                        207600.0,
+                        230700.0,
+                        253800.0,
+                        276900.0,
+                        300000.0
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "BONUS_RATIO": {
+        "colname": "BONUS_RATIO",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 10,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": 0.11344580260632389,
+                    "rbound": 0.18456409738357407,
+                    "lxtreme_mean": null,
+                    "lxtreme_median": null,
+                    "rxtreme_mean": null,
+                    "rxtreme_median": null
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.1282051282051282,
+                    "perc_1th": 0.13043478260869565,
+                    "perc_5th": 0.1323529411764706,
+                    "q1": 0.1401151631477927,
+                    "median": 0.14893617021276595,
+                    "q3": 0.15789473684210525,
+                    "perc_95th": 0.16483516483516483,
+                    "perc_99th": 0.16666666666666666,
+                    "maximum": 0.16883116883116883,
+                    "iqr": 0.017779573694312545,
+                    "range": 0.04062604062604064
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.14885744100485293,
+                    "var": 0.00010926617610684808,
+                    "std": 0.010453046259672253,
+                    "skew": -0.0325544845242839,
+                    "kurt": -1.1681450787194987,
+                    "mad": 0.009021956582650247,
+                    "cv": 0.07021841583172636,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        492,
+                        1047,
+                        1102,
+                        1131,
+                        1213,
+                        1162,
+                        1158,
+                        1115,
+                        1258,
+                        519
+                    ],
+                    "bin_edges": [
+                        0.1282051282051282,
+                        0.13226773226773225,
+                        0.1363303363303363,
+                        0.1403929403929404,
+                        0.14445554445554445,
+                        0.1485181485181485,
+                        0.15258075258075257,
+                        0.15664335664335663,
+                        0.16070596070596072,
+                        0.16476856476856477,
+                        0.16883116883116883
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "TOTAL_DR_RATIO_DEB": {
+        "colname": "TOTAL_DR_RATIO_DEB",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 15,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 2878,
+                    "perc": 0.2822398744728842
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 629,
+                    "perc": 0.06168480925762479
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -2.0857284896320056,
+                    "rbound": 3.476214149386676,
+                    "lxtreme_mean": -31.25498460044946,
+                    "lxtreme_median": -6.086881762819935,
+                    "rxtreme_mean": 12.983454934836129,
+                    "rxtreme_median": 5.487512715016625
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": -2.0651517674226683,
+                    "perc_1th": -0.47720809028509076,
+                    "perc_5th": 0.0,
+                    "q1": 0.0,
+                    "median": 0.4724908172501762,
+                    "q3": 1.3162634857121498,
+                    "perc_95th": 2.303027848738326,
+                    "perc_99th": 2.9889005321116655,
+                    "maximum": 3.4702294419333124,
+                    "iqr": 1.3162634857121498,
+                    "range": 5.535381209355981
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.7321275466923127,
+                    "var": 0.6738996855246405,
+                    "std": 0.8209139330798574,
+                    "skew": 0.7498337029186954,
+                    "kurt": 0.2327343580660246,
+                    "mad": 0.6863600183012509,
+                    "cv": 1.1212131502728944,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        23,
+                        19,
+                        17,
+                        31,
+                        20,
+                        3304,
+                        1548,
+                        990,
+                        1025,
+                        1125,
+                        644,
+                        394,
+                        227,
+                        141,
+                        60
+                    ],
+                    "bin_edges": [
+                        -2.0651517674226683,
+                        -1.6961263534656028,
+                        -1.3271009395085374,
+                        -0.9580755255514721,
+                        -0.5890501115944067,
+                        -0.22002469763734123,
+                        0.149000716319724,
+                        0.5180261302767897,
+                        0.8870515442338549,
+                        1.2560769581909201,
+                        1.6251023721479858,
+                        1.9941277861050515,
+                        2.3631532000621163,
+                        2.732178614019182,
+                        3.1012040279762476,
+                        3.4702294419333124
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "MAX_DR_RATIO_DEB": {
+        "colname": "MAX_DR_RATIO_DEB",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 10,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 2878,
+                    "perc": 0.2822398744728842
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 18,
+                    "perc": 0.00176522506619594
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -0.413024049398765,
+                    "rbound": 0.6883734156646084,
+                    "lxtreme_mean": null,
+                    "lxtreme_median": null,
+                    "rxtreme_mean": 0.7413658599622859,
+                    "rxtreme_median": 0.7252949968554487
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.0,
+                    "perc_1th": 0.0,
+                    "perc_5th": 0.0,
+                    "q1": 0.0,
+                    "median": 0.11949799580799682,
+                    "q3": 0.2744341603693129,
+                    "perc_95th": 0.44654613757301226,
+                    "perc_99th": 0.5594627251538259,
+                    "maximum": 0.6801003777805055,
+                    "iqr": 0.2744341603693129,
+                    "range": 0.6801003777805055
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.15969337335716524,
+                    "var": 0.02427254016038826,
+                    "std": 0.15579647030786115,
+                    "skew": 0.7169062338184435,
+                    "kurt": -0.44381230927756654,
+                    "mad": 0.13347140910873137,
+                    "cv": 0.9755496675102652,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        3972,
+                        1401,
+                        1030,
+                        1185,
+                        1013,
+                        763,
+                        472,
+                        215,
+                        88,
+                        40
+                    ],
+                    "bin_edges": [
+                        0.0,
+                        0.06801003777805055,
+                        0.1360200755561011,
+                        0.20403011333415166,
+                        0.2720401511122022,
+                        0.34005018889025274,
+                        0.4080602266683033,
+                        0.47607026444635386,
+                        0.5440803022244044,
+                        0.612090340002455,
+                        0.6801003777805055
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "TOTAL_CR_RATIO_DEB": {
+        "colname": "TOTAL_CR_RATIO_DEB",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 10,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 2882,
+                    "perc": 0.2826321467098166
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 1371,
+                    "perc": 0.13445130920859077
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -1.6708947488624584,
+                    "rbound": 2.7848245814374306,
+                    "lxtreme_mean": -59.692441920738894,
+                    "lxtreme_median": -11.12388836732952,
+                    "rxtreme_mean": 14.397389264743191,
+                    "rxtreme_median": 4.877563377856758
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.0,
+                    "perc_1th": 0.0,
+                    "perc_5th": 0.0,
+                    "q1": 0.0,
+                    "median": 0.15282098232575828,
+                    "q3": 0.7696420210035084,
+                    "perc_95th": 2.020591162517489,
+                    "perc_99th": 2.5968802919119947,
+                    "maximum": 2.782477022321174,
+                    "iqr": 0.7696420210035084,
+                    "range": 2.782477022321174
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.4868946538426496,
+                    "var": 0.4469936524060826,
+                    "std": 0.668575838933836,
+                    "skew": 1.5160426965136933,
+                    "kurt": 1.4640244935085205,
+                    "mad": 0.5270820492431822,
+                    "cv": 1.373064906804023,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        5077,
+                        992,
+                        687,
+                        555,
+                        450,
+                        331,
+                        244,
+                        187,
+                        161,
+                        142
+                    ],
+                    "bin_edges": [
+                        0.0,
+                        0.27824770223211737,
+                        0.5564954044642347,
+                        0.8347431066963521,
+                        1.1129908089284695,
+                        1.3912385111605867,
+                        1.6694862133927042,
+                        1.9477339156248217,
+                        2.225981617856939,
+                        2.504229320089056,
+                        2.782477022321174
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "MAX_CR_RATIO_DEB": {
+        "colname": "MAX_CR_RATIO_DEB",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 10,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 2882,
+                    "perc": 0.2826321467098166
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 575,
+                    "perc": 0.05638913405903697
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -0.41534675615212535,
+                    "rbound": 0.6922445935868755,
+                    "lxtreme_mean": null,
+                    "lxtreme_median": null,
+                    "rxtreme_mean": 0.9939429298624849,
+                    "rxtreme_median": 0.9020591341077084
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.0,
+                    "perc_1th": 0.0,
+                    "perc_5th": 0.0,
+                    "q1": 0.0,
+                    "median": 0.049406852077823415,
+                    "q3": 0.2206223324357647,
+                    "perc_95th": 0.5228525825612467,
+                    "perc_99th": 0.6468183596190114,
+                    "maximum": 0.691906824079325,
+                    "iqr": 0.2206223324357647,
+                    "range": 0.691906824079325
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.13517737791631104,
+                    "var": 0.031019096574791204,
+                    "std": 0.17612239089562465,
+                    "skew": 1.3138077239649129,
+                    "kurt": 0.6558399188659747,
+                    "mad": 0.1427331808747789,
+                    "cv": 1.302830705143213,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        5291,
+                        1055,
+                        739,
+                        562,
+                        500,
+                        443,
+                        363,
+                        304,
+                        218,
+                        147
+                    ],
+                    "bin_edges": [
+                        0.0,
+                        0.0691906824079325,
+                        0.138381364815865,
+                        0.2075720472237975,
+                        0.27676272963173,
+                        0.34595341203966246,
+                        0.415144094447595,
+                        0.4843347768555275,
+                        0.55352545926346,
+                        0.6227161416713924,
+                        0.691906824079325
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "CR_UTIL_CRE": {
+        "colname": "CR_UTIL_CRE",
+        "attr": {
+            "setaside_zero": true,
+            "log_scale": false,
+            "bins": 100,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1368,
+                    "perc": 0.13415710503089143
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 637,
+                    "perc": 0.06246935373148965
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": 0.10592324415996746,
+                    "rbound": 1.2237856495758441,
+                    "lxtreme_mean": -0.15879992150729785,
+                    "lxtreme_median": -0.07033920408459066,
+                    "rxtreme_mean": 1.4619413832470711,
+                    "rxtreme_median": 1.3998592379912964
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.10628462804129007,
+                    "perc_1th": 0.14398929466378504,
+                    "perc_5th": 0.29412661835967696,
+                    "q1": 0.5363249810322749,
+                    "median": 0.6447371696530027,
+                    "q3": 0.7947254726449655,
+                    "perc_95th": 1.007810988418171,
+                    "perc_99th": 1.1617224894353035,
+                    "maximum": 1.22240042464178,
+                    "iqr": 0.25840049161269063,
+                    "range": 1.1161157966004898
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.6603320429417583,
+                    "var": 0.04312194077845353,
+                    "std": 0.20765823070240566,
+                    "skew": 0.007504294491702456,
+                    "kurt": 0.12006178933569345,
+                    "mad": 0.16236822273779114,
+                    "cv": 0.3144562770844446,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        19,
+                        25,
+                        26,
+                        25,
+                        20,
+                        25,
+                        17,
+                        29,
+                        17,
+                        21,
+                        18,
+                        25,
+                        31,
+                        27,
+                        19,
+                        44,
+                        24,
+                        43,
+                        38,
+                        34,
+                        37,
+                        36,
+                        39,
+                        33,
+                        33,
+                        44,
+                        36,
+                        50,
+                        69,
+                        70,
+                        57,
+                        71,
+                        61,
+                        79,
+                        130,
+                        171,
+                        189,
+                        183,
+                        246,
+                        220,
+                        199,
+                        217,
+                        216,
+                        214,
+                        227,
+                        186,
+                        221,
+                        190,
+                        198,
+                        163,
+                        171,
+                        162,
+                        177,
+                        177,
+                        140,
+                        156,
+                        140,
+                        143,
+                        124,
+                        125,
+                        130,
+                        121,
+                        102,
+                        107,
+                        98,
+                        125,
+                        110,
+                        101,
+                        88,
+                        111,
+                        85,
+                        93,
+                        77,
+                        67,
+                        73,
+                        70,
+                        63,
+                        77,
+                        59,
+                        59,
+                        46,
+                        44,
+                        36,
+                        21,
+                        24,
+                        31,
+                        17,
+                        23,
+                        28,
+                        19,
+                        18,
+                        20,
+                        18,
+                        11,
+                        23,
+                        11,
+                        12,
+                        15,
+                        14,
+                        18
+                    ],
+                    "bin_edges": [
+                        0.10628462804129007,
+                        0.11744578600729497,
+                        0.12860694397329986,
+                        0.13976810193930478,
+                        0.15092925990530967,
+                        0.16209041787131456,
+                        0.17325157583731945,
+                        0.18441273380332435,
+                        0.19557389176932927,
+                        0.20673504973533413,
+                        0.21789620770133905,
+                        0.22905736566734394,
+                        0.24021852363334883,
+                        0.25137968159935375,
+                        0.2625408395653587,
+                        0.27370199753136354,
+                        0.2848631554973684,
+                        0.2960243134633733,
+                        0.30718547142937824,
+                        0.31834662939538316,
+                        0.329507787361388,
+                        0.3406689453273929,
+                        0.3518301032933978,
+                        0.36299126125940273,
+                        0.3741524192254076,
+                        0.3853135771914125,
+                        0.3964747351574174,
+                        0.4076358931234223,
+                        0.4187970510894272,
+                        0.4299582090554321,
+                        0.441119367021437,
+                        0.45228052498744187,
+                        0.4634416829534468,
+                        0.4746028409194517,
+                        0.48576399888545657,
+                        0.4969251568514615,
+                        0.5080863148174664,
+                        0.5192474727834713,
+                        0.5304086307494762,
+                        0.5415697887154811,
+                        0.552730946681486,
+                        0.5638921046474908,
+                        0.5750532626134958,
+                        0.5862144205795007,
+                        0.5973755785455055,
+                        0.6085367365115104,
+                        0.6196978944775153,
+                        0.6308590524435203,
+                        0.6420202104095252,
+                        0.6531813683755301,
+                        0.664342526341535,
+                        0.6755036843075399,
+                        0.6866648422735446,
+                        0.6978260002395495,
+                        0.7089871582055545,
+                        0.7201483161715594,
+                        0.7313094741375643,
+                        0.7424706321035692,
+                        0.7536317900695741,
+                        0.7647929480355791,
+                        0.775954106001584,
+                        0.7871152639675889,
+                        0.7982764219335936,
+                        0.8094375798995985,
+                        0.8205987378656034,
+                        0.8317598958316084,
+                        0.8429210537976133,
+                        0.8540822117636182,
+                        0.8652433697296231,
+                        0.876404527695628,
+                        0.887565685661633,
+                        0.8987268436276379,
+                        0.9098880015936426,
+                        0.9210491595596475,
+                        0.9322103175256524,
+                        0.9433714754916573,
+                        0.9545326334576623,
+                        0.9656937914236672,
+                        0.9768549493896721,
+                        0.988016107355677,
+                        0.9991772653216819,
+                        1.0103384232876869,
+                        1.0214995812536916,
+                        1.0326607392196965,
+                        1.0438218971857014,
+                        1.0549830551517063,
+                        1.0661442131177112,
+                        1.0773053710837162,
+                        1.088466529049721,
+                        1.099627687015726,
+                        1.110788844981731,
+                        1.1219500029477358,
+                        1.1331111609137408,
+                        1.1442723188797457,
+                        1.1554334768457504,
+                        1.1665946348117553,
+                        1.1777557927777602,
+                        1.1889169507437651,
+                        1.20007810870977,
+                        1.211239266675775,
+                        1.22240042464178
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "MAX_CR_UTIL_CRE": {
+        "colname": "MAX_CR_UTIL_CRE",
+        "attr": {
+            "setaside_zero": true,
+            "log_scale": false,
+            "bins": 100,
+            "xtreme_method": "quantile"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1368,
+                    "perc": 0.13415710503089143
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 178,
+                    "perc": 0.017456114543493183
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": 0.35493642127126074,
+                    "rbound": 2.0827664803292754,
+                    "lxtreme_mean": 0.31284645361811436,
+                    "lxtreme_median": 0.32426373835071964,
+                    "rxtreme_mean": 2.4989664369646793,
+                    "rxtreme_median": 2.3983115284821785
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.3562623483351717,
+                    "perc_1th": 0.3988344023225119,
+                    "perc_5th": 0.4916988249873252,
+                    "q1": 0.5841280207056709,
+                    "median": 0.6972593113141251,
+                    "q3": 0.8724014787543748,
+                    "perc_95th": 1.3582209829091048,
+                    "perc_99th": 1.7614570867783148,
+                    "maximum": 2.0796550681268307,
+                    "iqr": 0.28827345804870386,
+                    "range": 1.723392719791659
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.7688658540267963,
+                    "var": 0.07342738228334467,
+                    "std": 0.27097487389672253,
+                    "skew": 1.7520228893075975,
+                    "kurt": 3.7768219751606,
+                    "mad": 0.1972290251442468,
+                    "cv": 0.3524141572266107,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        30,
+                        36,
+                        44,
+                        38,
+                        55,
+                        61,
+                        81,
+                        103,
+                        180,
+                        341,
+                        376,
+                        345,
+                        397,
+                        350,
+                        358,
+                        356,
+                        331,
+                        305,
+                        305,
+                        289,
+                        262,
+                        255,
+                        239,
+                        249,
+                        214,
+                        168,
+                        198,
+                        181,
+                        176,
+                        174,
+                        149,
+                        159,
+                        145,
+                        119,
+                        105,
+                        126,
+                        136,
+                        100,
+                        83,
+                        64,
+                        49,
+                        42,
+                        39,
+                        30,
+                        33,
+                        26,
+                        31,
+                        26,
+                        30,
+                        22,
+                        23,
+                        34,
+                        31,
+                        26,
+                        33,
+                        14,
+                        14,
+                        26,
+                        31,
+                        26,
+                        13,
+                        31,
+                        17,
+                        26,
+                        13,
+                        14,
+                        12,
+                        17,
+                        14,
+                        14,
+                        9,
+                        14,
+                        7,
+                        15,
+                        9,
+                        9,
+                        8,
+                        13,
+                        8,
+                        16,
+                        11,
+                        10,
+                        6,
+                        5,
+                        3,
+                        7,
+                        3,
+                        6,
+                        5,
+                        5,
+                        5,
+                        4,
+                        6,
+                        4,
+                        4,
+                        3,
+                        5,
+                        2,
+                        4,
+                        5
+                    ],
+                    "bin_edges": [
+                        0.3562623483351717,
+                        0.3734962755330883,
+                        0.39073020273100484,
+                        0.40796412992892145,
+                        0.425198057126838,
+                        0.4424319843247546,
+                        0.4596659115226712,
+                        0.47689983872058783,
+                        0.4941337659185044,
+                        0.5113676931164209,
+                        0.5286016203143376,
+                        0.5458355475122542,
+                        0.5630694747101708,
+                        0.5803034019080873,
+                        0.597537329106004,
+                        0.6147712563039205,
+                        0.6320051835018371,
+                        0.6492391106997537,
+                        0.6664730378976702,
+                        0.6837069650955869,
+                        0.7009408922935034,
+                        0.71817481949142,
+                        0.7354087466893366,
+                        0.7526426738872531,
+                        0.7698766010851699,
+                        0.7871105282830864,
+                        0.804344455481003,
+                        0.8215783826789196,
+                        0.8388123098768362,
+                        0.8560462370747528,
+                        0.8732801642726693,
+                        0.8905140914705859,
+                        0.9077480186685025,
+                        0.9249819458664191,
+                        0.9422158730643357,
+                        0.9594498002622522,
+                        0.9766837274601688,
+                        0.9939176546580855,
+                        1.011151581856002,
+                        1.0283855090539187,
+                        1.0456194362518352,
+                        1.0628533634497517,
+                        1.0800872906476684,
+                        1.0973212178455851,
+                        1.1145551450435016,
+                        1.1317890722414181,
+                        1.1490229994393348,
+                        1.1662569266372513,
+                        1.1834908538351678,
+                        1.2007247810330846,
+                        1.2179587082310013,
+                        1.2351926354289176,
+                        1.2524265626268343,
+                        1.269660489824751,
+                        1.2868944170226675,
+                        1.304128344220584,
+                        1.3213622714185007,
+                        1.3385961986164172,
+                        1.3558301258143337,
+                        1.3730640530122504,
+                        1.390297980210167,
+                        1.4075319074080836,
+                        1.4247658346060001,
+                        1.4419997618039169,
+                        1.4592336890018334,
+                        1.4764676161997499,
+                        1.4937015433976666,
+                        1.510935470595583,
+                        1.5281693977934998,
+                        1.5454033249914163,
+                        1.5626372521893328,
+                        1.5798711793872495,
+                        1.597105106585166,
+                        1.6143390337830827,
+                        1.6315729609809992,
+                        1.6488068881789157,
+                        1.6660408153768325,
+                        1.683274742574749,
+                        1.7005086697726657,
+                        1.7177425969705822,
+                        1.7349765241684987,
+                        1.7522104513664154,
+                        1.769444378564332,
+                        1.7866783057622486,
+                        1.8039122329601651,
+                        1.8211461601580818,
+                        1.8383800873559983,
+                        1.8556140145539148,
+                        1.8728479417518316,
+                        1.890081868949748,
+                        1.9073157961476648,
+                        1.9245497233455813,
+                        1.9417836505434978,
+                        1.9590175777414145,
+                        1.976251504939331,
+                        1.9934854321372477,
+                        2.010719359335164,
+                        2.027953286533081,
+                        2.0451872137309977,
+                        2.062421140928914,
+                        2.0796550681268307
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "TOTAL_DR_RATIO_CRE": {
+        "colname": "TOTAL_DR_RATIO_CRE",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 25,
+            "xtreme_method": "quantile"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1368,
+                    "perc": 0.13415710503089143
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 204,
+                    "perc": 0.020005884083553988
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -18.413965552048158,
+                    "rbound": 21.32281283348882,
+                    "lxtreme_mean": -77.52163325235843,
+                    "lxtreme_median": -48.432512608028134,
+                    "rxtreme_mean": 149.42020255964457,
+                    "rxtreme_median": 44.38617075573916
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": -18.39919955490946,
+                    "perc_1th": -6.925369293869602,
+                    "perc_5th": 0.0,
+                    "q1": 0.03380909035699836,
+                    "median": 0.16639749632698736,
+                    "q3": 1.3825666714609472,
+                    "perc_95th": 5.315054442138949,
+                    "perc_99th": 13.374497805864875,
+                    "maximum": 21.31166016955779,
+                    "iqr": 1.348757581103949,
+                    "range": 39.71085972446725
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 1.039322250994132,
+                    "var": 7.810673571570224,
+                    "std": 2.794758231327036,
+                    "skew": 1.472148276135379,
+                    "kurt": 17.214485172276937,
+                    "mad": 1.5060865288869103,
+                    "cv": 2.688885366746249,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        8,
+                        11,
+                        13,
+                        13,
+                        8,
+                        19,
+                        24,
+                        24,
+                        30,
+                        13,
+                        0,
+                        6218,
+                        2042,
+                        778,
+                        314,
+                        159,
+                        80,
+                        66,
+                        39,
+                        33,
+                        34,
+                        22,
+                        15,
+                        14,
+                        16
+                    ],
+                    "bin_edges": [
+                        -18.39919955490946,
+                        -16.810765165930768,
+                        -15.222330776952079,
+                        -13.633896387973389,
+                        -12.0454619989947,
+                        -10.45702761001601,
+                        -8.868593221037319,
+                        -7.28015883205863,
+                        -5.69172444307994,
+                        -4.103290054101249,
+                        -2.5148556651225604,
+                        -0.9264212761438699,
+                        0.6620131128348206,
+                        2.250447501813511,
+                        3.838881890792198,
+                        5.4273162797708885,
+                        7.015750668749579,
+                        8.60418505772827,
+                        10.19261944670696,
+                        11.781053835685647,
+                        13.369488224664337,
+                        14.957922613643028,
+                        16.54635700262172,
+                        18.13479139160041,
+                        19.7232257805791,
+                        21.31166016955779
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "MAX_DR_RATIO_CRE": {
+        "colname": "MAX_DR_RATIO_CRE",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 25,
+            "xtreme_method": "quantile"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1368,
+                    "perc": 0.13415710503089143
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 102,
+                    "perc": 0.010002942041776994
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": 0.0,
+                    "rbound": 1.232640563774915,
+                    "lxtreme_mean": null,
+                    "lxtreme_median": null,
+                    "rxtreme_mean": 1.523495175449326,
+                    "rxtreme_median": 1.4055439680851824
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.0,
+                    "perc_1th": 0.0,
+                    "perc_5th": 0.0,
+                    "q1": 0.009467790744345884,
+                    "median": 0.0415542342643251,
+                    "q3": 0.3265681654767062,
+                    "perc_95th": 0.7521713725797358,
+                    "perc_99th": 1.0329111789623358,
+                    "maximum": 1.2326124556552918,
+                    "iqr": 0.3171003747323603,
+                    "range": 1.2326124556552918
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.194226087450247,
+                    "var": 0.06902898318693493,
+                    "std": 0.26273367349263577,
+                    "skew": 1.4771397577650702,
+                    "kurt": 1.4143795696124917,
+                    "mad": 0.2116932315576613,
+                    "cv": 1.352653825032876,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        5251,
+                        657,
+                        399,
+                        382,
+                        327,
+                        358,
+                        335,
+                        272,
+                        285,
+                        261,
+                        250,
+                        229,
+                        207,
+                        201,
+                        136,
+                        122,
+                        100,
+                        70,
+                        61,
+                        41,
+                        52,
+                        36,
+                        21,
+                        23,
+                        19
+                    ],
+                    "bin_edges": [
+                        0.0,
+                        0.04930449822621167,
+                        0.09860899645242334,
+                        0.14791349467863502,
+                        0.19721799290484668,
+                        0.24652249113105834,
+                        0.29582698935727003,
+                        0.34513148758348167,
+                        0.39443598580969336,
+                        0.44374048403590505,
+                        0.4930449822621167,
+                        0.5423494804883283,
+                        0.5916539787145401,
+                        0.6409584769407517,
+                        0.6902629751669633,
+                        0.7395674733931751,
+                        0.7888719716193867,
+                        0.8381764698455983,
+                        0.8874809680718101,
+                        0.9367854662980217,
+                        0.9860899645242334,
+                        1.035394462750445,
+                        1.0846989609766566,
+                        1.1340034592028685,
+                        1.1833079574290801,
+                        1.2326124556552918
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "TOTAL_CR_RATIO_CRE": {
+        "colname": "TOTAL_CR_RATIO_CRE",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 25,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1678,
+                    "perc": 0.16455820339315486
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 640,
+                    "perc": 0.06276355790918897
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -2.654456379850854,
+                    "rbound": 4.42629269341467,
+                    "lxtreme_mean": -21.51577429475581,
+                    "lxtreme_median": -8.723256376851532,
+                    "rxtreme_mean": 25.263140252947867,
+                    "rxtreme_median": 6.989373124984684
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": -2.649380974768845,
+                    "perc_1th": 0.0,
+                    "perc_5th": 0.0,
+                    "q1": 0.0010052869659824687,
+                    "median": 0.03342834990423328,
+                    "q3": 1.657160965711547,
+                    "perc_95th": 2.97118213414797,
+                    "perc_99th": 3.9238481500768136,
+                    "maximum": 4.415588927790866,
+                    "iqr": 1.6561556787455645,
+                    "range": 7.064969902559711
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.7788033451812753,
+                    "var": 1.2406325523061184,
+                    "std": 1.113836860723382,
+                    "skew": 1.0253198644034958,
+                    "kurt": 0.23368103901844606,
+                    "mad": 0.9637177201532211,
+                    "cv": 1.4301153079756483,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        11,
+                        9,
+                        9,
+                        12,
+                        10,
+                        9,
+                        11,
+                        4,
+                        2,
+                        5581,
+                        291,
+                        155,
+                        91,
+                        236,
+                        571,
+                        700,
+                        515,
+                        386,
+                        282,
+                        213,
+                        133,
+                        105,
+                        107,
+                        60,
+                        54
+                    ],
+                    "bin_edges": [
+                        -2.649380974768845,
+                        -2.3667821786664565,
+                        -2.0841833825640683,
+                        -1.8015845864616797,
+                        -1.5189857903592914,
+                        -1.236386994256903,
+                        -0.9537881981545144,
+                        -0.6711894020521261,
+                        -0.3885906059497377,
+                        -0.10599180984734913,
+                        0.176606986255039,
+                        0.4592057823574276,
+                        0.7418045784598162,
+                        1.0244033745622043,
+                        1.307002170664593,
+                        1.589600966766981,
+                        1.8721997628693696,
+                        2.154798558971758,
+                        2.437397355074147,
+                        2.7199961511765345,
+                        3.002594947278923,
+                        3.2851937433813116,
+                        3.5677925394837002,
+                        3.850391335586089,
+                        4.132990131688477,
+                        4.415588927790866
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "MAX_CR_RATIO_CRE": {
+        "colname": "MAX_CR_RATIO_CRE",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 25,
+            "xtreme_method": "iqr"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1678,
+                    "perc": 0.16455820339315486
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 2,
+                    "perc": 0.00019613611846621556
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -0.5450084791250392,
+                    "rbound": 0.9101371958283018,
+                    "lxtreme_mean": null,
+                    "lxtreme_median": null,
+                    "rxtreme_mean": 0.9457248744822974,
+                    "rxtreme_median": 0.9457248744822974
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 0.0,
+                    "perc_1th": 0.0,
+                    "perc_5th": 0.0,
+                    "q1": 0.0006706213248758337,
+                    "median": 0.012101614891485632,
+                    "q3": 0.3643448739834346,
+                    "perc_95th": 0.5772250265395296,
+                    "perc_99th": 0.6880213837859391,
+                    "maximum": 0.9053372360964066,
+                    "iqr": 0.3636742526585588,
+                    "range": 0.9053372360964066
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 0.17458147474064098,
+                    "var": 0.04693351888087331,
+                    "std": 0.21664145236051505,
+                    "skew": 0.8215706309589117,
+                    "kurt": -0.7394383887217337,
+                    "mad": 0.19468987483612743,
+                    "cv": 1.2408580436983534,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        5559,
+                        209,
+                        130,
+                        89,
+                        86,
+                        212,
+                        300,
+                        326,
+                        362,
+                        352,
+                        411,
+                        381,
+                        392,
+                        352,
+                        290,
+                        245,
+                        191,
+                        132,
+                        74,
+                        46,
+                        32,
+                        10,
+                        5,
+                        4,
+                        5
+                    ],
+                    "bin_edges": [
+                        0.0,
+                        0.036213489443856266,
+                        0.07242697888771253,
+                        0.10864046833156879,
+                        0.14485395777542506,
+                        0.18106744721928134,
+                        0.21728093666313758,
+                        0.25349442610699385,
+                        0.2897079155508501,
+                        0.3259214049947064,
+                        0.36213489443856267,
+                        0.39834838388241894,
+                        0.43456187332627516,
+                        0.47077536277013143,
+                        0.5069888522139877,
+                        0.543202341657844,
+                        0.5794158311017003,
+                        0.6156293205455565,
+                        0.6518428099894128,
+                        0.6880562994332691,
+                        0.7242697888771253,
+                        0.7604832783209816,
+                        0.7966967677648379,
+                        0.8329102572086942,
+                        0.8691237466525503,
+                        0.9053372360964066
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "NUM_ACCTS": {
+        "colname": "NUM_ACCTS",
+        "attr": {
+            "setaside_zero": false,
+            "log_scale": false,
+            "bins": 5,
+            "xtreme_method": null
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": null,
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": 1.0,
+                    "perc_1th": 1.0,
+                    "perc_5th": 1.0,
+                    "q1": 2.0,
+                    "median": 3.0,
+                    "q3": 4.0,
+                    "perc_95th": 5.0,
+                    "perc_99th": 5.0,
+                    "maximum": 5.0,
+                    "iqr": 2.0,
+                    "range": 4.0
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": 2.9805825242718447,
+                    "var": 2.0100191584744826,
+                    "std": 1.4177514445326735,
+                    "skew": 0.017759393294274783,
+                    "kurt": -1.306330925273434,
+                    "mad": 1.208480316407548,
+                    "cv": 0.4756392125422642,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        2093,
+                        2056,
+                        2017,
+                        2018,
+                        2013
+                    ],
+                    "bin_edges": [
+                        1.0,
+                        1.8,
+                        2.6,
+                        3.4000000000000004,
+                        4.2,
+                        5.0
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "TOTAL_FLOW": {
+        "colname": "TOTAL_FLOW",
+        "attr": {
+            "setaside_zero": true,
+            "log_scale": false,
+            "bins": 25,
+            "xtreme_method": "quantile"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 1368,
+                    "perc": 0.13415710503089143
+                },
+                "infs_pos": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "infs_neg": {
+                    "value": 0,
+                    "perc": 0.0
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 178,
+                    "perc": 0.017456114543493183
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -103338.8404,
+                    "rbound": 14730.396799999975,
+                    "lxtreme_mean": -144645.36258426966,
+                    "lxtreme_median": -133619.93000000002,
+                    "rxtreme_mean": 27034.631460674158,
+                    "rxtreme_median": 19287.339999999997
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": -102898.15,
+                    "perc_1th": -75755.38500000001,
+                    "perc_5th": -44862.384999999995,
+                    "q1": -9651.345000000001,
+                    "median": -1292.4199999999996,
+                    "q3": 851.0100000000001,
+                    "perc_95th": 5908.285,
+                    "perc_99th": 10559.94,
+                    "maximum": 14703.8,
+                    "iqr": 10502.355000000001,
+                    "range": 117601.95
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": -7635.988500751358,
+                    "var": 278444727.2117103,
+                    "std": 16686.663153899593,
+                    "skew": -2.4889148695735357,
+                    "kurt": 7.131607386847714,
+                    "mad": 11347.329485659642,
+                    "cv": -2.1851393161314796,
+                    "normality_p": 0.0
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        19,
+                        11,
+                        8,
+                        13,
+                        16,
+                        28,
+                        28,
+                        28,
+                        49,
+                        56,
+                        71,
+                        72,
+                        98,
+                        103,
+                        132,
+                        157,
+                        220,
+                        289,
+                        379,
+                        463,
+                        749,
+                        3273,
+                        1865,
+                        410,
+                        114
+                    ],
+                    "bin_edges": [
+                        -102898.15,
+                        -98194.072,
+                        -93489.99399999999,
+                        -88785.916,
+                        -84081.83799999999,
+                        -79377.76,
+                        -74673.682,
+                        -69969.60399999999,
+                        -65265.526,
+                        -60561.448,
+                        -55857.369999999995,
+                        -51153.292,
+                        -46449.214,
+                        -41745.136,
+                        -37041.058000000005,
+                        -32336.979999999996,
+                        -27632.902000000002,
+                        -22928.824000000008,
+                        -18224.746,
+                        -13520.668000000005,
+                        -8816.589999999997,
+                        -4112.512000000002,
+                        591.5659999999916,
+                        5295.644,
+                        9999.721999999994,
+                        14703.8
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    },
+    "DEB_TO_CRE": {
+        "colname": "DEB_TO_CRE",
+        "attr": {
+            "setaside_zero": true,
+            "log_scale": false,
+            "bins": 25,
+            "xtreme_method": "quantile"
+        },
+        "params": {
+            "stats": {
+                "total": 10197,
+                "missing": {
+                    "value": 0,
+                    "perc": 0.0
+                },
+                "zeros": {
+                    "value": 2878,
+                    "perc": 0.2822398744728842
+                },
+                "infs_pos": {
+                    "value": 884,
+                    "perc": 0.08669216436206728
+                },
+                "infs_neg": {
+                    "value": 484,
+                    "perc": 0.04746494066882417
+                }
+            },
+            "xtreme_num": {
+                "origin": {
+                    "value": 120,
+                    "perc": 0.011768167107972934
+                },
+                "log": null
+            },
+            "xtreme_stat": {
+                "origin": {
+                    "lbound": -44.04489460908323,
+                    "rbound": 36.29187631821193,
+                    "lxtreme_mean": -252.84475088577855,
+                    "lxtreme_median": -110.31321962127726,
+                    "rxtreme_mean": 237.79402971141775,
+                    "rxtreme_median": 81.05504203091732
+                },
+                "log": null
+            },
+            "stat_quantile": {
+                "origin": {
+                    "minimum": -43.60202497049512,
+                    "perc_1th": -20.32833888513114,
+                    "perc_5th": -5.618343608011666,
+                    "q1": -0.43492341055950423,
+                    "median": -0.018386569199499735,
+                    "q3": 0.2854958099031546,
+                    "perc_95th": 4.546575711102679,
+                    "perc_99th": 16.537596968117114,
+                    "maximum": 35.97032407164244,
+                    "iqr": 0.7204192204626588,
+                    "range": 79.57234904213756
+                },
+                "log": null
+            },
+            "stat_descriptive": {
+                "origin": {
+                    "mean": -0.22399006231234475,
+                    "var": 26.312338971027213,
+                    "std": 5.1295554360029305,
+                    "skew": -1.146308903476533,
+                    "kurt": 22.020456820992994,
+                    "mad": 2.0728697599186248,
+                    "cv": -22.898853244076296,
+                    "normality_p": 2.7962588642345402e-118
+                },
+                "log": null
+            },
+            "histogram": {
+                "origin": {
+                    "hist": [
+                        5,
+                        6,
+                        8,
+                        5,
+                        6,
+                        11,
+                        13,
+                        22,
+                        30,
+                        38,
+                        57,
+                        104,
+                        325,
+                        4292,
+                        580,
+                        134,
+                        64,
+                        51,
+                        25,
+                        12,
+                        9,
+                        15,
+                        6,
+                        4,
+                        9
+                    ],
+                    "bin_edges": [
+                        -43.60202497049512,
+                        -40.41913100880962,
+                        -37.23623704712412,
+                        -34.05334308543861,
+                        -30.87044912375311,
+                        -27.68755516206761,
+                        -24.50466120038211,
+                        -21.321767238696605,
+                        -18.138873277011104,
+                        -14.955979315325603,
+                        -11.773085353640099,
+                        -8.590191391954598,
+                        -5.407297430269097,
+                        -2.2244034685835956,
+                        0.9584904931019125,
+                        4.1413844547874135,
+                        7.324278416472914,
+                        10.507172378158415,
+                        13.690066339843916,
+                        16.872960301529424,
+                        20.055854263214925,
+                        23.23874822490042,
+                        26.421642186585927,
+                        29.604536148271436,
+                        32.78743010995693,
+                        35.97032407164244
+                    ]
+                },
+                "log": {
+                    "hist": null,
+                    "bin_edges": null
+                }
+            }
+        },
+        "constructor": "NumericStat"
+    }
+}

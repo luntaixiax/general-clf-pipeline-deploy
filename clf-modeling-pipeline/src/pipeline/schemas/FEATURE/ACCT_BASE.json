@@ -13,7 +13,8 @@
             "nullable": false
         },
         "descr" : "observation snapshot date",
-        "primary_key" : true
+        "primary_key" : true,
+        "partition_key" : true
     },
     "NUM_ACCTS_DEB" : {
         "dtype":"Int8",

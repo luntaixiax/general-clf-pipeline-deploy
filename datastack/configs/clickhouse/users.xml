@@ -1,4 +1,9 @@
 <clickhouse>
+    <profiles>
+        <special>
+            <join_use_nulls>1</join_use_nulls>
+        </special>
+    </profiles>
 
     <users>
         <!-- see https://stackoverflow.com/questions/45062749/how-to-make-clickhouse-take-new-users-xml-file -->
@@ -66,6 +71,8 @@
                 <ip>::/0</ip>
             </networks>
 
+            <!-- special settings from above section -->
+            <profile>special</profile>
 
             <!-- User can create other users and grant rights to them. -->
             <!-- <access_management>1</access_management> -->

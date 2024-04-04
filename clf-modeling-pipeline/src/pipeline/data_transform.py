@@ -33,7 +33,7 @@ class EventWindow(SnapTableCH):
 class Features(SnapTableCH):
     dm = SnapshotDataManagerCHSQL(schema = 'FEATURE', table = 'FEATURES', snap_dt_key = 'SNAP_DT')
     sql_template: str = "src/pipeline/query/transform/feature/features.sql"
-    upstreams = [_CurrentStream(CustomerRaw()), _CurrentStream(AcctWindow()), _CurrentStream(EventWindow())]
+    upstreams = [_CurrentStream(CustBase()), _CurrentStream(AcctWindow()), _CurrentStream(EventWindow())]
 
 # Targets - Y
 class PurchaseWindow(SnapTableCH):

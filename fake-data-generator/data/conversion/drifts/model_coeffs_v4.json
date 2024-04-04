@@ -1,0 +1,13 @@
+{
+    "RANDOMNESS" : 0.5,
+    "INTERCEPT" : -2,
+    "COEF" : {
+        "DAYS_SINCE_LAST_EVENT" : -3.5,
+        "NUM_EVENT" : 2.3,
+        "NUM_ENGE_EMAIL": 2.21,
+        "NUM_ENGE_PHONE": 2.5,
+        "NUM_CLICK" : 2.3,
+        "NUM_DECLINE" : -4,
+        "NUM_OPEN" : 0.9
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "RANDOMNESS" : 0.25,
+    "INTERCEPT" : -3,
+    "COEF" : {
+        "GENDER" : 0.35,
+        "BLOOD_GRP" : {
+            "A+" : 0.41,
+            "AB+" : 0.25,
+            "AB-" : 0.33,
+            "B+" : 0.45,
+            "B-" : -0.55,
+            "O+" : 0.22,
+            "O-" : -0.31
+        },
+        "OFFICE": 0.29,
+        "ORG" : {
+            "Devops": -0.23,
+            "Internal Tools": 0.25,
+            "Platform": 0.31,
+            "Product": -0.35,
+            "Sales": -0.42
+        },
+        "TITLE": -0.31,
+        "AGE" : 0.45,
+        "TENURE" : -0.26,
+        "TOTAL_COMP" : 0.33,
+        "BONUS_RATIO" : 0.18,
+        "TOTAL_DR_RATIO_DEB" : -0.37,
+        "MAX_DR_RATIO_DEB" : -0.44,
+        "TOTAL_CR_RATIO_DEB" : -0.32,
+        "MAX_CR_RATIO_DEB" : -0.65,
+        "CR_UTIL_CRE" : 0.27,
+        "MAX_CR_UTIL_CRE" : 0.45,
+        "TOTAL_DR_RATIO_CRE" : 0.11,
+        "MAX_DR_RATIO_CRE" : 0.29,
+        "TOTAL_CR_RATIO_CRE" : 0.32,
+        "MAX_CR_RATIO_CRE" : 0.14,
+        "NUM_ACCTS" : 0.07,
+        "TOTAL_FLOW" : 0.45,
+        "DEB_TO_CRE" : -0.24
+    }
+}

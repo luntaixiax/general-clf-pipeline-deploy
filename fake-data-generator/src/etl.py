@@ -2,7 +2,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 from datetime import date, timedelta
 import random
-import json
 import pandas as pd
 import numpy as np
 from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
@@ -11,7 +10,9 @@ from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerObjS
 from luntaiDs.CommonTools.utils import dt2str, str2dt
 
 from src.data_connection import Connection
-from src.model import CustFeature, AcctFeature, FakeLinearProbModel, lognormal2normal
+from src.model import CustFeature, AcctFeature, lognormal2normal
+from src.registry import FakeModelRegistryMongo, load_fake_model_by_timetable
+
 
 SnapshotDataManagerObjStorage.setup(
     bucket = Connection.DATA_BUCKET,
@@ -313,14 +314,11 @@ class EngagementEventSnap(SnapTableStreamGenerator):
     upstreams = [_CurrentStream(EngagementFeatureSnap())]
     
     @classmethod
-    def load_model(cls):
-        PROFILE = json.loads(
-            Connection().S3A.read_obj(remote_path='/fake/model/event/feature_standalone_profile.json')
+    def load_model(cls, snap_dt: date):
+        model = load_fake_model_by_timetable(
+            model_name = 'event',
+            snap_dt = snap_dt
         )
-        MODEL_COEF = json.loads(
-            Connection().S3A.read_obj(remote_path='/fake/model/event/model_coeffs.json')
-        )
-        model = FakeLinearProbModel(PROFILE, MODEL_COEF)  # TODO: add drift
         return model
 
     @classmethod
@@ -330,7 +328,7 @@ class EngagementEventSnap(SnapTableStreamGenerator):
         features_df = sdp_feat.read(snap_dt)
 
         # get model
-        model = cls.load_model()
+        model = cls.load_model(snap_dt)
 
         # predict probability of event for next 7 days
         probs_event_next_7d = model.predict(features_df)
@@ -489,7 +487,6 @@ class EngagementEventFeatureSnap(SnapTableStreamGenerator):
         return cls.dm.count(snap_dt) > 0
 
 
-
 class ConversionEventSnap(SnapTableStreamGenerator):
 
     dm = SnapshotDataManagerObjStorage(schema='EVENTS', table='CONVERSION')
@@ -501,25 +498,19 @@ class ConversionEventSnap(SnapTableStreamGenerator):
     NATURAL_CONV_PROB = 0.015
 
     @classmethod
-    def load_event_model(cls):
-        PROFILE = json.loads(
-            Connection().S3A.read_obj(remote_path='/fake/model/event/feature_standalone_profile.json')
+    def load_event_model(cls, snap_dt: date):
+        model = load_fake_model_by_timetable(
+            model_name = 'event',
+            snap_dt = snap_dt
         )
-        MODEL_COEF = json.loads(
-            Connection().S3A.read_obj(remote_path='/fake/model/event/model_coeffs.json')
-        )
-        model = FakeLinearProbModel(PROFILE, MODEL_COEF)  # TODO: add drift
         return model
 
     @classmethod
-    def load_conv_model(cls):
-        PROFILE = json.loads(
-            Connection().S3A.read_obj(remote_path='/fake/model/conversion/feature_standalone_profile.json')
+    def load_conv_model(cls, snap_dt: date):
+        model = load_fake_model_by_timetable(
+            model_name = 'conversion',
+            snap_dt = snap_dt
         )
-        MODEL_COEF = json.loads(
-            Connection().S3A.read_obj(remote_path='/fake/model/conversion/model_coeffs.json')
-        )
-        model = FakeLinearProbModel(PROFILE, MODEL_COEF)  # TODO: add drift
         return model
 
     @classmethod
@@ -531,8 +522,8 @@ class ConversionEventSnap(SnapTableStreamGenerator):
         engevet_feat = sdp_engevet_feat.read(snap_dt)
 
         # get model
-        event_model = cls.load_event_model()
-        conv_model = cls.load_conv_model()
+        event_model = cls.load_event_model(snap_dt)
+        conv_model = cls.load_conv_model(snap_dt)
 
         # get probabilities
         event_probs = event_model.predict(eng_feat)

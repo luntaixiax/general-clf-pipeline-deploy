@@ -68,8 +68,8 @@ class CustFeature:
         ) / 1000) * 1000
         bonus_ratio = random.uniform(0.15, 0.2)
         profile['BONUS'] = round(profile['SALARY'] * bonus_ratio / 500) * 500
-        st = fake.date_between(start_date="-20y", end_date="now")
-        bt = st - timedelta(days=365 * random.randint(18, 40))
+        st = fake.date_between(start_date=date(2014, 1, 1), end_date=snap_dt)
+        bt = st - timedelta(days=365 * random.randint(1, 40))
         profile['BIRTH_DT'] = bt.strftime('%Y-%m-%d')
         profile['SINCE_DT'] = st.strftime('%Y-%m-%d')
         profile['SNAP_DT'] = snap_dt.strftime('%Y-%m-%d')
@@ -196,6 +196,7 @@ class FakeLinearProbModel:
     def __init__(self, profile: dict, model_coeffs: dict):
         self.profile = profile
         self.model_coeffs = model_coeffs
+        
     def predict(self, features_df: pd.DataFrame) -> pd.Series:
         ts = TabularStat.from_dict(self.profile)
 

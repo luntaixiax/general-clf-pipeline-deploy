@@ -4,6 +4,7 @@ from luntaiDs.CommonTools.utils import str2dt
 from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
 from src import etl
 from src.utils import update_exec_plan
+from src.registry import register_predefined_fake_models
 
 def test_run(*args, **kws):
     print("Test Running ...")
@@ -12,6 +13,11 @@ def test_run(*args, **kws):
     
 def update_exec_plan_2_db():
     update_exec_plan()
+    
+def register_fake_model():
+    register_predefined_fake_models( 'event')
+    register_predefined_fake_models('conversion')
+    
 
 def run_pipeline(task_name: str, dag_date: date, day_offset: int = 0, **kws):
     snap_dt = str2dt(dag_date) + timedelta(day_offset)
@@ -28,7 +34,8 @@ def run_pipeline(task_name: str, dag_date: date, day_offset: int = 0, **kws):
 TASKS = {
     'run_pipeline' : run_pipeline,
     'test_run' : test_run,
-    'update_exec_plan_2_db' : update_exec_plan_2_db
+    'update_exec_plan_2_db' : update_exec_plan_2_db,
+    'register_fake_model' : register_fake_model
 }
 
 def run(task: str, *args, **kws):

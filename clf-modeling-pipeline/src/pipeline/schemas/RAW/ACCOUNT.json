@@ -21,7 +21,8 @@
             "nullable": false
         },
         "descr" : "observation snapshot date",
-        "primary_key" : true
+        "primary_key" : true,
+        "partition_key" : true
     },
     "ACCT_TYPE_CD" : {
         "dtype":"String",

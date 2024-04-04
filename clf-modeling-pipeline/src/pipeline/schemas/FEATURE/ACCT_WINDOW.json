@@ -13,7 +13,8 @@
             "nullable": false
         },
         "descr" : "observation snapshot date",
-        "primary_key" : true
+        "primary_key" : true,
+        "partition_key" : true
     },
     "MAX_NUM_ACCT_7D" : {
         "dtype":"Int8",
@@ -34,7 +35,7 @@
         "primary_key" : false
     },
     "DEB_CRE_FLOW_7D" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },
@@ -42,7 +43,7 @@
         "primary_key" : false
     },
     "AVG_CR_UTIL_7D" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },
@@ -50,7 +51,7 @@
         "primary_key" : false
     },
     "MAX_CR_UTIL_7D" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },
@@ -58,7 +59,7 @@
         "primary_key" : false
     },
     "AVG_DR_DEB_3D" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },
@@ -66,7 +67,7 @@
         "primary_key" : false
     },
     "AVG_CR_DEB_3D" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },
@@ -74,7 +75,7 @@
         "primary_key" : false
     },
     "AVG_DR_CRE_3D" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },
@@ -82,7 +83,7 @@
         "primary_key" : false
     },
     "AVG_CR_CRE_3D" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable" : false
         },

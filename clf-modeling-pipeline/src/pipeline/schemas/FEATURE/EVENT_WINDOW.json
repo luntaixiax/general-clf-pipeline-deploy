@@ -13,7 +13,8 @@
             "nullable": false
         },
         "descr" : "observation snapshot date",
-        "primary_key" : true
+        "primary_key" : true,
+        "partition_key" : true
     },
     "DAYS_SINCE_LAST_EVENT" : {
         "dtype":"Int8",
@@ -32,7 +33,7 @@
         "primary_key" : false
     },
     "RATIO_EVENT_EMAIL" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable": false
         },
@@ -40,7 +41,7 @@
         "primary_key" : false
     },
     "RATIO_EVENT_CLICK" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable": false
         },
@@ -48,7 +49,7 @@
         "primary_key" : false
     },
     "RATIO_EVENT_DECLINE" : {
-        "dtype":"Float16",
+        "dtype":"Float32",
         "args":{
             "nullable": false
         },

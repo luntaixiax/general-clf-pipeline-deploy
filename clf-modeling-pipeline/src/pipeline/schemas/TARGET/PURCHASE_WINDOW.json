@@ -13,7 +13,8 @@
             "nullable": false
         },
         "descr" : "observation snapshot date",
-        "primary_key" : false
+        "primary_key" : false,
+        "partition_key" : true
     },
     "NUM_PUR_F7D" : {
         "dtype":"Int64",

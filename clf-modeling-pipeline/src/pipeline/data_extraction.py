@@ -5,7 +5,7 @@ logging.basicConfig(
 )
 from datetime import date
 from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-from src.data_connection import VAULT_MOUNT_POINT, VAULT_MOUNT_PATH, Connection,\
+from src.data_layer.data_connection import VAULT_MOUNT_POINT, VAULT_MOUNT_PATH, Connection,\
         get_vault_resp
 from src.pipeline.utils import SnapTableCH
 
