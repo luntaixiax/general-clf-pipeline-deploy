@@ -8,15 +8,8 @@ import numpy as np
 import pandas as pd
 from scipy.special import logit, expit
 from faker import Faker
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import FunctionTransformer
-from luntaiDs.ModelingTools.FeatureEngineer.transformers import NamedTransformer
-from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import floatFy, nominal_categ_preprocess_pipe, \
-    numeric_preprocess_pipe, ordinal_categ_preprocess_pipe, binary_preprocess_pipe
 from luntaiDs.ModelingTools.FeatureEngineer.transformers import WeightedAverager
-from luntaiDs.ModelingTools.utils.support import make_present_col_selector
-from luntaiDs.ModelingTools.Explore.profiling import TabularStat
+from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import TabularPreprocModel
 
 fake = Faker()
 
@@ -198,48 +191,9 @@ class FakeLinearProbModel:
         self.model_coeffs = model_coeffs
         
     def predict(self, features_df: pd.DataFrame) -> pd.Series:
-        ts = TabularStat.from_dict(self.profile)
+        tpm = TabularPreprocModel.deserialize(self.profile)
 
-        transformers = []
-        for col, stat in ts.configs.items():
-            if col in ts.get_nominal_cols():
-                transformer = nominal_categ_preprocess_pipe(
-                    cs=stat,
-                    impute_value='Missing',
-                    bucket_strategy='freq',
-                    encode_strategy='ohe'
-                )
-            elif col in ts.get_numeric_cols():
-                transformer = numeric_preprocess_pipe(
-                    ns=stat,
-                    impute=True,
-                    normalize=False,
-                    standardize_strategy='robust'
-                )
-            elif col in ts.get_binary_cols():
-                transformer = binary_preprocess_pipe(
-                    bs=stat
-                )
-            elif col in ts.get_ordinal_cols():
-                transformer = ordinal_categ_preprocess_pipe(
-                    os=stat,
-                    impute=True,
-                    standardize=True
-                )
-            else:
-                raise
-
-            transformers.append((col, transformer, make_present_col_selector([col])))
-
-        preprocessing_pipe = Pipeline([
-            ('transform', NamedTransformer(
-                ColumnTransformer(
-                    transformers=transformers,
-                    remainder='drop'
-                )
-            )),
-            ('float', NamedTransformer(FunctionTransformer(floatFy)))
-        ])
+        preprocessing_pipe = tpm.compile_sklearn_pipeline()
         preprocessed = preprocessing_pipe.fit_transform(features_df)
 
         intercept = self.model_coeffs['INTERCEPT']

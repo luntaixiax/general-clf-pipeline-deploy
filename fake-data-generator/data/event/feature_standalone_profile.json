@@ -1,2608 +1,2822 @@
-{
-    "GENDER": {
+[
+    {
+        "constructor": "BinaryFeaturePreprocModel",
         "colname": "GENDER",
-        "attr": {
-            "pos_values": [
-                "M"
-            ],
-            "int_dtype": false,
-            "na_to_pos": false
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "unique": {
-                    "value": 2,
-                    "perc": 0.00019613611846621556
-                }
+        "stat_obj": {
+            "constructor": "BinaryStatObj",
+            "colname": "GENDER",
+            "attr": {
+                "pos_values_": [
+                    "M"
+                ],
+                "na_to_pos_": false,
+                "int_dtype_": false
             },
-            "distribution": {
-                "vcounts": {
-                    "F": 5181,
-                    "M": 5016
+            "summary": {
+                "colname": "GENDER",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "unique": {
+                        "value": 2,
+                        "perc": 0.00019351717464925012
+                    }
                 },
-                "vpercs": {
-                    "F": 0.5080906148867314,
-                    "M": 0.4919093851132686
-                }
-            },
-            "binary_distribution": {
-                "binary_vcounts": {
-                    "0": 5181,
-                    "1": 5016
+                "distribution": {
+                    "vcounts": {
+                        "F": 5203,
+                        "M": 5132
+                    },
+                    "vpercs": {
+                        "F": 0.5034349298500241,
+                        "M": 0.4965650701499758
+                    }
                 },
-                "binary_vpercs": {
-                    "0": 0.5080906148867314,
-                    "1": 0.4919093851132686
+                "binary_distribution": {
+                    "binary_vcounts": {
+                        "0": 5203,
+                        "1": 5132
+                    },
+                    "binary_vpercs": {
+                        "0": 0.5034349298500241,
+                        "1": 0.4965650701499758
+                    }
                 }
             }
         },
-        "constructor": "BinaryStat"
+        "preproc": {}
     },
-    "BLOOD_GRP": {
+    {
+        "constructor": "NominalFeaturePreprocModel",
         "colname": "BLOOD_GRP",
-        "attr": {
-            "int_dtype": false,
-            "max_categories": 25
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "unique": {
-                    "value": 8,
-                    "perc": 0.0007845444738648623
-                }
+        "stat_obj": {
+            "constructor": "NominalCategStatObj",
+            "colname": "BLOOD_GRP",
+            "attr": {
+                "int_dtype_": false,
+                "max_categories_": 10
             },
-            "distribution": {
-                "vcounts": {
-                    "B-": 1312,
-                    "B+": 1308,
-                    "O+": 1304,
-                    "AB-": 1283,
-                    "A+": 1273,
-                    "O-": 1268,
-                    "AB+": 1231,
-                    "A-": 1218
+            "summary": {
+                "colname": "BLOOD_GRP",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "unique": {
+                        "value": 8,
+                        "perc": 0.0007740686985970005
+                    }
                 },
-                "vpercs": {
-                    "B-": 0.1286652937138374,
-                    "B+": 0.12827302147690497,
-                    "O+": 0.12788074923997253,
-                    "AB-": 0.1258213199960773,
-                    "A+": 0.1248406394037462,
-                    "O-": 0.12435029910758066,
-                    "AB+": 0.12072178091595567,
-                    "A-": 0.11944689614592527
+                "distribution": {
+                    "vcounts": {
+                        "B+": 1318,
+                        "AB+": 1314,
+                        "A-": 1313,
+                        "O+": 1311,
+                        "B-": 1281,
+                        "A+": 1280,
+                        "O-": 1277,
+                        "AB-": 1241
+                    },
+                    "vpercs": {
+                        "B+": 0.12752781809385583,
+                        "AB+": 0.12714078374455734,
+                        "A-": 0.1270440251572327,
+                        "O+": 0.12685050798258346,
+                        "B-": 0.12394775036284471,
+                        "A+": 0.12385099177552007,
+                        "O-": 0.1235607160135462,
+                        "AB-": 0.1200774068698597
+                    }
                 }
             }
         },
-        "constructor": "NominalCategStat"
+        "preproc": {
+            "impute_value": "Missing",
+            "bucket_strategy": "freq",
+            "encode_strategy": "ohe"
+        }
     },
-    "OFFICE": {
+    {
+        "constructor": "OrdinalFeaturePreprocModel",
         "colname": "OFFICE",
-        "attr": {
-            "int_dtype": false,
-            "categories": [
-                "Austin",
-                "Seattle",
-                "Chicago",
-                "New York"
-            ]
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "unique": {
-                    "value": 4,
-                    "perc": 0.00039227223693243113
-                }
+        "stat_obj": {
+            "constructor": "OrdinalCategStatObj",
+            "colname": "OFFICE",
+            "attr": {
+                "categories_": [
+                    "Austin",
+                    "Seattle",
+                    "Chicago",
+                    "New York"
+                ],
+                "int_dtype_": false
             },
-            "distribution": {
-                "vcounts": {
-                    "Austin": 2586,
-                    "New York": 2582,
-                    "Chicago": 2533,
-                    "Seattle": 2496
+            "summary": {
+                "colname": "OFFICE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "unique": {
+                        "value": 4,
+                        "perc": 0.00038703434929850025
+                    }
                 },
-                "vpercs": {
-                    "Austin": 0.2536040011768167,
-                    "New York": 0.2532117289398843,
-                    "Chicago": 0.248406394037462,
-                    "Seattle": 0.24477787584583702
+                "distribution": {
+                    "vcounts": {
+                        "Seattle": 2653,
+                        "Austin": 2585,
+                        "Chicago": 2559,
+                        "New York": 2538
+                    },
+                    "vpercs": {
+                        "Seattle": 0.25670053217223027,
+                        "Austin": 0.25012094823415576,
+                        "Chicago": 0.24760522496371554,
+                        "New York": 0.2455732946298984
+                    }
                 }
             }
         },
-        "constructor": "OrdinalCategStat"
+        "preproc": {
+            "impute": true,
+            "standardize": true
+        }
     },
-    "ORG": {
+    {
+        "constructor": "NominalFeaturePreprocModel",
         "colname": "ORG",
-        "attr": {
-            "int_dtype": false,
-            "max_categories": 25
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "unique": {
-                    "value": 5,
-                    "perc": 0.0004903402961655388
-                }
+        "stat_obj": {
+            "constructor": "NominalCategStatObj",
+            "colname": "ORG",
+            "attr": {
+                "int_dtype_": false,
+                "max_categories_": 10
             },
-            "distribution": {
-                "vcounts": {
-                    "Devops": 3165,
-                    "Sales": 2582,
-                    "Internal Tools": 1908,
-                    "Product": 1890,
-                    "Platform": 652
+            "summary": {
+                "colname": "ORG",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "unique": {
+                        "value": 5,
+                        "perc": 0.0004837929366231253
+                    }
                 },
-                "vpercs": {
-                    "Devops": 0.3103854074727861,
-                    "Sales": 0.2532117289398843,
-                    "Internal Tools": 0.18711385701676964,
-                    "Product": 0.1853486319505737,
-                    "Platform": 0.06394037461998626
+                "distribution": {
+                    "vcounts": {
+                        "Devops": 3191,
+                        "Sales": 2538,
+                        "Internal Tools": 1972,
+                        "Product": 1962,
+                        "Platform": 672
+                    },
+                    "vpercs": {
+                        "Devops": 0.30875665215287856,
+                        "Sales": 0.2455732946298984,
+                        "Internal Tools": 0.19080793420416062,
+                        "Product": 0.18984034833091437,
+                        "Platform": 0.06502177068214804
+                    }
                 }
             }
         },
-        "constructor": "NominalCategStat"
+        "preproc": {
+            "impute_value": "Missing",
+            "bucket_strategy": "freq",
+            "encode_strategy": "ohe"
+        }
     },
-    "TITLE": {
+    {
+        "constructor": "OrdinalFeaturePreprocModel",
         "colname": "TITLE",
-        "attr": {
-            "int_dtype": false,
-            "categories": [
-                "Associate",
-                "Engineer",
-                "Senior Engineer",
-                "Manager",
-                "VP"
-            ]
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "unique": {
-                    "value": 5,
-                    "perc": 0.0004903402961655388
-                }
+        "stat_obj": {
+            "constructor": "OrdinalCategStatObj",
+            "colname": "TITLE",
+            "attr": {
+                "categories_": [
+                    "Associate",
+                    "Engineer",
+                    "Senior Engineer",
+                    "Manager",
+                    "VP"
+                ],
+                "int_dtype_": false
             },
-            "distribution": {
-                "vcounts": {
-                    "Associate": 2582,
-                    "Manager": 2460,
-                    "Engineer": 2176,
-                    "Senior Engineer": 1544,
-                    "VP": 1435
+            "summary": {
+                "colname": "TITLE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "unique": {
+                        "value": 5,
+                        "perc": 0.0004837929366231253
+                    }
                 },
-                "vpercs": {
-                    "Associate": 0.2532117289398843,
-                    "Manager": 0.24124742571344512,
-                    "Engineer": 0.21339609689124253,
-                    "Senior Engineer": 0.1514170834559184,
-                    "VP": 0.14072766499950967
+                "distribution": {
+                    "vcounts": {
+                        "Associate": 2538,
+                        "Manager": 2491,
+                        "Engineer": 2236,
+                        "Senior Engineer": 1585,
+                        "VP": 1485
+                    },
+                    "vpercs": {
+                        "Associate": 0.2455732946298984,
+                        "Manager": 0.24102564102564103,
+                        "Engineer": 0.21635220125786164,
+                        "Senior Engineer": 0.15336236090953073,
+                        "VP": 0.14368650217706821
+                    }
                 }
             }
         },
-        "constructor": "OrdinalCategStat"
+        "preproc": {
+            "impute": true,
+            "standardize": true
+        }
     },
-    "AGE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "AGE",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 10,
-            "xtreme_method": null
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "AGE",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": null,
+                "bins_": 10
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 0,
-                    "perc": 0.0
+            "summary": {
+                "colname": "AGE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": null,
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 18.027397260273972,
-                    "perc_1th": 20.539068493150687,
-                    "perc_5th": 24.36986301369863,
-                    "q1": 32.657534246575345,
-                    "median": 39.038356164383565,
-                    "q3": 45.24657534246575,
-                    "perc_95th": 53.71452054794519,
-                    "perc_99th": 57.578520547945196,
-                    "maximum": 59.961643835616435,
-                    "iqr": 12.589041095890408,
-                    "range": 41.93424657534246
+                "xtreme_num": {
+                    "origin": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 39.010214661577876,
-                    "var": 76.83987758016333,
-                    "std": 8.765835817545486,
-                    "skew": 0.011884240985328266,
-                    "kurt": -0.5976122638271977,
-                    "mad": 7.16746306475445,
-                    "cv": 0.22469514866287402,
-                    "normality_p": 0.0
+                "xtreme_stat": {
+                    "origin": null,
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        233,
-                        626,
-                        995,
-                        1473,
-                        1753,
-                        1806,
-                        1419,
-                        999,
-                        637,
-                        256
-                    ],
-                    "bin_edges": [
-                        18.027397260273972,
-                        22.220821917808216,
-                        26.414246575342464,
-                        30.60767123287671,
-                        34.801095890410956,
-                        38.9945205479452,
-                        43.18794520547945,
-                        47.381369863013695,
-                        51.57479452054794,
-                        55.768219178082184,
-                        59.961643835616435
-                    ]
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 17.87123287671233,
+                        "perc_1th": 20.484164383561644,
+                        "perc_5th": 24.007397260273972,
+                        "q1": 32.64794520547945,
+                        "median": 38.961643835616435,
+                        "q3": 45.38767123287671,
+                        "perc_95th": 53.618082191780815,
+                        "perc_99th": 57.412602739726026,
+                        "maximum": 59.797260273972604,
+                        "iqr": 12.73972602739726,
+                        "range": 41.92602739726027
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 38.919387637433644,
+                        "var": 78.18038694271965,
+                        "std": 8.841967368336057,
+                        "skew": -0.015312802383659773,
+                        "kurt": -0.6052449256234937,
+                        "mad": 7.217652555335578,
+                        "cv": 0.22717571181279625,
+                        "normality_p": 0.0
+                    },
+                    "log": null
+                },
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            260,
+                            664,
+                            995,
+                            1397,
+                            1787,
+                            1816,
+                            1480,
+                            1031,
+                            634,
+                            271
+                        ],
+                        "bin_edges": [
+                            17.87123287671233,
+                            22.063835616438357,
+                            26.256438356164384,
+                            30.44904109589041,
+                            34.641643835616435,
+                            38.83424657534246,
+                            43.02684931506849,
+                            47.219452054794516,
+                            51.41205479452054,
+                            55.60465753424657,
+                            59.797260273972604
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "TENURE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "TENURE",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 10,
-            "xtreme_method": null
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1,
-                    "perc": 9.806805923310778e-05
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "TENURE",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": null,
+                "bins_": 10
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 0,
-                    "perc": 0.0
+            "summary": {
+                "colname": "TENURE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": null,
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": -0.038356164383561646,
-                    "perc_1th": 0.17797260273972604,
-                    "perc_5th": 0.9556164383561644,
-                    "q1": 5.005479452054795,
-                    "median": 10.084931506849315,
-                    "q3": 14.978082191780821,
-                    "perc_95th": 18.997260273972604,
-                    "perc_99th": 19.77271232876712,
-                    "maximum": 19.972602739726028,
-                    "iqr": 9.972602739726026,
-                    "range": 20.01095890410959
+                "xtreme_num": {
+                    "origin": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 10.002663421016926,
-                    "var": 33.566409859411,
-                    "std": 5.793652549075669,
-                    "skew": -0.006466271115262739,
-                    "kurt": -1.2034168801306464,
-                    "mad": 5.024484468582361,
-                    "cv": 0.5791825848910468,
-                    "normality_p": 0.0
+                "xtreme_stat": {
+                    "origin": null,
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        1020,
-                        1009,
-                        1003,
-                        1075,
-                        944,
-                        1013,
-                        1073,
-                        986,
-                        1030,
-                        1044
-                    ],
-                    "bin_edges": [
-                        -0.038356164383561646,
-                        1.9627397260273973,
-                        3.9638356164383564,
-                        5.964931506849316,
-                        7.966027397260275,
-                        9.967123287671233,
-                        11.968219178082194,
-                        13.969315068493152,
-                        15.970410958904111,
-                        17.97150684931507,
-                        19.972602739726028
-                    ]
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -0.20821917808219179,
+                        "perc_1th": 0.0201095890410959,
+                        "perc_5th": 0.8273972602739726,
+                        "q1": 4.86986301369863,
+                        "median": 10.087671232876712,
+                        "q3": 14.895890410958904,
+                        "perc_95th": 18.904931506849312,
+                        "perc_99th": 19.601808219178082,
+                        "maximum": 19.802739726027397,
+                        "iqr": 10.026027397260274,
+                        "range": 20.01095890410959
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 9.923838532450578,
+                        "var": 33.53766011005601,
+                        "std": 5.791170875570502,
+                        "skew": -0.030111065572300335,
+                        "kurt": -1.2071187635483502,
+                        "mad": 5.022361099301724,
+                        "cv": 0.5835333451970688,
+                        "normality_p": 0.0
+                    },
+                    "log": null
+                },
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            995,
+                            1037,
+                            1003,
+                            1025,
+                            957,
+                            1078,
+                            1027,
+                            1107,
+                            1033,
+                            1073
+                        ],
+                        "bin_edges": [
+                            -0.20821917808219179,
+                            1.7928767123287672,
+                            3.7939726027397263,
+                            5.795068493150686,
+                            7.796164383561645,
+                            9.797260273972602,
+                            11.798356164383563,
+                            13.799452054794521,
+                            15.80054794520548,
+                            17.80164383561644,
+                            19.802739726027397
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "TOTAL_COMP": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "TOTAL_COMP",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 10,
-            "xtreme_method": null
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "TOTAL_COMP",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": null,
+                "bins_": 10
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 0,
-                    "perc": 0.0
+            "summary": {
+                "colname": "TOTAL_COMP",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": null,
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 69000.0,
-                    "perc_1th": 71500.0,
-                    "perc_5th": 75500.0,
-                    "q1": 94500.0,
-                    "median": 139500.0,
-                    "q3": 166000.0,
-                    "perc_95th": 252000.0,
-                    "perc_99th": 284500.0,
-                    "maximum": 300000.0,
-                    "iqr": 71500.0,
-                    "range": 231000.0
+                "xtreme_num": {
+                    "origin": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 142273.1195449642,
-                    "var": 2541253124.957559,
-                    "std": 50410.8433271807,
-                    "skew": 0.7948730494933839,
-                    "kurt": 0.5114004434904382,
-                    "mad": 39056.76163303621,
-                    "cv": 0.35430706503809806,
-                    "normality_p": 0.0
+                "xtreme_stat": {
+                    "origin": null,
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        2396,
-                        752,
-                        1827,
-                        2058,
-                        1824,
-                        287,
-                        265,
-                        309,
-                        294,
-                        185
-                    ],
-                    "bin_edges": [
-                        69000.0,
-                        92100.0,
-                        115200.0,
-                        138300.0,
-                        161400.0,
-                        184500.0,
-                        207600.0,
-                        230700.0,
-                        253800.0,
-                        276900.0,
-                        300000.0
-                    ]
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 69000.0,
+                        "perc_1th": 71500.0,
+                        "perc_5th": 75000.0,
+                        "q1": 106500.0,
+                        "median": 140000.0,
+                        "q3": 166000.0,
+                        "perc_95th": 253500.0,
+                        "perc_99th": 286500.0,
+                        "maximum": 298500.0,
+                        "iqr": 59500.0,
+                        "range": 229500.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 142855.39429124334,
+                        "var": 2555983078.8434553,
+                        "std": 50556.73129112933,
+                        "skew": 0.8029859724740057,
+                        "kurt": 0.5677581796277953,
+                        "mad": 38950.326172870184,
+                        "cv": 0.3538843288615678,
+                        "normality_p": 0.0
+                    },
+                    "log": null
+                },
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            2308,
+                            766,
+                            1865,
+                            2112,
+                            1889,
+                            303,
+                            292,
+                            274,
+                            288,
+                            238
+                        ],
+                        "bin_edges": [
+                            69000.0,
+                            91950.0,
+                            114900.0,
+                            137850.0,
+                            160800.0,
+                            183750.0,
+                            206700.0,
+                            229650.0,
+                            252600.0,
+                            275550.0,
+                            298500.0
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "BONUS_RATIO": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "BONUS_RATIO",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 10,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "BONUS_RATIO",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 10
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 0,
-                    "perc": 0.0
+            "summary": {
+                "colname": "BONUS_RATIO",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": 0.11344580260632389,
-                    "rbound": 0.18456409738357407,
-                    "lxtreme_mean": null,
-                    "lxtreme_median": null,
-                    "rxtreme_mean": null,
-                    "rxtreme_median": null
+                "xtreme_num": {
+                    "origin": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.1282051282051282,
-                    "perc_1th": 0.13043478260869565,
-                    "perc_5th": 0.1323529411764706,
-                    "q1": 0.1401151631477927,
-                    "median": 0.14893617021276595,
-                    "q3": 0.15789473684210525,
-                    "perc_95th": 0.16483516483516483,
-                    "perc_99th": 0.16666666666666666,
-                    "maximum": 0.16883116883116883,
-                    "iqr": 0.017779573694312545,
-                    "range": 0.04062604062604064
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": 0.11268656716417914,
+                        "rbound": 0.18552238805970145,
+                        "lxtreme_mean": null,
+                        "lxtreme_median": null,
+                        "rxtreme_mean": null,
+                        "rxtreme_median": null
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.14885744100485293,
-                    "var": 0.00010926617610684808,
-                    "std": 0.010453046259672253,
-                    "skew": -0.0325544845242839,
-                    "kurt": -1.1681450787194987,
-                    "mad": 0.009021956582650247,
-                    "cv": 0.07021841583172636,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 0.12849162011173185,
+                        "perc_1th": 0.13043478260869565,
+                        "perc_5th": 0.13230769230769232,
+                        "q1": 0.14,
+                        "median": 0.14917127071823205,
+                        "q3": 0.1582089552238806,
+                        "perc_95th": 0.16489361702127658,
+                        "perc_99th": 0.16666666666666666,
+                        "maximum": 0.16883116883116883,
+                        "iqr": 0.01820895522388058,
+                        "range": 0.040339548719436985
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        492,
-                        1047,
-                        1102,
-                        1131,
-                        1213,
-                        1162,
-                        1158,
-                        1115,
-                        1258,
-                        519
-                    ],
-                    "bin_edges": [
-                        0.1282051282051282,
-                        0.13226773226773225,
-                        0.1363303363303363,
-                        0.1403929403929404,
-                        0.14445554445554445,
-                        0.1485181485181485,
-                        0.15258075258075257,
-                        0.15664335664335663,
-                        0.16070596070596072,
-                        0.16476856476856477,
-                        0.16883116883116883
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.1489209747427022,
+                        "var": 0.00011106410772640948,
+                        "std": 0.01053869573175018,
+                        "skew": -0.04789714189413682,
+                        "kurt": -1.174256440391293,
+                        "mad": 0.009107135536418287,
+                        "cv": 0.07076361058586998,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            564,
+                            1132,
+                            1019,
+                            1177,
+                            1158,
+                            1147,
+                            1186,
+                            1149,
+                            1250,
+                            553
+                        ],
+                        "bin_edges": [
+                            0.12849162011173185,
+                            0.13252557498367554,
+                            0.13655952985561925,
+                            0.14059348472756295,
+                            0.14462743959950664,
+                            0.14866139447145033,
+                            0.15269534934339404,
+                            0.15672930421533773,
+                            0.16076325908728145,
+                            0.16479721395922514,
+                            0.16883116883116883
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "TOTAL_DR_RATIO_DEB": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "TOTAL_DR_RATIO_DEB",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 15,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 2878,
-                    "perc": 0.2822398744728842
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "TOTAL_DR_RATIO_DEB",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 15
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 629,
-                    "perc": 0.06168480925762479
+            "summary": {
+                "colname": "TOTAL_DR_RATIO_DEB",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 2851,
+                        "perc": 0.27585873246250603
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -2.0857284896320056,
-                    "rbound": 3.476214149386676,
-                    "lxtreme_mean": -31.25498460044946,
-                    "lxtreme_median": -6.086881762819935,
-                    "rxtreme_mean": 12.983454934836129,
-                    "rxtreme_median": 5.487512715016625
+                "xtreme_num": {
+                    "origin": {
+                        "value": 837,
+                        "perc": 0.08098693759071117
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": -2.0651517674226683,
-                    "perc_1th": -0.47720809028509076,
-                    "perc_5th": 0.0,
-                    "q1": 0.0,
-                    "median": 0.4724908172501762,
-                    "q3": 1.3162634857121498,
-                    "perc_95th": 2.303027848738326,
-                    "perc_99th": 2.9889005321116655,
-                    "maximum": 3.4702294419333124,
-                    "iqr": 1.3162634857121498,
-                    "range": 5.535381209355981
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -1.6627049839181862,
+                        "rbound": 2.771174973196977,
+                        "lxtreme_mean": -18.811366910302564,
+                        "lxtreme_median": -5.04341752347015,
+                        "rxtreme_mean": 55.441127002781755,
+                        "rxtreme_median": 4.341763984933936
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.7321275466923127,
-                    "var": 0.6738996855246405,
-                    "std": 0.8209139330798574,
-                    "skew": 0.7498337029186954,
-                    "kurt": 0.2327343580660246,
-                    "mad": 0.6863600183012509,
-                    "cv": 1.1212131502728944,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -1.660199210971956,
+                        "perc_1th": -0.7002963634676513,
+                        "perc_5th": 0.0,
+                        "q1": 0.0,
+                        "median": 0.35903225938667516,
+                        "q3": 1.0125825690813923,
+                        "perc_95th": 1.8664809920106105,
+                        "perc_99th": 2.4770275631267054,
+                        "maximum": 2.7691074291822555,
+                        "iqr": 1.0125825690813923,
+                        "range": 4.429306640154212
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        23,
-                        19,
-                        17,
-                        31,
-                        20,
-                        3304,
-                        1548,
-                        990,
-                        1025,
-                        1125,
-                        644,
-                        394,
-                        227,
-                        141,
-                        60
-                    ],
-                    "bin_edges": [
-                        -2.0651517674226683,
-                        -1.6961263534656028,
-                        -1.3271009395085374,
-                        -0.9580755255514721,
-                        -0.5890501115944067,
-                        -0.22002469763734123,
-                        0.149000716319724,
-                        0.5180261302767897,
-                        0.8870515442338549,
-                        1.2560769581909201,
-                        1.6251023721479858,
-                        1.9941277861050515,
-                        2.3631532000621163,
-                        2.732178614019182,
-                        3.1012040279762476,
-                        3.4702294419333124
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.5696505585635875,
+                        "var": 0.44514485417013366,
+                        "std": 0.6671917671630351,
+                        "skew": 0.809962176196624,
+                        "kurt": 0.46323901440698956,
+                        "mad": 0.5485465396758877,
+                        "cv": 1.1711682424579024,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            21,
+                            27,
+                            37,
+                            43,
+                            37,
+                            3247,
+                            1590,
+                            1039,
+                            1018,
+                            969,
+                            654,
+                            354,
+                            226,
+                            140,
+                            96
+                        ],
+                        "bin_edges": [
+                            -1.660199210971956,
+                            -1.364912101628342,
+                            -1.0696249922847278,
+                            -0.7743378829411137,
+                            -0.4790507735974996,
+                            -0.18376366425388535,
+                            0.11152344508972867,
+                            0.4068105544333427,
+                            0.7020976637769569,
+                            0.9973847731205712,
+                            1.2926718824641854,
+                            1.5879589918077992,
+                            1.8832461011514134,
+                            2.1785332104950275,
+                            2.4738203198386417,
+                            2.7691074291822555
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "MAX_DR_RATIO_DEB": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "MAX_DR_RATIO_DEB",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 10,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 2878,
-                    "perc": 0.2822398744728842
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "MAX_DR_RATIO_DEB",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 10
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 18,
-                    "perc": 0.00176522506619594
+            "summary": {
+                "colname": "MAX_DR_RATIO_DEB",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 2851,
+                        "perc": 0.27585873246250603
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -0.413024049398765,
-                    "rbound": 0.6883734156646084,
-                    "lxtreme_mean": null,
-                    "lxtreme_median": null,
-                    "rxtreme_mean": 0.7413658599622859,
-                    "rxtreme_median": 0.7252949968554487
+                "xtreme_num": {
+                    "origin": {
+                        "value": 250,
+                        "perc": 0.024189646831156264
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.0,
-                    "perc_1th": 0.0,
-                    "perc_5th": 0.0,
-                    "q1": 0.0,
-                    "median": 0.11949799580799682,
-                    "q3": 0.2744341603693129,
-                    "perc_95th": 0.44654613757301226,
-                    "perc_99th": 0.5594627251538259,
-                    "maximum": 0.6801003777805055,
-                    "iqr": 0.2744341603693129,
-                    "range": 0.6801003777805055
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -0.35755123278718703,
+                        "rbound": 0.5959187213119783,
+                        "lxtreme_mean": -2.4541686006250236,
+                        "lxtreme_median": -2.0980353634577606,
+                        "rxtreme_mean": 2.3392687966119086,
+                        "rxtreme_median": 0.8272682613460303
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.15969337335716524,
-                    "var": 0.02427254016038826,
-                    "std": 0.15579647030786115,
-                    "skew": 0.7169062338184435,
-                    "kurt": -0.44381230927756654,
-                    "mad": 0.13347140910873137,
-                    "cv": 0.9755496675102652,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -0.2922966806835466,
+                        "perc_1th": 0.0,
+                        "perc_5th": 0.0,
+                        "q1": 0.0,
+                        "median": 0.1031750141477506,
+                        "q3": 0.22988600053786235,
+                        "perc_95th": 0.41072480641491554,
+                        "perc_99th": 0.5267922860586126,
+                        "maximum": 0.5929932473089522,
+                        "iqr": 0.22988600053786235,
+                        "range": 0.8852899279924988
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        3972,
-                        1401,
-                        1030,
-                        1185,
-                        1013,
-                        763,
-                        472,
-                        215,
-                        88,
-                        40
-                    ],
-                    "bin_edges": [
-                        0.0,
-                        0.06801003777805055,
-                        0.1360200755561011,
-                        0.20403011333415166,
-                        0.2720401511122022,
-                        0.34005018889025274,
-                        0.4080602266683033,
-                        0.47607026444635386,
-                        0.5440803022244044,
-                        0.612090340002455,
-                        0.6801003777805055
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.13803442155040946,
+                        "var": 0.019286492419695975,
+                        "std": 0.13887581654015926,
+                        "skew": 0.8778431665856127,
+                        "kurt": 0.02305690892496548,
+                        "mad": 0.11578287863362785,
+                        "cv": 1.0060456626950132,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            3,
+                            1,
+                            0,
+                            3996,
+                            2008,
+                            1717,
+                            1235,
+                            658,
+                            314,
+                            153
+                        ],
+                        "bin_edges": [
+                            -0.2922966806835466,
+                            -0.2037676878842967,
+                            -0.1152386950850468,
+                            -0.026709702285796888,
+                            0.061819290513452974,
+                            0.15034828331270284,
+                            0.2388772761119528,
+                            0.32740626891120267,
+                            0.41593526171045253,
+                            0.5044642545097024,
+                            0.5929932473089522
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "TOTAL_CR_RATIO_DEB": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "TOTAL_CR_RATIO_DEB",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 10,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 2882,
-                    "perc": 0.2826321467098166
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "TOTAL_CR_RATIO_DEB",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 10
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 1371,
-                    "perc": 0.13445130920859077
+            "summary": {
+                "colname": "TOTAL_CR_RATIO_DEB",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 2858,
+                        "perc": 0.2765360425737784
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -1.6708947488624584,
-                    "rbound": 2.7848245814374306,
-                    "lxtreme_mean": -59.692441920738894,
-                    "lxtreme_median": -11.12388836732952,
-                    "rxtreme_mean": 14.397389264743191,
-                    "rxtreme_median": 4.877563377856758
+                "xtreme_num": {
+                    "origin": {
+                        "value": 1587,
+                        "perc": 0.15355587808417998
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.0,
-                    "perc_1th": 0.0,
-                    "perc_5th": 0.0,
-                    "q1": 0.0,
-                    "median": 0.15282098232575828,
-                    "q3": 0.7696420210035084,
-                    "perc_95th": 2.020591162517489,
-                    "perc_99th": 2.5968802919119947,
-                    "maximum": 2.782477022321174,
-                    "iqr": 0.7696420210035084,
-                    "range": 2.782477022321174
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -1.3132333588614329,
+                        "rbound": 2.188722264769055,
+                        "lxtreme_mean": -28.241751353457538,
+                        "lxtreme_median": -6.858183445190156,
+                        "rxtreme_mean": 57.50059950846877,
+                        "rxtreme_median": 4.140541047506183
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.4868946538426496,
-                    "var": 0.4469936524060826,
-                    "std": 0.668575838933836,
-                    "skew": 1.5160426965136933,
-                    "kurt": 1.4640244935085205,
-                    "mad": 0.5270820492431822,
-                    "cv": 1.373064906804023,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -1.1441480793906469,
+                        "perc_1th": 0.0,
+                        "perc_5th": 0.0,
+                        "q1": 0.0,
+                        "median": 0.12648684721410333,
+                        "q3": 0.5935818554441098,
+                        "perc_95th": 1.5503211593145945,
+                        "perc_99th": 2.0381097040753353,
+                        "maximum": 2.188547943368837,
+                        "iqr": 0.5935818554441098,
+                        "range": 3.332696022759484
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        5077,
-                        992,
-                        687,
-                        555,
-                        450,
-                        331,
-                        244,
-                        187,
-                        161,
-                        142
-                    ],
-                    "bin_edges": [
-                        0.0,
-                        0.27824770223211737,
-                        0.5564954044642347,
-                        0.8347431066963521,
-                        1.1129908089284695,
-                        1.3912385111605867,
-                        1.6694862133927042,
-                        1.9477339156248217,
-                        2.225981617856939,
-                        2.504229320089056,
-                        2.782477022321174
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.3796386214107685,
+                        "var": 0.2705444675058079,
+                        "std": 0.5201388925141129,
+                        "skew": 1.5121241027362085,
+                        "kurt": 1.4545742913447608,
+                        "mad": 0.4090119206652971,
+                        "cv": 1.3700111983181997,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            1,
+                            0,
+                            0,
+                            4831,
+                            1507,
+                            899,
+                            580,
+                            463,
+                            286,
+                            181
+                        ],
+                        "bin_edges": [
+                            -1.1441480793906469,
+                            -0.8108784771146985,
+                            -0.47760887483875014,
+                            -0.14433927256280177,
+                            0.1889303297131466,
+                            0.5221999319890949,
+                            0.8554695342650434,
+                            1.1887391365409918,
+                            1.52200873881694,
+                            1.8552783410928884,
+                            2.188547943368837
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "MAX_CR_RATIO_DEB": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "MAX_CR_RATIO_DEB",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 10,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 2882,
-                    "perc": 0.2826321467098166
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "MAX_CR_RATIO_DEB",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 10
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 575,
-                    "perc": 0.05638913405903697
+            "summary": {
+                "colname": "MAX_CR_RATIO_DEB",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 2858,
+                        "perc": 0.2765360425737784
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -0.41534675615212535,
-                    "rbound": 0.6922445935868755,
-                    "lxtreme_mean": null,
-                    "lxtreme_median": null,
-                    "rxtreme_mean": 0.9939429298624849,
-                    "rxtreme_median": 0.9020591341077084
+                "xtreme_num": {
+                    "origin": {
+                        "value": 954,
+                        "perc": 0.09230769230769231
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.0,
-                    "perc_1th": 0.0,
-                    "perc_5th": 0.0,
-                    "q1": 0.0,
-                    "median": 0.049406852077823415,
-                    "q3": 0.2206223324357647,
-                    "perc_95th": 0.5228525825612467,
-                    "perc_99th": 0.6468183596190114,
-                    "maximum": 0.691906824079325,
-                    "iqr": 0.2206223324357647,
-                    "range": 0.691906824079325
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -0.33688072611108894,
+                        "rbound": 0.5614678768518149,
+                        "lxtreme_mean": -10.49590386256189,
+                        "lxtreme_median": -8.4377299745259,
+                        "rxtreme_mean": 2.6315834735863097,
+                        "rxtreme_median": 0.8624264253711676
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.13517737791631104,
-                    "var": 0.031019096574791204,
-                    "std": 0.17612239089562465,
-                    "skew": 1.3138077239649129,
-                    "kurt": 0.6558399188659747,
-                    "mad": 0.1427331808747789,
-                    "cv": 1.302830705143213,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 0.0,
+                        "perc_1th": 0.0,
+                        "perc_5th": 0.0,
+                        "q1": 0.0,
+                        "median": 0.038810481616012735,
+                        "q3": 0.1636289138525626,
+                        "perc_95th": 0.42112388263270245,
+                        "perc_99th": 0.5267994689518087,
+                        "maximum": 0.5614213462641431,
+                        "iqr": 0.1636289138525626,
+                        "range": 0.5614213462641431
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        5291,
-                        1055,
-                        739,
-                        562,
-                        500,
-                        443,
-                        363,
-                        304,
-                        218,
-                        147
-                    ],
-                    "bin_edges": [
-                        0.0,
-                        0.0691906824079325,
-                        0.138381364815865,
-                        0.2075720472237975,
-                        0.27676272963173,
-                        0.34595341203966246,
-                        0.415144094447595,
-                        0.4843347768555275,
-                        0.55352545926346,
-                        0.6227161416713924,
-                        0.691906824079325
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.10342345660124348,
+                        "var": 0.01886844616266861,
+                        "std": 0.1373624627133214,
+                        "skew": 1.4723443718130178,
+                        "kurt": 1.2999765440696698,
+                        "mad": 0.1083747200424632,
+                        "cv": 1.3280849985067888,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            5176,
+                            1163,
+                            752,
+                            625,
+                            458,
+                            359,
+                            252,
+                            247,
+                            183,
+                            166
+                        ],
+                        "bin_edges": [
+                            0.0,
+                            0.056142134626414306,
+                            0.11228426925282861,
+                            0.1684264038792429,
+                            0.22456853850565722,
+                            0.28071067313207154,
+                            0.3368528077584858,
+                            0.3929949423849001,
+                            0.44913707701131445,
+                            0.5052792116377287,
+                            0.5614213462641431
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "CR_UTIL_CRE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "CR_UTIL_CRE",
-        "attr": {
-            "setaside_zero": true,
-            "log_scale": false,
-            "bins": 100,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1368,
-                    "perc": 0.13415710503089143
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "CR_UTIL_CRE",
+            "attr": {
+                "setaside_zero_": true,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 100
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 637,
-                    "perc": 0.06246935373148965
+            "summary": {
+                "colname": "CR_UTIL_CRE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 1354,
+                        "perc": 0.13101112723754232
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": 0.10592324415996746,
-                    "rbound": 1.2237856495758441,
-                    "lxtreme_mean": -0.15879992150729785,
-                    "lxtreme_median": -0.07033920408459066,
-                    "rxtreme_mean": 1.4619413832470711,
-                    "rxtreme_median": 1.3998592379912964
+                "xtreme_num": {
+                    "origin": {
+                        "value": 824,
+                        "perc": 0.07972907595549104
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.10628462804129007,
-                    "perc_1th": 0.14398929466378504,
-                    "perc_5th": 0.29412661835967696,
-                    "q1": 0.5363249810322749,
-                    "median": 0.6447371696530027,
-                    "q3": 0.7947254726449655,
-                    "perc_95th": 1.007810988418171,
-                    "perc_99th": 1.1617224894353035,
-                    "maximum": 1.22240042464178,
-                    "iqr": 0.25840049161269063,
-                    "range": 1.1161157966004898
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": 0.08531476713908615,
+                        "rbound": 1.211601271708201,
+                        "lxtreme_mean": -0.18713595281840034,
+                        "lxtreme_median": -0.10407327011709738,
+                        "rxtreme_mean": 1.4448854808879157,
+                        "rxtreme_median": 1.3668846755319097
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.6603320429417583,
-                    "var": 0.04312194077845353,
-                    "std": 0.20765823070240566,
-                    "skew": 0.007504294491702456,
-                    "kurt": 0.12006178933569345,
-                    "mad": 0.16236822273779114,
-                    "cv": 0.3144562770844446,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 0.0855457812903354,
+                        "perc_1th": 0.13181493723323567,
+                        "perc_5th": 0.25420474625345396,
+                        "q1": 0.5245680643548156,
+                        "median": 0.6305030689365285,
+                        "q3": 0.7813178959446253,
+                        "perc_95th": 0.9951084605640914,
+                        "perc_99th": 1.1413956947187076,
+                        "maximum": 1.2110674511402748,
+                        "iqr": 0.2567498315898097,
+                        "range": 1.1255216698499395
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        19,
-                        25,
-                        26,
-                        25,
-                        20,
-                        25,
-                        17,
-                        29,
-                        17,
-                        21,
-                        18,
-                        25,
-                        31,
-                        27,
-                        19,
-                        44,
-                        24,
-                        43,
-                        38,
-                        34,
-                        37,
-                        36,
-                        39,
-                        33,
-                        33,
-                        44,
-                        36,
-                        50,
-                        69,
-                        70,
-                        57,
-                        71,
-                        61,
-                        79,
-                        130,
-                        171,
-                        189,
-                        183,
-                        246,
-                        220,
-                        199,
-                        217,
-                        216,
-                        214,
-                        227,
-                        186,
-                        221,
-                        190,
-                        198,
-                        163,
-                        171,
-                        162,
-                        177,
-                        177,
-                        140,
-                        156,
-                        140,
-                        143,
-                        124,
-                        125,
-                        130,
-                        121,
-                        102,
-                        107,
-                        98,
-                        125,
-                        110,
-                        101,
-                        88,
-                        111,
-                        85,
-                        93,
-                        77,
-                        67,
-                        73,
-                        70,
-                        63,
-                        77,
-                        59,
-                        59,
-                        46,
-                        44,
-                        36,
-                        21,
-                        24,
-                        31,
-                        17,
-                        23,
-                        28,
-                        19,
-                        18,
-                        20,
-                        18,
-                        11,
-                        23,
-                        11,
-                        12,
-                        15,
-                        14,
-                        18
-                    ],
-                    "bin_edges": [
-                        0.10628462804129007,
-                        0.11744578600729497,
-                        0.12860694397329986,
-                        0.13976810193930478,
-                        0.15092925990530967,
-                        0.16209041787131456,
-                        0.17325157583731945,
-                        0.18441273380332435,
-                        0.19557389176932927,
-                        0.20673504973533413,
-                        0.21789620770133905,
-                        0.22905736566734394,
-                        0.24021852363334883,
-                        0.25137968159935375,
-                        0.2625408395653587,
-                        0.27370199753136354,
-                        0.2848631554973684,
-                        0.2960243134633733,
-                        0.30718547142937824,
-                        0.31834662939538316,
-                        0.329507787361388,
-                        0.3406689453273929,
-                        0.3518301032933978,
-                        0.36299126125940273,
-                        0.3741524192254076,
-                        0.3853135771914125,
-                        0.3964747351574174,
-                        0.4076358931234223,
-                        0.4187970510894272,
-                        0.4299582090554321,
-                        0.441119367021437,
-                        0.45228052498744187,
-                        0.4634416829534468,
-                        0.4746028409194517,
-                        0.48576399888545657,
-                        0.4969251568514615,
-                        0.5080863148174664,
-                        0.5192474727834713,
-                        0.5304086307494762,
-                        0.5415697887154811,
-                        0.552730946681486,
-                        0.5638921046474908,
-                        0.5750532626134958,
-                        0.5862144205795007,
-                        0.5973755785455055,
-                        0.6085367365115104,
-                        0.6196978944775153,
-                        0.6308590524435203,
-                        0.6420202104095252,
-                        0.6531813683755301,
-                        0.664342526341535,
-                        0.6755036843075399,
-                        0.6866648422735446,
-                        0.6978260002395495,
-                        0.7089871582055545,
-                        0.7201483161715594,
-                        0.7313094741375643,
-                        0.7424706321035692,
-                        0.7536317900695741,
-                        0.7647929480355791,
-                        0.775954106001584,
-                        0.7871152639675889,
-                        0.7982764219335936,
-                        0.8094375798995985,
-                        0.8205987378656034,
-                        0.8317598958316084,
-                        0.8429210537976133,
-                        0.8540822117636182,
-                        0.8652433697296231,
-                        0.876404527695628,
-                        0.887565685661633,
-                        0.8987268436276379,
-                        0.9098880015936426,
-                        0.9210491595596475,
-                        0.9322103175256524,
-                        0.9433714754916573,
-                        0.9545326334576623,
-                        0.9656937914236672,
-                        0.9768549493896721,
-                        0.988016107355677,
-                        0.9991772653216819,
-                        1.0103384232876869,
-                        1.0214995812536916,
-                        1.0326607392196965,
-                        1.0438218971857014,
-                        1.0549830551517063,
-                        1.0661442131177112,
-                        1.0773053710837162,
-                        1.088466529049721,
-                        1.099627687015726,
-                        1.110788844981731,
-                        1.1219500029477358,
-                        1.1331111609137408,
-                        1.1442723188797457,
-                        1.1554334768457504,
-                        1.1665946348117553,
-                        1.1777557927777602,
-                        1.1889169507437651,
-                        1.20007810870977,
-                        1.211239266675775,
-                        1.22240042464178
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.643651739349128,
+                        "var": 0.04386528572907678,
+                        "std": 0.20944041092653726,
+                        "skew": -0.06435706237433868,
+                        "kurt": 0.12378168133127154,
+                        "mad": 0.16288094557468766,
+                        "cv": 0.32537404880848675,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            14,
+                            20,
+                            25,
+                            22,
+                            34,
+                            27,
+                            25,
+                            23,
+                            21,
+                            30,
+                            28,
+                            31,
+                            42,
+                            31,
+                            36,
+                            26,
+                            30,
+                            36,
+                            35,
+                            36,
+                            32,
+                            39,
+                            39,
+                            28,
+                            35,
+                            45,
+                            42,
+                            52,
+                            52,
+                            58,
+                            64,
+                            64,
+                            78,
+                            85,
+                            100,
+                            117,
+                            129,
+                            190,
+                            218,
+                            195,
+                            221,
+                            212,
+                            250,
+                            235,
+                            208,
+                            203,
+                            216,
+                            222,
+                            194,
+                            178,
+                            168,
+                            173,
+                            175,
+                            151,
+                            147,
+                            149,
+                            137,
+                            135,
+                            156,
+                            126,
+                            132,
+                            123,
+                            126,
+                            119,
+                            122,
+                            128,
+                            101,
+                            85,
+                            88,
+                            95,
+                            94,
+                            96,
+                            84,
+                            67,
+                            73,
+                            55,
+                            62,
+                            53,
+                            56,
+                            54,
+                            54,
+                            35,
+                            48,
+                            45,
+                            26,
+                            25,
+                            16,
+                            30,
+                            20,
+                            12,
+                            16,
+                            15,
+                            16,
+                            19,
+                            17,
+                            7,
+                            17,
+                            12,
+                            17,
+                            7
+                        ],
+                        "bin_edges": [
+                            0.0855457812903354,
+                            0.09680099798883479,
+                            0.10805621468733419,
+                            0.11931143138583358,
+                            0.130566648084333,
+                            0.14182186478283237,
+                            0.15307708148133176,
+                            0.16433229817983117,
+                            0.17558751487833058,
+                            0.18684273157682996,
+                            0.19809794827532934,
+                            0.20935316497382875,
+                            0.22060838167232816,
+                            0.23186359837082754,
+                            0.24311881506932692,
+                            0.25437403176782636,
+                            0.26562924846632574,
+                            0.2768844651648251,
+                            0.2881396818633245,
+                            0.29939489856182394,
+                            0.3106501152603233,
+                            0.3219053319588227,
+                            0.3331605486573221,
+                            0.3444157653558215,
+                            0.3556709820543209,
+                            0.3669261987528203,
+                            0.37818141545131967,
+                            0.3894366321498191,
+                            0.4006918488483185,
+                            0.41194706554681787,
+                            0.4232022822453173,
+                            0.4344574989438167,
+                            0.44571271564231607,
+                            0.45696793234081545,
+                            0.46822314903931483,
+                            0.47947836573781427,
+                            0.49073358243631365,
+                            0.501988799134813,
+                            0.5132440158333125,
+                            0.5244992325318119,
+                            0.5357544492303112,
+                            0.5470096659288106,
+                            0.55826488262731,
+                            0.5695200993258094,
+                            0.5807753160243088,
+                            0.5920305327228083,
+                            0.6032857494213076,
+                            0.614540966119807,
+                            0.6257961828183064,
+                            0.6370513995168058,
+                            0.6483066162153052,
+                            0.6595618329138045,
+                            0.6708170496123039,
+                            0.6820722663108034,
+                            0.6933274830093028,
+                            0.7045826997078022,
+                            0.7158379164063016,
+                            0.727093133104801,
+                            0.7383483498033003,
+                            0.7496035665017997,
+                            0.7608587832002992,
+                            0.7721139998987986,
+                            0.783369216597298,
+                            0.7946244332957973,
+                            0.8058796499942967,
+                            0.8171348666927961,
+                            0.8283900833912955,
+                            0.8396453000897949,
+                            0.8509005167882943,
+                            0.8621557334867938,
+                            0.8734109501852931,
+                            0.8846661668837925,
+                            0.8959213835822919,
+                            0.9071766002807913,
+                            0.9184318169792907,
+                            0.92968703367779,
+                            0.9409422503762895,
+                            0.9521974670747889,
+                            0.9634526837732883,
+                            0.9747079004717877,
+                            0.9859631171702871,
+                            0.9972183338687864,
+                            1.0084735505672857,
+                            1.019728767265785,
+                            1.0309839839642845,
+                            1.042239200662784,
+                            1.0534944173612835,
+                            1.0647496340597828,
+                            1.0760048507582822,
+                            1.0872600674567816,
+                            1.098515284155281,
+                            1.1097705008537804,
+                            1.1210257175522798,
+                            1.1322809342507791,
+                            1.1435361509492785,
+                            1.154791367647778,
+                            1.1660465843462773,
+                            1.1773018010447767,
+                            1.188557017743276,
+                            1.1998122344417754,
+                            1.2110674511402748
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "MAX_CR_UTIL_CRE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "MAX_CR_UTIL_CRE",
-        "attr": {
-            "setaside_zero": true,
-            "log_scale": false,
-            "bins": 100,
-            "xtreme_method": "quantile"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1368,
-                    "perc": 0.13415710503089143
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "MAX_CR_UTIL_CRE",
+            "attr": {
+                "setaside_zero_": true,
+                "log_scale_": false,
+                "xtreme_method_": "quantile",
+                "bins_": 100
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 178,
-                    "perc": 0.017456114543493183
+            "summary": {
+                "colname": "MAX_CR_UTIL_CRE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 1354,
+                        "perc": 0.13101112723754232
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": 0.35493642127126074,
-                    "rbound": 2.0827664803292754,
-                    "lxtreme_mean": 0.31284645361811436,
-                    "lxtreme_median": 0.32426373835071964,
-                    "rxtreme_mean": 2.4989664369646793,
-                    "rxtreme_median": 2.3983115284821785
+                "xtreme_num": {
+                    "origin": {
+                        "value": 180,
+                        "perc": 0.01741654571843251
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.3562623483351717,
-                    "perc_1th": 0.3988344023225119,
-                    "perc_5th": 0.4916988249873252,
-                    "q1": 0.5841280207056709,
-                    "median": 0.6972593113141251,
-                    "q3": 0.8724014787543748,
-                    "perc_95th": 1.3582209829091048,
-                    "perc_99th": 1.7614570867783148,
-                    "maximum": 2.0796550681268307,
-                    "iqr": 0.28827345804870386,
-                    "range": 1.723392719791659
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": 0.1847154629395243,
+                        "rbound": 2.189022850610571,
+                        "lxtreme_mean": 0.07950409738518761,
+                        "lxtreme_median": 0.12252677451834673,
+                        "rxtreme_mean": 2.602667550083701,
+                        "rxtreme_median": 2.484956191082575
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.7688658540267963,
-                    "var": 0.07342738228334467,
-                    "std": 0.27097487389672253,
-                    "skew": 1.7520228893075975,
-                    "kurt": 3.7768219751606,
-                    "mad": 0.1972290251442468,
-                    "cv": 0.3524141572266107,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 0.18496097020838384,
+                        "perc_1th": 0.2607369713778697,
+                        "perc_5th": 0.4060180984948938,
+                        "q1": 0.5734013101872292,
+                        "median": 0.6977631516192111,
+                        "q3": 0.8896029790543533,
+                        "perc_95th": 1.4410120810044809,
+                        "perc_99th": 1.897776740303744,
+                        "maximum": 2.1889911223073923,
+                        "iqr": 0.3162016688671241,
+                        "range": 2.0040301520990087
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        30,
-                        36,
-                        44,
-                        38,
-                        55,
-                        61,
-                        81,
-                        103,
-                        180,
-                        341,
-                        376,
-                        345,
-                        397,
-                        350,
-                        358,
-                        356,
-                        331,
-                        305,
-                        305,
-                        289,
-                        262,
-                        255,
-                        239,
-                        249,
-                        214,
-                        168,
-                        198,
-                        181,
-                        176,
-                        174,
-                        149,
-                        159,
-                        145,
-                        119,
-                        105,
-                        126,
-                        136,
-                        100,
-                        83,
-                        64,
-                        49,
-                        42,
-                        39,
-                        30,
-                        33,
-                        26,
-                        31,
-                        26,
-                        30,
-                        22,
-                        23,
-                        34,
-                        31,
-                        26,
-                        33,
-                        14,
-                        14,
-                        26,
-                        31,
-                        26,
-                        13,
-                        31,
-                        17,
-                        26,
-                        13,
-                        14,
-                        12,
-                        17,
-                        14,
-                        14,
-                        9,
-                        14,
-                        7,
-                        15,
-                        9,
-                        9,
-                        8,
-                        13,
-                        8,
-                        16,
-                        11,
-                        10,
-                        6,
-                        5,
-                        3,
-                        7,
-                        3,
-                        6,
-                        5,
-                        5,
-                        5,
-                        4,
-                        6,
-                        4,
-                        4,
-                        3,
-                        5,
-                        2,
-                        4,
-                        5
-                    ],
-                    "bin_edges": [
-                        0.3562623483351717,
-                        0.3734962755330883,
-                        0.39073020273100484,
-                        0.40796412992892145,
-                        0.425198057126838,
-                        0.4424319843247546,
-                        0.4596659115226712,
-                        0.47689983872058783,
-                        0.4941337659185044,
-                        0.5113676931164209,
-                        0.5286016203143376,
-                        0.5458355475122542,
-                        0.5630694747101708,
-                        0.5803034019080873,
-                        0.597537329106004,
-                        0.6147712563039205,
-                        0.6320051835018371,
-                        0.6492391106997537,
-                        0.6664730378976702,
-                        0.6837069650955869,
-                        0.7009408922935034,
-                        0.71817481949142,
-                        0.7354087466893366,
-                        0.7526426738872531,
-                        0.7698766010851699,
-                        0.7871105282830864,
-                        0.804344455481003,
-                        0.8215783826789196,
-                        0.8388123098768362,
-                        0.8560462370747528,
-                        0.8732801642726693,
-                        0.8905140914705859,
-                        0.9077480186685025,
-                        0.9249819458664191,
-                        0.9422158730643357,
-                        0.9594498002622522,
-                        0.9766837274601688,
-                        0.9939176546580855,
-                        1.011151581856002,
-                        1.0283855090539187,
-                        1.0456194362518352,
-                        1.0628533634497517,
-                        1.0800872906476684,
-                        1.0973212178455851,
-                        1.1145551450435016,
-                        1.1317890722414181,
-                        1.1490229994393348,
-                        1.1662569266372513,
-                        1.1834908538351678,
-                        1.2007247810330846,
-                        1.2179587082310013,
-                        1.2351926354289176,
-                        1.2524265626268343,
-                        1.269660489824751,
-                        1.2868944170226675,
-                        1.304128344220584,
-                        1.3213622714185007,
-                        1.3385961986164172,
-                        1.3558301258143337,
-                        1.3730640530122504,
-                        1.390297980210167,
-                        1.4075319074080836,
-                        1.4247658346060001,
-                        1.4419997618039169,
-                        1.4592336890018334,
-                        1.4764676161997499,
-                        1.4937015433976666,
-                        1.510935470595583,
-                        1.5281693977934998,
-                        1.5454033249914163,
-                        1.5626372521893328,
-                        1.5798711793872495,
-                        1.597105106585166,
-                        1.6143390337830827,
-                        1.6315729609809992,
-                        1.6488068881789157,
-                        1.6660408153768325,
-                        1.683274742574749,
-                        1.7005086697726657,
-                        1.7177425969705822,
-                        1.7349765241684987,
-                        1.7522104513664154,
-                        1.769444378564332,
-                        1.7866783057622486,
-                        1.8039122329601651,
-                        1.8211461601580818,
-                        1.8383800873559983,
-                        1.8556140145539148,
-                        1.8728479417518316,
-                        1.890081868949748,
-                        1.9073157961476648,
-                        1.9245497233455813,
-                        1.9417836505434978,
-                        1.9590175777414145,
-                        1.976251504939331,
-                        1.9934854321372477,
-                        2.010719359335164,
-                        2.027953286533081,
-                        2.0451872137309977,
-                        2.062421140928914,
-                        2.0796550681268307
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.7739216297007905,
+                        "var": 0.09803303288247944,
+                        "std": 0.31310227224100345,
+                        "skew": 1.5660140855933393,
+                        "kurt": 3.1821593760252673,
+                        "mad": 0.22646471534487753,
+                        "cv": 0.4045428785551011,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            18,
+                            19,
+                            32,
+                            22,
+                            41,
+                            34,
+                            47,
+                            34,
+                            66,
+                            56,
+                            69,
+                            63,
+                            73,
+                            92,
+                            116,
+                            185,
+                            335,
+                            362,
+                            402,
+                            386,
+                            336,
+                            384,
+                            356,
+                            356,
+                            328,
+                            298,
+                            279,
+                            251,
+                            267,
+                            243,
+                            243,
+                            233,
+                            194,
+                            180,
+                            175,
+                            175,
+                            150,
+                            138,
+                            127,
+                            132,
+                            110,
+                            95,
+                            90,
+                            59,
+                            70,
+                            51,
+                            60,
+                            55,
+                            39,
+                            37,
+                            46,
+                            41,
+                            37,
+                            32,
+                            38,
+                            28,
+                            31,
+                            27,
+                            34,
+                            24,
+                            21,
+                            22,
+                            27,
+                            16,
+                            28,
+                            18,
+                            15,
+                            15,
+                            22,
+                            20,
+                            12,
+                            17,
+                            16,
+                            18,
+                            14,
+                            21,
+                            12,
+                            15,
+                            12,
+                            13,
+                            10,
+                            12,
+                            12,
+                            9,
+                            11,
+                            7,
+                            7,
+                            6,
+                            13,
+                            3,
+                            7,
+                            4,
+                            8,
+                            6,
+                            5,
+                            7,
+                            5,
+                            7,
+                            2,
+                            5
+                        ],
+                        "bin_edges": [
+                            0.18496097020838384,
+                            0.20500127172937394,
+                            0.225041573250364,
+                            0.2450818747713541,
+                            0.2651221762923442,
+                            0.28516247781333426,
+                            0.3052027793343244,
+                            0.32524308085531445,
+                            0.3452833823763045,
+                            0.36532368389729464,
+                            0.38536398541828476,
+                            0.40540428693927477,
+                            0.4254445884602649,
+                            0.445484889981255,
+                            0.46552519150224503,
+                            0.48556549302323515,
+                            0.5056057945442253,
+                            0.5256460960652153,
+                            0.5456863975862054,
+                            0.5657266991071955,
+                            0.5857670006281857,
+                            0.6058073021491757,
+                            0.6258476036701658,
+                            0.6458879051911559,
+                            0.6659282067121459,
+                            0.685968508233136,
+                            0.7060088097541262,
+                            0.7260491112751163,
+                            0.7460894127961063,
+                            0.7661297143170964,
+                            0.7861700158380865,
+                            0.8062103173590766,
+                            0.8262506188800667,
+                            0.8462909204010568,
+                            0.8663312219220468,
+                            0.8863715234430369,
+                            0.9064118249640271,
+                            0.9264521264850171,
+                            0.9464924280060072,
+                            0.9665327295269973,
+                            0.9865730310479874,
+                            1.0066133325689774,
+                            1.0266536340899675,
+                            1.0466939356109577,
+                            1.0667342371319477,
+                            1.0867745386529377,
+                            1.106814840173928,
+                            1.126855141694918,
+                            1.146895443215908,
+                            1.1669357447368982,
+                            1.1869760462578882,
+                            1.2070163477788785,
+                            1.2270566492998685,
+                            1.2470969508208585,
+                            1.2671372523418487,
+                            1.2871775538628387,
+                            1.3072178553838287,
+                            1.327258156904819,
+                            1.347298458425809,
+                            1.367338759946799,
+                            1.3873790614677892,
+                            1.4074193629887792,
+                            1.4274596645097692,
+                            1.4474999660307595,
+                            1.4675402675517495,
+                            1.4875805690727395,
+                            1.5076208705937297,
+                            1.5276611721147197,
+                            1.5477014736357098,
+                            1.5677417751567,
+                            1.58778207667769,
+                            1.60782237819868,
+                            1.6278626797196702,
+                            1.6479029812406603,
+                            1.6679432827616503,
+                            1.6879835842826405,
+                            1.7080238858036305,
+                            1.7280641873246205,
+                            1.7481044888456108,
+                            1.7681447903666008,
+                            1.788185091887591,
+                            1.808225393408581,
+                            1.828265694929571,
+                            1.8483059964505613,
+                            1.8683462979715513,
+                            1.8883865994925413,
+                            1.9084269010135315,
+                            1.9284672025345215,
+                            1.9485075040555115,
+                            1.9685478055765018,
+                            1.9885881070974918,
+                            2.0086284086184816,
+                            2.028668710139472,
+                            2.048709011660462,
+                            2.068749313181452,
+                            2.088789614702442,
+                            2.1088299162234323,
+                            2.128870217744422,
+                            2.1489105192654123,
+                            2.1689508207864026,
+                            2.1889911223073923
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "TOTAL_DR_RATIO_CRE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "TOTAL_DR_RATIO_CRE",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 25,
-            "xtreme_method": "quantile"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1368,
-                    "perc": 0.13415710503089143
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "TOTAL_DR_RATIO_CRE",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "quantile",
+                "bins_": 25
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 204,
-                    "perc": 0.020005884083553988
+            "summary": {
+                "colname": "TOTAL_DR_RATIO_CRE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 1354,
+                        "perc": 0.13101112723754232
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -18.413965552048158,
-                    "rbound": 21.32281283348882,
-                    "lxtreme_mean": -77.52163325235843,
-                    "lxtreme_median": -48.432512608028134,
-                    "rxtreme_mean": 149.42020255964457,
-                    "rxtreme_median": 44.38617075573916
+                "xtreme_num": {
+                    "origin": {
+                        "value": 208,
+                        "perc": 0.02012578616352201
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": -18.39919955490946,
-                    "perc_1th": -6.925369293869602,
-                    "perc_5th": 0.0,
-                    "q1": 0.03380909035699836,
-                    "median": 0.16639749632698736,
-                    "q3": 1.3825666714609472,
-                    "perc_95th": 5.315054442138949,
-                    "perc_99th": 13.374497805864875,
-                    "maximum": 21.31166016955779,
-                    "iqr": 1.348757581103949,
-                    "range": 39.71085972446725
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -18.558256667581436,
+                        "rbound": 21.61378245326003,
+                        "lxtreme_mean": -207.24907507463104,
+                        "lxtreme_median": -35.36729503250255,
+                        "rxtreme_mean": 127.78622565045505,
+                        "rxtreme_median": 46.88373704756799
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 1.039322250994132,
-                    "var": 7.810673571570224,
-                    "std": 2.794758231327036,
-                    "skew": 1.472148276135379,
-                    "kurt": 17.214485172276937,
-                    "mad": 1.5060865288869103,
-                    "cv": 2.688885366746249,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -18.55327215544354,
+                        "perc_1th": -7.956195395366984,
+                        "perc_5th": 0.0,
+                        "q1": 0.026486173618588797,
+                        "median": 0.13444864520055033,
+                        "q3": 1.0604514644268126,
+                        "perc_95th": 4.515358975100011,
+                        "perc_99th": 11.253549726438806,
+                        "maximum": 21.510457059309644,
+                        "iqr": 1.0339652908082237,
+                        "range": 40.06372921475318
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        8,
-                        11,
-                        13,
-                        13,
-                        8,
-                        19,
-                        24,
-                        24,
-                        30,
-                        13,
-                        0,
-                        6218,
-                        2042,
-                        778,
-                        314,
-                        159,
-                        80,
-                        66,
-                        39,
-                        33,
-                        34,
-                        22,
-                        15,
-                        14,
-                        16
-                    ],
-                    "bin_edges": [
-                        -18.39919955490946,
-                        -16.810765165930768,
-                        -15.222330776952079,
-                        -13.633896387973389,
-                        -12.0454619989947,
-                        -10.45702761001601,
-                        -8.868593221037319,
-                        -7.28015883205863,
-                        -5.69172444307994,
-                        -4.103290054101249,
-                        -2.5148556651225604,
-                        -0.9264212761438699,
-                        0.6620131128348206,
-                        2.250447501813511,
-                        3.838881890792198,
-                        5.4273162797708885,
-                        7.015750668749579,
-                        8.60418505772827,
-                        10.19261944670696,
-                        11.781053835685647,
-                        13.369488224664337,
-                        14.957922613643028,
-                        16.54635700262172,
-                        18.13479139160041,
-                        19.7232257805791,
-                        21.31166016955779
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.7725857268239643,
+                        "var": 7.25341791061352,
+                        "std": 2.693217018848188,
+                        "skew": 0.7822796904399127,
+                        "kurt": 19.04880642120136,
+                        "mad": 1.3342728032453803,
+                        "cv": 3.485806105338304,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            14,
+                            9,
+                            14,
+                            16,
+                            19,
+                            14,
+                            32,
+                            53,
+                            51,
+                            62,
+                            6,
+                            6526,
+                            2082,
+                            612,
+                            238,
+                            114,
+                            90,
+                            55,
+                            33,
+                            24,
+                            6,
+                            26,
+                            7,
+                            15,
+                            9
+                        ],
+                        "bin_edges": [
+                            -18.55327215544354,
+                            -16.950722986853414,
+                            -15.348173818263286,
+                            -13.74562464967316,
+                            -12.14307548108303,
+                            -10.540526312492904,
+                            -8.937977143902778,
+                            -7.3354279753126495,
+                            -5.732878806722523,
+                            -4.130329638132396,
+                            -2.527780469542268,
+                            -0.9252313009521416,
+                            0.677317867637985,
+                            2.2798670362281115,
+                            3.8824162048182416,
+                            5.484965373408368,
+                            7.087514541998495,
+                            8.690063710588621,
+                            10.292612879178748,
+                            11.895162047768878,
+                            13.497711216359004,
+                            15.100260384949127,
+                            16.702809553539257,
+                            18.305358722129387,
+                            19.90790789071951,
+                            21.510457059309644
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "MAX_DR_RATIO_CRE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "MAX_DR_RATIO_CRE",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 25,
-            "xtreme_method": "quantile"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1368,
-                    "perc": 0.13415710503089143
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "MAX_DR_RATIO_CRE",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "quantile",
+                "bins_": 25
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 102,
-                    "perc": 0.010002942041776994
+            "summary": {
+                "colname": "MAX_DR_RATIO_CRE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 1354,
+                        "perc": 0.13101112723754232
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": 0.0,
-                    "rbound": 1.232640563774915,
-                    "lxtreme_mean": null,
-                    "lxtreme_median": null,
-                    "rxtreme_mean": 1.523495175449326,
-                    "rxtreme_median": 1.4055439680851824
+                "xtreme_num": {
+                    "origin": {
+                        "value": 118,
+                        "perc": 0.011417513304305757
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.0,
-                    "perc_1th": 0.0,
-                    "perc_5th": 0.0,
-                    "q1": 0.009467790744345884,
-                    "median": 0.0415542342643251,
-                    "q3": 0.3265681654767062,
-                    "perc_95th": 0.7521713725797358,
-                    "perc_99th": 1.0329111789623358,
-                    "maximum": 1.2326124556552918,
-                    "iqr": 0.3171003747323603,
-                    "range": 1.2326124556552918
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": 0.0,
+                        "rbound": 1.8781128066932722,
+                        "lxtreme_mean": -44.57873038059152,
+                        "lxtreme_median": -6.831509599512275,
+                        "rxtreme_mean": 4.694958481669477,
+                        "rxtreme_median": 2.8603625199069977
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.194226087450247,
-                    "var": 0.06902898318693493,
-                    "std": 0.26273367349263577,
-                    "skew": 1.4771397577650702,
-                    "kurt": 1.4143795696124917,
-                    "mad": 0.2116932315576613,
-                    "cv": 1.352653825032876,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 0.0,
+                        "perc_1th": 0.0,
+                        "perc_5th": 0.0,
+                        "q1": 0.008835471158452837,
+                        "median": 0.040552646364094176,
+                        "q3": 0.2508721585066061,
+                        "perc_95th": 0.7833384684521308,
+                        "perc_99th": 1.346163414885156,
+                        "maximum": 1.8660839551543897,
+                        "iqr": 0.24203668734815326,
+                        "range": 1.8660839551543897
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        5251,
-                        657,
-                        399,
-                        382,
-                        327,
-                        358,
-                        335,
-                        272,
-                        285,
-                        261,
-                        250,
-                        229,
-                        207,
-                        201,
-                        136,
-                        122,
-                        100,
-                        70,
-                        61,
-                        41,
-                        52,
-                        36,
-                        21,
-                        23,
-                        19
-                    ],
-                    "bin_edges": [
-                        0.0,
-                        0.04930449822621167,
-                        0.09860899645242334,
-                        0.14791349467863502,
-                        0.19721799290484668,
-                        0.24652249113105834,
-                        0.29582698935727003,
-                        0.34513148758348167,
-                        0.39443598580969336,
-                        0.44374048403590505,
-                        0.4930449822621167,
-                        0.5423494804883283,
-                        0.5916539787145401,
-                        0.6409584769407517,
-                        0.6902629751669633,
-                        0.7395674733931751,
-                        0.7888719716193867,
-                        0.8381764698455983,
-                        0.8874809680718101,
-                        0.9367854662980217,
-                        0.9860899645242334,
-                        1.035394462750445,
-                        1.0846989609766566,
-                        1.1340034592028685,
-                        1.1833079574290801,
-                        1.2326124556552918
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.18190674176330765,
+                        "var": 0.08075639076423163,
+                        "std": 0.28417668933998025,
+                        "skew": 2.4555428355297457,
+                        "kurt": 7.0814656269183125,
+                        "mad": 0.20060974666899672,
+                        "cv": 1.5621344167549676,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            5803,
+                            849,
+                            777,
+                            575,
+                            491,
+                            373,
+                            291,
+                            201,
+                            177,
+                            113,
+                            113,
+                            73,
+                            79,
+                            62,
+                            34,
+                            42,
+                            30,
+                            31,
+                            25,
+                            13,
+                            15,
+                            14,
+                            13,
+                            12,
+                            11
+                        ],
+                        "bin_edges": [
+                            0.0,
+                            0.07464335820617558,
+                            0.14928671641235117,
+                            0.22393007461852676,
+                            0.29857343282470233,
+                            0.3732167910308779,
+                            0.44786014923705353,
+                            0.522503507443229,
+                            0.5971468656494047,
+                            0.6717902238555803,
+                            0.7464335820617558,
+                            0.8210769402679314,
+                            0.8957202984741071,
+                            0.9703636566802826,
+                            1.045007014886458,
+                            1.1196503730926337,
+                            1.1942937312988093,
+                            1.268937089504985,
+                            1.3435804477111606,
+                            1.418223805917336,
+                            1.4928671641235116,
+                            1.5675105223296872,
+                            1.6421538805358629,
+                            1.7167972387420385,
+                            1.7914405969482141,
+                            1.8660839551543897
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "TOTAL_CR_RATIO_CRE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "TOTAL_CR_RATIO_CRE",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 25,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1678,
-                    "perc": 0.16455820339315486
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "TOTAL_CR_RATIO_CRE",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 25
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 640,
-                    "perc": 0.06276355790918897
+            "summary": {
+                "colname": "TOTAL_CR_RATIO_CRE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 1688,
+                        "perc": 0.1633284954039671
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -2.654456379850854,
-                    "rbound": 4.42629269341467,
-                    "lxtreme_mean": -21.51577429475581,
-                    "lxtreme_median": -8.723256376851532,
-                    "rxtreme_mean": 25.263140252947867,
-                    "rxtreme_median": 6.989373124984684
+                "xtreme_num": {
+                    "origin": {
+                        "value": 843,
+                        "perc": 0.08156748911465893
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": -2.649380974768845,
-                    "perc_1th": 0.0,
-                    "perc_5th": 0.0,
-                    "q1": 0.0010052869659824687,
-                    "median": 0.03342834990423328,
-                    "q3": 1.657160965711547,
-                    "perc_95th": 2.97118213414797,
-                    "perc_99th": 3.9238481500768136,
-                    "maximum": 4.415588927790866,
-                    "iqr": 1.6561556787455645,
-                    "range": 7.064969902559711
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -2.118522885942328,
+                        "rbound": 3.532037878571872,
+                        "lxtreme_mean": -43.330249224669096,
+                        "lxtreme_median": -6.6920697098994335,
+                        "rxtreme_mean": 19.596312817848304,
+                        "rxtreme_median": 5.588578999736025
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.7788033451812753,
-                    "var": 1.2406325523061184,
-                    "std": 1.113836860723382,
-                    "skew": 1.0253198644034958,
-                    "kurt": 0.23368103901844606,
-                    "mad": 0.9637177201532211,
-                    "cv": 1.4301153079756483,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -2.114100580343969,
+                        "perc_1th": -0.8124837281053147,
+                        "perc_5th": 0.0,
+                        "q1": 0.0008431724054518091,
+                        "median": 0.027353419631652685,
+                        "q3": 1.287533612169861,
+                        "perc_95th": 2.413741488431811,
+                        "perc_99th": 3.1915379779145896,
+                        "maximum": 3.531999714560214,
+                        "iqr": 1.2866904397644092,
+                        "range": 5.646100294904183
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        11,
-                        9,
-                        9,
-                        12,
-                        10,
-                        9,
-                        11,
-                        4,
-                        2,
-                        5581,
-                        291,
-                        155,
-                        91,
-                        236,
-                        571,
-                        700,
-                        515,
-                        386,
-                        282,
-                        213,
-                        133,
-                        105,
-                        107,
-                        60,
-                        54
-                    ],
-                    "bin_edges": [
-                        -2.649380974768845,
-                        -2.3667821786664565,
-                        -2.0841833825640683,
-                        -1.8015845864616797,
-                        -1.5189857903592914,
-                        -1.236386994256903,
-                        -0.9537881981545144,
-                        -0.6711894020521261,
-                        -0.3885906059497377,
-                        -0.10599180984734913,
-                        0.176606986255039,
-                        0.4592057823574276,
-                        0.7418045784598162,
-                        1.0244033745622043,
-                        1.307002170664593,
-                        1.589600966766981,
-                        1.8721997628693696,
-                        2.154798558971758,
-                        2.437397355074147,
-                        2.7199961511765345,
-                        3.002594947278923,
-                        3.2851937433813116,
-                        3.5677925394837002,
-                        3.850391335586089,
-                        4.132990131688477,
-                        4.415588927790866
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.599008842434381,
+                        "var": 0.8100199744252892,
+                        "std": 0.9000110968345275,
+                        "skew": 1.0594416153525223,
+                        "kurt": 0.44340349173328386,
+                        "mad": 0.7639695683896668,
+                        "cv": 1.5024213716110368,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            15,
+                            10,
+                            20,
+                            15,
+                            22,
+                            19,
+                            4,
+                            5,
+                            1,
+                            5609,
+                            327,
+                            173,
+                            115,
+                            240,
+                            496,
+                            620,
+                            498,
+                            339,
+                            259,
+                            213,
+                            170,
+                            98,
+                            95,
+                            66,
+                            63
+                        ],
+                        "bin_edges": [
+                            -2.114100580343969,
+                            -1.8882565685478017,
+                            -1.6624125567516344,
+                            -1.4365685449554668,
+                            -1.2107245331592997,
+                            -0.9848805213631322,
+                            -0.7590365095669649,
+                            -0.5331924977707976,
+                            -0.30734848597463027,
+                            -0.08150447417846296,
+                            0.14433953761770457,
+                            0.37018354941387166,
+                            0.5960275612100392,
+                            0.8218715730062063,
+                            1.0477155848023738,
+                            1.273559596598541,
+                            1.4994036083947084,
+                            1.725247620190876,
+                            1.951091631987043,
+                            2.17693564378321,
+                            2.402779655579378,
+                            2.628623667375545,
+                            2.8544676791717123,
+                            3.0803116909678794,
+                            3.3061557027640474,
+                            3.531999714560214
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "MAX_CR_RATIO_CRE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "MAX_CR_RATIO_CRE",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 25,
-            "xtreme_method": "iqr"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1678,
-                    "perc": 0.16455820339315486
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "MAX_CR_RATIO_CRE",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": "iqr",
+                "bins_": 25
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 2,
-                    "perc": 0.00019613611846621556
+            "summary": {
+                "colname": "MAX_CR_RATIO_CRE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 1688,
+                        "perc": 0.1633284954039671
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -0.5450084791250392,
-                    "rbound": 0.9101371958283018,
-                    "lxtreme_mean": null,
-                    "lxtreme_median": null,
-                    "rxtreme_mean": 0.9457248744822974,
-                    "rxtreme_median": 0.9457248744822974
+                "xtreme_num": {
+                    "origin": {
+                        "value": 212,
+                        "perc": 0.020512820512820513
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 0.0,
-                    "perc_1th": 0.0,
-                    "perc_5th": 0.0,
-                    "q1": 0.0006706213248758337,
-                    "median": 0.012101614891485632,
-                    "q3": 0.3643448739834346,
-                    "perc_95th": 0.5772250265395296,
-                    "perc_99th": 0.6880213837859391,
-                    "maximum": 0.9053372360964066,
-                    "iqr": 0.3636742526585588,
-                    "range": 0.9053372360964066
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -0.43336730240489757,
+                        "rbound": 0.7241312404916139,
+                        "lxtreme_mean": -17.540713224243092,
+                        "lxtreme_median": -2.0871913580246915,
+                        "rxtreme_mean": 1.2884138909049585,
+                        "rxtreme_median": 0.9337693222354341
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 0.17458147474064098,
-                    "var": 0.04693351888087331,
-                    "std": 0.21664145236051505,
-                    "skew": 0.8215706309589117,
-                    "kurt": -0.7394383887217337,
-                    "mad": 0.19468987483612743,
-                    "cv": 1.2408580436983534,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -0.4184788726628939,
+                        "perc_1th": 0.0,
+                        "perc_5th": 0.0,
+                        "q1": 0.0006172416861778898,
+                        "median": 0.010080664633958743,
+                        "q3": 0.27832369888776987,
+                        "perc_95th": 0.515291825522654,
+                        "perc_99th": 0.6524243507727486,
+                        "maximum": 0.7229087181823359,
+                        "iqr": 0.277706457201592,
+                        "range": 1.1413875908452298
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        5559,
-                        209,
-                        130,
-                        89,
-                        86,
-                        212,
-                        300,
-                        326,
-                        362,
-                        352,
-                        411,
-                        381,
-                        392,
-                        352,
-                        290,
-                        245,
-                        191,
-                        132,
-                        74,
-                        46,
-                        32,
-                        10,
-                        5,
-                        4,
-                        5
-                    ],
-                    "bin_edges": [
-                        0.0,
-                        0.036213489443856266,
-                        0.07242697888771253,
-                        0.10864046833156879,
-                        0.14485395777542506,
-                        0.18106744721928134,
-                        0.21728093666313758,
-                        0.25349442610699385,
-                        0.2897079155508501,
-                        0.3259214049947064,
-                        0.36213489443856267,
-                        0.39834838388241894,
-                        0.43456187332627516,
-                        0.47077536277013143,
-                        0.5069888522139877,
-                        0.543202341657844,
-                        0.5794158311017003,
-                        0.6156293205455565,
-                        0.6518428099894128,
-                        0.6880562994332691,
-                        0.7242697888771253,
-                        0.7604832783209816,
-                        0.7966967677648379,
-                        0.8329102572086942,
-                        0.8691237466525503,
-                        0.9053372360964066
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 0.14322492263378053,
+                        "var": 0.03431614600813914,
+                        "std": 0.18524617677063984,
+                        "skew": 1.0265040088451958,
+                        "kurt": -0.09028935107358471,
+                        "mad": 0.1610995300427439,
+                        "cv": 1.2933295642379106,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            1,
+                            0,
+                            1,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            5627,
+                            261,
+                            168,
+                            266,
+                            491,
+                            623,
+                            555,
+                            497,
+                            414,
+                            362,
+                            271,
+                            189,
+                            153,
+                            105,
+                            77,
+                            61
+                        ],
+                        "bin_edges": [
+                            -0.4184788726628939,
+                            -0.3728233690290847,
+                            -0.32716786539527554,
+                            -0.2815123617614663,
+                            -0.23585685812765714,
+                            -0.19020135449384795,
+                            -0.14454585086003874,
+                            -0.09889034722622958,
+                            -0.05323484359242037,
+                            -0.007579339958611153,
+                            0.038076163675198005,
+                            0.08373166730900722,
+                            0.12938717094281643,
+                            0.17504267457662565,
+                            0.22069817821043475,
+                            0.26635368184424396,
+                            0.3120091854780532,
+                            0.3576646891118624,
+                            0.4033201927456716,
+                            0.4489756963794807,
+                            0.4946312000132899,
+                            0.5402867036470991,
+                            0.5859422072809084,
+                            0.6315977109147175,
+                            0.6772532145485268,
+                            0.7229087181823359
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "NUM_ACCTS": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "NUM_ACCTS",
-        "attr": {
-            "setaside_zero": false,
-            "log_scale": false,
-            "bins": 5,
-            "xtreme_method": null
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "NUM_ACCTS",
+            "attr": {
+                "setaside_zero_": false,
+                "log_scale_": false,
+                "xtreme_method_": null,
+                "bins_": 5
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 0,
-                    "perc": 0.0
+            "summary": {
+                "colname": "NUM_ACCTS",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": null,
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": 1.0,
-                    "perc_1th": 1.0,
-                    "perc_5th": 1.0,
-                    "q1": 2.0,
-                    "median": 3.0,
-                    "q3": 4.0,
-                    "perc_95th": 5.0,
-                    "perc_99th": 5.0,
-                    "maximum": 5.0,
-                    "iqr": 2.0,
-                    "range": 4.0
+                "xtreme_num": {
+                    "origin": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": 2.9805825242718447,
-                    "var": 2.0100191584744826,
-                    "std": 1.4177514445326735,
-                    "skew": 0.017759393294274783,
-                    "kurt": -1.306330925273434,
-                    "mad": 1.208480316407548,
-                    "cv": 0.4756392125422642,
-                    "normality_p": 0.0
+                "xtreme_stat": {
+                    "origin": null,
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        2093,
-                        2056,
-                        2017,
-                        2018,
-                        2013
-                    ],
-                    "bin_edges": [
-                        1.0,
-                        1.8,
-                        2.6,
-                        3.4000000000000004,
-                        4.2,
-                        5.0
-                    ]
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": 1.0,
+                        "perc_1th": 1.0,
+                        "perc_5th": 1.0,
+                        "q1": 2.0,
+                        "median": 3.0,
+                        "q3": 4.0,
+                        "perc_95th": 5.0,
+                        "perc_99th": 5.0,
+                        "maximum": 5.0,
+                        "iqr": 2.0,
+                        "range": 4.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": 3.0328979196903725,
+                        "var": 2.0066590581870782,
+                        "std": 1.4165659385242462,
+                        "skew": -0.030540724482539798,
+                        "kurt": -1.3080726728588201,
+                        "mad": 1.2123060820051261,
+                        "cv": 0.4670442071955616,
+                        "normality_p": 0.0
+                    },
+                    "log": null
+                },
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            2002,
+                            2061,
+                            2004,
+                            2131,
+                            2137
+                        ],
+                        "bin_edges": [
+                            1.0,
+                            1.8,
+                            2.6,
+                            3.4000000000000004,
+                            4.2,
+                            5.0
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "TOTAL_FLOW": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "TOTAL_FLOW",
-        "attr": {
-            "setaside_zero": true,
-            "log_scale": false,
-            "bins": 25,
-            "xtreme_method": "quantile"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 1368,
-                    "perc": 0.13415710503089143
-                },
-                "infs_pos": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "infs_neg": {
-                    "value": 0,
-                    "perc": 0.0
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "TOTAL_FLOW",
+            "attr": {
+                "setaside_zero_": true,
+                "log_scale_": false,
+                "xtreme_method_": "quantile",
+                "bins_": 25
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 178,
-                    "perc": 0.017456114543493183
+            "summary": {
+                "colname": "TOTAL_FLOW",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 1354,
+                        "perc": 0.13101112723754232
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -103338.8404,
-                    "rbound": 14730.396799999975,
-                    "lxtreme_mean": -144645.36258426966,
-                    "lxtreme_median": -133619.93000000002,
-                    "rxtreme_mean": 27034.631460674158,
-                    "rxtreme_median": 19287.339999999997
+                "xtreme_num": {
+                    "origin": {
+                        "value": 180,
+                        "perc": 0.01741654571843251
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": -102898.15,
-                    "perc_1th": -75755.38500000001,
-                    "perc_5th": -44862.384999999995,
-                    "q1": -9651.345000000001,
-                    "median": -1292.4199999999996,
-                    "q3": 851.0100000000001,
-                    "perc_95th": 5908.285,
-                    "perc_99th": 10559.94,
-                    "maximum": 14703.8,
-                    "iqr": 10502.355000000001,
-                    "range": 117601.95
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -82166.522,
+                        "rbound": 13073.252000000051,
+                        "lxtreme_mean": -110987.32066666667,
+                        "lxtreme_median": -98443.34000000001,
+                        "rxtreme_mean": 24147.68288888889,
+                        "rxtreme_median": 19270.515
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": -7635.988500751358,
-                    "var": 278444727.2117103,
-                    "std": 16686.663153899593,
-                    "skew": -2.4889148695735357,
-                    "kurt": 7.131607386847714,
-                    "mad": 11347.329485659642,
-                    "cv": -2.1851393161314796,
-                    "normality_p": 0.0
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -82069.09,
+                        "perc_1th": -65017.97999999999,
+                        "perc_5th": -37249.73,
+                        "q1": -7562.640000000001,
+                        "median": -1048.36,
+                        "q3": 619.8899999999996,
+                        "perc_95th": 4919.4,
+                        "perc_99th": 9276.77,
+                        "maximum": 13058.83,
+                        "iqr": 8182.530000000001,
+                        "range": 95127.92
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        19,
-                        11,
-                        8,
-                        13,
-                        16,
-                        28,
-                        28,
-                        28,
-                        49,
-                        56,
-                        71,
-                        72,
-                        98,
-                        103,
-                        132,
-                        157,
-                        220,
-                        289,
-                        379,
-                        463,
-                        749,
-                        3273,
-                        1865,
-                        410,
-                        114
-                    ],
-                    "bin_edges": [
-                        -102898.15,
-                        -98194.072,
-                        -93489.99399999999,
-                        -88785.916,
-                        -84081.83799999999,
-                        -79377.76,
-                        -74673.682,
-                        -69969.60399999999,
-                        -65265.526,
-                        -60561.448,
-                        -55857.369999999995,
-                        -51153.292,
-                        -46449.214,
-                        -41745.136,
-                        -37041.058000000005,
-                        -32336.979999999996,
-                        -27632.902000000002,
-                        -22928.824000000008,
-                        -18224.746,
-                        -13520.668000000005,
-                        -8816.589999999997,
-                        -4112.512000000002,
-                        591.5659999999916,
-                        5295.644,
-                        9999.721999999994,
-                        14703.8
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": -6404.695274400637,
+                        "var": 196671328.82778412,
+                        "std": 14023.955534291461,
+                        "skew": -2.4607037265634717,
+                        "kurt": 6.765943468264271,
+                        "mad": 9489.028994059601,
+                        "cv": -2.18951225401624,
+                        "normality_p": 0.0
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            16,
+                            15,
+                            27,
+                            23,
+                            27,
+                            26,
+                            31,
+                            39,
+                            49,
+                            60,
+                            65,
+                            85,
+                            109,
+                            119,
+                            147,
+                            199,
+                            227,
+                            300,
+                            376,
+                            519,
+                            1137,
+                            3774,
+                            1043,
+                            298,
+                            90
+                        ],
+                        "bin_edges": [
+                            -82069.09,
+                            -78263.9732,
+                            -74458.85639999999,
+                            -70653.7396,
+                            -66848.6228,
+                            -63043.505999999994,
+                            -59238.3892,
+                            -55433.2724,
+                            -51628.1556,
+                            -47823.038799999995,
+                            -44017.922,
+                            -40212.8052,
+                            -36407.6884,
+                            -32602.571599999996,
+                            -28797.4548,
+                            -24992.338000000003,
+                            -21187.2212,
+                            -17382.104399999997,
+                            -13576.987599999993,
+                            -9771.870800000004,
+                            -5966.754000000001,
+                            -2161.6371999999974,
+                            1643.4795999999915,
+                            5448.596399999995,
+                            9253.713199999998,
+                            13058.83
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     },
-    "DEB_TO_CRE": {
+    {
+        "constructor": "NumericFeaturePreprocModel",
         "colname": "DEB_TO_CRE",
-        "attr": {
-            "setaside_zero": true,
-            "log_scale": false,
-            "bins": 25,
-            "xtreme_method": "quantile"
-        },
-        "params": {
-            "stats": {
-                "total": 10197,
-                "missing": {
-                    "value": 0,
-                    "perc": 0.0
-                },
-                "zeros": {
-                    "value": 2878,
-                    "perc": 0.2822398744728842
-                },
-                "infs_pos": {
-                    "value": 884,
-                    "perc": 0.08669216436206728
-                },
-                "infs_neg": {
-                    "value": 484,
-                    "perc": 0.04746494066882417
-                }
+        "stat_obj": {
+            "constructor": "NumericStatObj",
+            "colname": "DEB_TO_CRE",
+            "attr": {
+                "setaside_zero_": true,
+                "log_scale_": false,
+                "xtreme_method_": "quantile",
+                "bins_": 25
             },
-            "xtreme_num": {
-                "origin": {
-                    "value": 120,
-                    "perc": 0.011768167107972934
+            "summary": {
+                "colname": "DEB_TO_CRE",
+                "stats": {
+                    "total": 10335,
+                    "missing": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "zeros": {
+                        "value": 4205,
+                        "perc": 0.40686985970004835
+                    },
+                    "infs_pos": {
+                        "value": 0,
+                        "perc": 0.0
+                    },
+                    "infs_neg": {
+                        "value": 0,
+                        "perc": 0.0
+                    }
                 },
-                "log": null
-            },
-            "xtreme_stat": {
-                "origin": {
-                    "lbound": -44.04489460908323,
-                    "rbound": 36.29187631821193,
-                    "lxtreme_mean": -252.84475088577855,
-                    "lxtreme_median": -110.31321962127726,
-                    "rxtreme_mean": 237.79402971141775,
-                    "rxtreme_median": 81.05504203091732
+                "xtreme_num": {
+                    "origin": {
+                        "value": 124,
+                        "perc": 0.011998064828253507
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_quantile": {
-                "origin": {
-                    "minimum": -43.60202497049512,
-                    "perc_1th": -20.32833888513114,
-                    "perc_5th": -5.618343608011666,
-                    "q1": -0.43492341055950423,
-                    "median": -0.018386569199499735,
-                    "q3": 0.2854958099031546,
-                    "perc_95th": 4.546575711102679,
-                    "perc_99th": 16.537596968117114,
-                    "maximum": 35.97032407164244,
-                    "iqr": 0.7204192204626588,
-                    "range": 79.57234904213756
+                "xtreme_stat": {
+                    "origin": {
+                        "lbound": -43.389352276064855,
+                        "rbound": 35.630406208093035,
+                        "lxtreme_mean": -289.07321973886224,
+                        "lxtreme_median": -93.05338474275223,
+                        "rxtreme_mean": 129.64044291366196,
+                        "rxtreme_median": 52.14553421467364
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "stat_descriptive": {
-                "origin": {
-                    "mean": -0.22399006231234475,
-                    "var": 26.312338971027213,
-                    "std": 5.1295554360029305,
-                    "skew": -1.146308903476533,
-                    "kurt": 22.020456820992994,
-                    "mad": 2.0728697599186248,
-                    "cv": -22.898853244076296,
-                    "normality_p": 2.7962588642345402e-118
+                "stat_quantile": {
+                    "origin": {
+                        "minimum": -43.027289351526235,
+                        "perc_1th": -22.35295776671775,
+                        "perc_5th": -5.269347144632957,
+                        "q1": -0.43425539690038567,
+                        "median": -0.012800892396481547,
+                        "q3": 0.3244712637321213,
+                        "perc_95th": 4.958344794410827,
+                        "perc_99th": 17.920206809423526,
+                        "maximum": 35.47864209687251,
+                        "iqr": 0.7587266606325069,
+                        "range": 78.50593144839874
+                    },
+                    "log": null
                 },
-                "log": null
-            },
-            "histogram": {
-                "origin": {
-                    "hist": [
-                        5,
-                        6,
-                        8,
-                        5,
-                        6,
-                        11,
-                        13,
-                        22,
-                        30,
-                        38,
-                        57,
-                        104,
-                        325,
-                        4292,
-                        580,
-                        134,
-                        64,
-                        51,
-                        25,
-                        12,
-                        9,
-                        15,
-                        6,
-                        4,
-                        9
-                    ],
-                    "bin_edges": [
-                        -43.60202497049512,
-                        -40.41913100880962,
-                        -37.23623704712412,
-                        -34.05334308543861,
-                        -30.87044912375311,
-                        -27.68755516206761,
-                        -24.50466120038211,
-                        -21.321767238696605,
-                        -18.138873277011104,
-                        -14.955979315325603,
-                        -11.773085353640099,
-                        -8.590191391954598,
-                        -5.407297430269097,
-                        -2.2244034685835956,
-                        0.9584904931019125,
-                        4.1413844547874135,
-                        7.324278416472914,
-                        10.507172378158415,
-                        13.690066339843916,
-                        16.872960301529424,
-                        20.055854263214925,
-                        23.23874822490042,
-                        26.421642186585927,
-                        29.604536148271436,
-                        32.78743010995693,
-                        35.97032407164244
-                    ]
+                "stat_descriptive": {
+                    "origin": {
+                        "mean": -0.12965880589768677,
+                        "var": 26.052274483677575,
+                        "std": 5.104142874536094,
+                        "skew": -0.945358134246505,
+                        "kurt": 21.561578054062597,
+                        "mad": 2.032887545565703,
+                        "cv": -39.36267884925141,
+                        "normality_p": 4.564315977283733e-104
+                    },
+                    "log": null
                 },
-                "log": {
-                    "hist": null,
-                    "bin_edges": null
+                "histogram": {
+                    "origin": {
+                        "hist": [
+                            6,
+                            5,
+                            3,
+                            10,
+                            12,
+                            14,
+                            12,
+                            14,
+                            18,
+                            39,
+                            54,
+                            106,
+                            336,
+                            4395,
+                            621,
+                            159,
+                            74,
+                            31,
+                            25,
+                            16,
+                            22,
+                            10,
+                            8,
+                            8,
+                            8
+                        ],
+                        "bin_edges": [
+                            -43.027289351526235,
+                            -39.887052093590285,
+                            -36.746814835654334,
+                            -33.60657757771838,
+                            -30.46634031978244,
+                            -27.32610306184649,
+                            -24.185865803910538,
+                            -21.04562854597459,
+                            -17.90539128803864,
+                            -14.76515403010269,
+                            -11.624916772166742,
+                            -8.484679514230791,
+                            -5.34444225629484,
+                            -2.2042049983588896,
+                            0.936032259577054,
+                            4.076269517513005,
+                            7.216506775448956,
+                            10.356744033384906,
+                            13.496981291320857,
+                            16.6372185492568,
+                            19.77745580719275,
+                            22.917693065128702,
+                            26.057930323064653,
+                            29.198167581000604,
+                            32.338404838936555,
+                            35.47864209687251
+                        ]
+                    },
+                    "log": {
+                        "hist": null,
+                        "bin_edges": null
+                    }
                 }
             }
         },
-        "constructor": "NumericStat"
+        "preproc": {
+            "impute": true,
+            "normalize": false,
+            "standardize_strategy": "robust"
+        }
     }
-}
+]

@@ -108,16 +108,15 @@ def register_predefined_fake_models(model_name: str):
         with open(coeff_file_path) as obj:
             model_coeffs = json.load(obj)
         
-        # register model
-        try:
-            frm.register(
-                model_id = model_id,
-                feature_profile = feature_profile,
-                model_coeffs = model_coeffs,
-                description = meta['description']
-            )
-        except AssertionError as e:
-            pass
+        if model_id in frm.get_model_list():
+            frm.remove(model_id=model_id)
+            
+        frm.register(
+            model_id = model_id,
+            feature_profile = feature_profile,
+            model_coeffs = model_coeffs,
+            description = meta['description']
+        )
         
         # register to timetable
         effective_weeks = meta['effective_weeks']

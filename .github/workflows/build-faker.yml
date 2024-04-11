@@ -43,6 +43,7 @@ jobs:
           SECRET_TOML_PATH: ${{ vars.SECRET_TOML_PATH }}
         run: |
           python -m src.dag_run update_exec_plan_2_db
+          python -m src.dag_run register_fake_model
 
   # job2 - CI
   build-image:

@@ -14,19 +14,25 @@ from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import BaseFeaturePrep
 from src.services.eda.apis.plots import get_nominal_ordinal_plots, get_binary_plots, get_numeric_plots, \
         plot_table_profiling_to_html_string
 # TODO: will replace the below imports into micro service
-from src.services.eda.apis.apis import RemoteDataManagerForRegistry, RemoteDataManagerForQuery
+from src.services.eda.apis.apis import DataManagerIbisForRegistry, DataManagerIbisForQuery, \
+    DataManagerPandasForObjStorage
 
 
 def get_data_manager():
     data_config = st.session_state['data_config']
     if data_config['source'] == 'data_registry':
-        return RemoteDataManagerForRegistry(
+        return DataManagerIbisForRegistry(
             data_id = data_config['config']['data_id'],
             is_train = data_config['config']['is_train']
         )
     elif data_config['source'] == 'ad_hoc_query':
-        return RemoteDataManagerForQuery(
+        return DataManagerIbisForQuery(
             query = data_config['config']['query']
+        )
+    elif data_config['source'] == 'ad_hoc_file':
+        return DataManagerPandasForObjStorage(
+            bucket = data_config['config']['bucket'],
+            file_path = data_config['config']['file_path']
         )
 
 

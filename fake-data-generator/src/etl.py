@@ -11,7 +11,7 @@ from luntaiDs.CommonTools.utils import dt2str, str2dt
 
 from src.data_connection import Connection
 from src.model import CustFeature, AcctFeature, lognormal2normal
-from src.registry import FakeModelRegistryMongo, load_fake_model_by_timetable
+from src.registry import load_fake_model_by_timetable
 
 
 SnapshotDataManagerObjStorage.setup(
