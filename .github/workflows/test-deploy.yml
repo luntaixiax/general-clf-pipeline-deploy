@@ -37,11 +37,9 @@ jobs:
           port: ${{ secrets.FAKER_PORT }}
           envs: IMAGE
           script: |
-            bash -l -c "$(cat <<- EOF
+
             echo "Login to $(hostname)"
             echo "trying to pull docker image: $IMAGE"
-            docker pull $IMAGE
-            EOF
-            )"
+            /Volume1/@apps/DockerEngine/dockerd/bin/docker pull $IMAGE
             
             
