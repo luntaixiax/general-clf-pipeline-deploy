@@ -105,17 +105,21 @@ jobs:
 
       - name: pull image on faker prod machine
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}:${{ steps.ver_tag.outputs.data }}
         with:
           host: ${{ secrets.FAKER_HOST }}
           password: ${{ secrets.FAKER_PASSWORD }}
           username: ${{ secrets.FAKER_USERNAME }}
           port: ${{ secrets.FAKER_PORT }}
+          envs: IMAGE
           script: |
+            whoami
+            hostname
+            pwd
             exec bash \-l
             bash
             echo "login to host: $(hostname), current path: $(pwd)"
 
-            model_hub_nm=${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}
-            echo trying to pull docker image: ${model_hub_nm}:${{ steps.ver_tag.outputs.data }}
-            
-            docker pull ${model_hub_nm}:${{ steps.ver_tag.outputs.data }}
+            echo "trying to pull docker image: $IMAGE"
+            docker pull $IMAGE
