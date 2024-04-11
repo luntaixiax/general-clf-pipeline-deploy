@@ -36,10 +36,10 @@ jobs:
 
           echo "trying to pull docker image: $IMAGE:$TAG"
           curl -X 'POST' \
-            'http://${{ secrets.FAKER_HOST }}:$NAS_SERVICE_PORT/docker/image/pull' \
+            'http://192.168.2.84:9876/docker/image/pull' \
             -H 'accept: application/json' \
             -H 'Content-Type: application/json' \
             -d '{
-            "image_name": "$IMAGE",
-            "tag": "$TAG"
-          }'
+              "image_name": "$IMAGE",
+              "tag": "$TAG"
+            }'
