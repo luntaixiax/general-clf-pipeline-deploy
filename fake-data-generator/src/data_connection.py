@@ -95,7 +95,7 @@ def get_airflow_api() -> AirflowAPI:
 
 
     
-class Singleton (type):
+class Singleton(type):
     _instances = {}
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
