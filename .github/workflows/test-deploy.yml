@@ -40,9 +40,9 @@ jobs:
           port: ${{ secrets.FAKER_PORT }}
           envs: IMAGE,TAG,NAS_SERVICE_HOST,NAS_SERVICE_PORT
           script: |
-            echo "Login to $(hostname), starting NAS-Service@$NAS_SERVICE_HOST:$NAS_SERVICE_PORT"
-            cd codes/nas-services
-            python -m uvicorn app:app --host $NAS_SERVICE_HOST --port $NAS_SERVICE_PORT
+            echo "Login to $(hostname), operating on NAS-Service@$NAS_SERVICE_HOST:$NAS_SERVICE_PORT"
+            #cd codes/nas-services
+            #python -m uvicorn app:app --host $NAS_SERVICE_HOST --port $NAS_SERVICE_PORT
 
             echo "trying to pull docker image: $IMAGE:$TAG"
             ter_curl -X 'POST' 'http://$NAS_SERVICE_HOST:$NAS_SERVICE_PORT/docker/image/pull' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"image_name": "$IMAGE", "tag": "$TAG"}' 
