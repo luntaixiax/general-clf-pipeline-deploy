@@ -37,14 +37,12 @@ jobs:
           port: ${{ secrets.FAKER_PORT }}
           envs: IMAGE
           script: |
+            exec bash \-l
+            bash
+            
             whoami
             hostname
             pwd
             docker pull $IMAGE
-            
-            exec bash \-l
-            bash
-            echo "login to host: $(hostname), current path: $(pwd)"
-
             echo "trying to pull docker image: $IMAGE"
-            docker pull $IMAGE
+            
