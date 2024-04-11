@@ -26,21 +26,23 @@ jobs:
           file: './fake-data-generator/build.yml'
           key-path: '["metadata", "docker-image-name"]'
 
-      - name: pull image on faker prod machine
+      - name: start nas services on faker prod machine
         uses: appleboy/ssh-action@v1.0.3
         env:
-          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}:${{ steps.ver_tag.outputs.data }}
+          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}
+          TAG: ${{ steps.ver_tag.outputs.data }}
+          NAS_SERVICE_HOST: "0.0.0.0"
+          NAS_SERVICE_PORT: 9876
         with:
           host: ${{ secrets.FAKER_HOST }}
           password: ${{ secrets.FAKER_PASSWORD }}
           username: ${{ secrets.FAKER_USERNAME }}
           port: ${{ secrets.FAKER_PORT }}
-          envs: IMAGE
+          envs: IMAGE,TAG,NAS_SERVICE_HOST,NAS_SERVICE_PORT
           script: |
-            source ~/.bashrc
+            echo "Login to $(hostname), starting NAS-Service@$NAS_SERVICE_HOST:$NAS_SERVICE_PORT"
+            cd codes/nas-services
+            python -m uvicorn app:app --host $NAS_SERVICE_HOST --port $NAS_SERVICE_PORT
 
-            echo "Login to $hostname"
-            echo "trying to pull docker image: $IMAGE"
-            docker pull $IMAGE
-            
-            
+            echo "trying to pull docker image: $IMAGE:$TAG"
+            ter_curl -X 'POST' 'http://$NAS_SERVICE_HOST:$NAS_SERVICE_PORT/docker/image/pull' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"image_name": "$IMAGE", "tag": "$TAG"}' 
