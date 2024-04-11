@@ -9,7 +9,6 @@ on:
 jobs:
   deploy:
     runs-on: luntaixia-ubuntu # need self hosted runner as need connect to local servers
-    needs: build-image  # will depend on previous step `build`
     steps:
       - uses: actions/checkout@v4
 
