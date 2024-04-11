@@ -5,7 +5,7 @@ on:
       - 'main'
     paths:
       - "fake-data-generator/**"
-      - ".github/workflows/build-faker.yml"
+      #- ".github/workflows/build-faker.yml"
 
 jobs:
   # job1 - testing

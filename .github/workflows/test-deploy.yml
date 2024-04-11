@@ -1,0 +1,51 @@
+name: test and build fake data generator
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - ".github/workflows/test-deploy.yml"
+
+jobs:
+  deploy:
+    runs-on: luntaixia-ubuntu # need self hosted runner as need connect to local servers
+    needs: build-image  # will depend on previous step `build`
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: read model version tag
+        id: ver_tag
+        uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
+        with:
+          file: './fake-data-generator/build.yml'
+          key-path: '["metadata", "version-tag"]'
+
+      - name: read dockerhub model name
+        id: model_nm
+        uses: jbutcher5/read-yaml@main  # read yaml prebuilt action
+        with:
+          file: './fake-data-generator/build.yml'
+          key-path: '["metadata", "docker-image-name"]'
+
+      - name: pull image on faker prod machine
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.model_nm.outputs.data }}:${{ steps.ver_tag.outputs.data }}
+        with:
+          host: ${{ secrets.FAKER_HOST }}
+          password: ${{ secrets.FAKER_PASSWORD }}
+          username: ${{ secrets.FAKER_USERNAME }}
+          port: ${{ secrets.FAKER_PORT }}
+          envs: IMAGE
+          script: |
+            whoami
+            hostname
+            pwd
+            docker pull $IMAGE
+            
+            exec bash \-l
+            bash
+            echo "login to host: $(hostname), current path: $(pwd)"
+
+            echo "trying to pull docker image: $IMAGE"
+            docker pull $IMAGE
