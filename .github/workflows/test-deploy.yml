@@ -1,4 +1,4 @@
-name: test and build fake data generator
+name: test deployment
 on:
   push:
     branches:
@@ -38,7 +38,6 @@ jobs:
           envs: IMAGE
           script: |
             exec bash \-l
-            bash
             
             whoami
             hostname
