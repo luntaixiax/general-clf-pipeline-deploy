@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  clickhouse:
+  data_warehouse:
     image: clickhouse/clickhouse-server
     container_name: clickhouse
     ports:
@@ -23,16 +23,45 @@ services:
       timeout: 10s
       retries: 5
 
-  mongodb:
+  optuna_storage:
+    image: mysql:latest
+    container_name: mysql
+    volumes:
+      - ${MYSQL_DATA_PATH:-./docker-volume-mapping/mysql}/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD_FILE: "/run/secrets/mysql_root_password"
+      MYSQL_USER: "luntaixia"
+      MYSQL_PASSWORD: "luntaixia"
+    secrets:
+      - mysql_root_password
+    ports:
+      - 3307:3306
+    command:
+      --default-authentication-plugin=caching_sha2_password
+      --log-error-verbosity=1
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD']
+      #test: ["CMD", "whoami"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+
+  nosql_storage:
     image: mongo
     container_name: mongodb
     ports:
       - 27017:27017
     volumes:
-      - ${MONGO_VOLUME_MAPPING:-./docker-volume-mapping/mongodb}:/data  # the below volumes part
+      - ${MONGO_VOLUME_MAPPING:-./docker-volume-mapping/mongodb}/configdb:/data/configdb  # the below volumes part
+      - ${MONGO_VOLUME_MAPPING:-./docker-volume-mapping/mongodb}/db:/data/db  # the below volumes part
+    secrets:
+      - mongodb_root_password
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=rootuser
-      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+        MONGO_INITDB_ROOT_USERNAME: rootuser
+        MONGO_INITDB_ROOT_PASSWORD_FILE: "/run/secrets/mongodb_root_password"
     healthcheck:
       test: |
         echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
@@ -40,13 +69,19 @@ services:
       timeout: 10s
       retries: 5
 
-  mongo-express:
+  mongodb_admin:
     image: mongo-express
     container_name: mongo-express
     restart: always
     ports:
       - 8081:8081
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: rootuser
+      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpass
+      ME_CONFIG_MONGODB_SERVER: mongodb
+
+secrets:
+  mysql_root_password:
+    file: ./configs/secrets/mysql_root_password.txt
+  mongodb_root_password:
+    file: ./configs/secrets/mongo_root_password.txt

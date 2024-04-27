@@ -5,3 +5,4 @@ secrets.toml
 *.ipynb
 .vscode
 *local_test_run.py
+datastack/configs/secrets/*

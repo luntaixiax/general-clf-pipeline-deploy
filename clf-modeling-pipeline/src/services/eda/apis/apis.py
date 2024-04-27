@@ -8,27 +8,13 @@ from luntaiDs.ModelingTools.Explore.engines.pandas import EDAEnginePandas
 from luntaiDs.ModelingTools.Explore.summary import BinaryStatAttr, NominalCategStatAttr, \
         OrdinalCategStatAttr, NumericStatAttr, BinaryStatObj, NumericStatObj, \
             NominalCategStatObj, OrdinalCategStatObj
-from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import BaseFeaturePreproc, BinaryFeaturePreproc, \
+from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import BinaryFeaturePreproc, \
     NumericFeaturePreproc, NominalCategFeaturePreproc, OrdinalCategFeaturePreproc, \
     BinaryFeaturePreprocModel, NominalFeaturePreprocModel, OrdinalFeaturePreprocModel, \
     NumericFeaturePreprocModel, TabularPreprocModel
 from src.data_layer.data_connection import Connection
-from src.data_layer.training_data import ConvModelingDataRegistry
-from src.data_layer.model_registry import EdaProfilingRegistryMongo
-from src.data_layer.dbapi import TableSchema, CH_HANDLER
+from src.data_layer.dbapi import CH_HANDLER, EDA_PREPROC_REGISTRY, CONV_MODEL_DATA_REGISTRY
 
-CMDR = ConvModelingDataRegistry(
-    handler = CH_HANDLER, 
-    schema = 'TARGET', 
-    table = 'TRAINING'
-)
-CMDR.init_table()
-
-EDA_REGISTRY = EdaProfilingRegistryMongo(
-    mongo_client = Connection().MONGO,
-    db = 'modeling',
-    collection = 'registry_eda'
-)
 
 OBJ_HANDLE = Connection().S3A
 
@@ -37,11 +23,11 @@ class _BaseDataManager:
     
     @classmethod
     def get_existing_eda_model_ids(cls) -> List[str]:
-        return EDA_REGISTRY.get_model_list()
+        return EDA_PREPROC_REGISTRY.get_model_list()
     
     @classmethod
     def get_existing_eda_data_source_config(cls, eda_model_id: str) -> dict:
-        model_config = EDA_REGISTRY.get_model_config(eda_model_id)
+        model_config = EDA_PREPROC_REGISTRY.get_model_config(eda_model_id)
         return {
             'source' : model_config['data_source'],
             'config' : model_config['data_config']
@@ -49,7 +35,7 @@ class _BaseDataManager:
         
     @classmethod
     def get_existing_data_ids_from_data_registry(cls) -> List[str]:
-        return CMDR.get_existing_ids()
+        return CONV_MODEL_DATA_REGISTRY.get_existing_ids()
     
     @classmethod
     def get_existing_buckets_from_obj_storage(cls) -> List[str]:
@@ -57,12 +43,12 @@ class _BaseDataManager:
     
     @classmethod       
     def get_existing_eda_model_profile(cls, eda_model_id: str) -> list:
-        tpm: TabularPreprocModel = EDA_REGISTRY.load_model(eda_model_id)
+        tpm: TabularPreprocModel = EDA_PREPROC_REGISTRY.load_model(eda_model_id)
         return tpm.serialize()
     
     @classmethod
     def delete_eda_model(cls, eda_model_id: str):
-        EDA_REGISTRY.remove(model_id = eda_model_id)
+        EDA_PREPROC_REGISTRY.remove(model_id = eda_model_id)
         
     def get_eda_engine(self) -> _BaseEDAEngine:
         raise NotImplementedError("")
@@ -155,10 +141,10 @@ class _BaseDataManager:
     def train_and_save_eda_model(self, eda_model_id: str, serialized_profile: dict) -> list:
         tpm = self.train_eda_model(serialized_profile)
         
-        if eda_model_id in EDA_REGISTRY.get_model_list():
-            EDA_REGISTRY.remove(model_id = eda_model_id)
+        if eda_model_id in EDA_PREPROC_REGISTRY.get_model_list():
+            EDA_PREPROC_REGISTRY.remove(model_id = eda_model_id)
         
-        EDA_REGISTRY.register(
+        EDA_PREPROC_REGISTRY.register(
             model_id = eda_model_id,
             tpm = tpm,
             data_source = self.DATA_SOURCE,
@@ -228,7 +214,7 @@ class DataManagerIbisForRegistry(_BaseDataManagerIbis):
         }
         
     def _get_data(self) -> ibis.expr.types.Table:
-        train_ds, test_ds = CMDR.fetch(data_id = self._data_id)
+        train_ds, test_ds = CONV_MODEL_DATA_REGISTRY.fetch(data_id = self._data_id)
         if self._is_train:
             return train_ds
         else:

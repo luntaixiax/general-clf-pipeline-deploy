@@ -9,7 +9,7 @@ from luntaiDs.ModelingTools.CustomModel.splitter import SimpleSplitterIbis, Stra
 from luntaiDs.CommonTools.dtyper import DSchema, DSchemaField
 from luntaiDs.ProviderTools.clickhouse.dbapi import WarehouseHandlerCHSQL
 from luntaiDs.ProviderTools.clickhouse.serving import _BaseModelDataRegistryCH
-from src.data_layer.dbapi import TableSchema
+from src.data_layer.table_schemas import TableSchema
 
     
 class ConvModelingDataRegistry(_BaseModelDataRegistryCH):
@@ -32,7 +32,10 @@ class ConvModelingDataRegistry(_BaseModelDataRegistryCH):
         """
         ## step 1. create table schema on the fly
         # adjust schema
-        schema_features: DSchema = TableSchema.read_schema(schema = 'FEATURE', table = 'FEATURES')
+        schema_features: DSchema = TableSchema.read_schema(
+            schema = 'FEATURE', 
+            table = 'FEATURES'
+        )
         # add target columns schema
         schema_features[self.TARGET_COL] = DSchemaField(
             dtype = 'Int8',
@@ -61,7 +64,10 @@ class ConvModelingDataRegistry(_BaseModelDataRegistryCH):
         # validate if table already exists
         if self.handler.is_exist(schema = self.schema, table = self.table):
             # if exists, check if schema changes
-            existing_schema = self.handler.get_dtypes(schema = self.schema, table = self.table)
+            existing_schema = self.handler.get_dtypes(
+                schema = self.schema, 
+                table = self.table
+            )
             current_schema = schema_features.ibis_schema
             if not current_schema.equals(existing_schema):
                 msg = f"""

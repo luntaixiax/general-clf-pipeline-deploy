@@ -3,6 +3,7 @@ import logging
 import hvac
 import pymongo
 import toml
+from luntaiDs.CommonTools.dbapi import MySQL
 from luntaiDs.ProviderTools.aws.s3 import S3Accessor
 from luntaiDs.ProviderTools.clickhouse.dbapi import ClickHouse
 from luntaiDs.ProviderTools.airflow.api import AirflowAPI
@@ -14,6 +15,7 @@ VAULT_MOUNT_PATH = {
     'clickhouse' : f"{ENV}/clickhouse",
     'mongo' : f"{ENV}/mongo",
     'airflow' : f"{ENV}/airflow",
+    'mysql' : f"{ENV}/mysql",
 }
 SECRET_PATH = os.environ.get("SECRET_TOML_PATH", "../secrets.toml") # vault credentials
 
@@ -93,6 +95,22 @@ def get_airflow_api() -> AirflowAPI:
         password = response['password'],
     )
 
+def get_optuna_storage() -> MySQL:
+    response = get_vault_resp(
+        mount_point = VAULT_MOUNT_POINT,
+        path = VAULT_MOUNT_PATH['mysql'],
+    )
+    db_conf = MySQL()
+    db_conf.bindServer(
+        ip = response['ip'],
+        port = response['port'],
+        db = response['db'],
+    )
+    db_conf.login(
+        username = response['username'],
+        password = response['password'],
+    )
+    return db_conf
 
     
 class Singleton(type):
@@ -111,6 +129,7 @@ class Connection(metaclass=Singleton):
         self._ch_conf = get_warehouse_connect()
         self._mongo = get_mongo_client()
         self._airflow_api = get_airflow_api()
+        self._mysql_conf = get_optuna_storage()
         
     @property
     def S3A(self):
@@ -127,3 +146,7 @@ class Connection(metaclass=Singleton):
     @property
     def AIRFLOW_API(self):
         return self._airflow_api
+    
+    @property
+    def OPTUNA_STORAGE(self):
+        return self._mysql_conf
