@@ -1,15 +1,18 @@
-import fire
+import typer
 from datetime import date, timedelta
 from luntaiDs.CommonTools.utils import str2dt
 from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
 from src.data_layer.dbapi import HYPER_STORAGE
 
-def test_run(*args, **kws):
-    print("Test Running ...")
-    print(f"args = {args}")
-    print(f"kws = {kws}")
+app = typer.Typer(
+    name = "clf-modeling-pipeline"
+)
 
-def start_optuna_dashboard(ip: str = '0.0.0.0', port: int = 6543):
+@app.command(help="Start Optuna Dashboard")
+def start_optuna_dashboard(
+    ip: str = typer.Option(default='0.0.0.0', help='target ip for dashboard'), 
+    port: int = typer.Option(default=6543, help='target port for dashboard')
+):
     """start optuna dashboard for hyper tunning
 
     :param str ip: target ip for dashboard, defaults to '0.0.0.0'
@@ -22,8 +25,14 @@ def start_optuna_dashboard(ip: str = '0.0.0.0', port: int = 6543):
         host = ip,
         port = port
     )
-    
-def write_schemas_from_js_2_sm(schema_root_file_path: str = 'src/pipeline/schemas'):
+
+@app.command(help="Write table schemas from local JSON file to schema manager")
+def write_schemas_from_js_2_sm(
+    schema_root_file_path: str = typer.Option(
+        default='src/pipeline/schemas',
+        help='folder for schemas'
+    )
+):
     """intialize/write datawarehouse table schemas to schema manager (e.g., backed by mongodb)
 
     :param str schema_root_file_path: folder for schemas, defaults to 'src/pipeline/schemas'
@@ -32,16 +41,5 @@ def write_schemas_from_js_2_sm(schema_root_file_path: str = 'src/pipeline/schema
     
     TableSchema.write_schemas_from_js_2_sm(schema_root_file_path)
     
-
-TASKS = {
-    'test_run' : test_run,
-    'start_optuna_dashboard' : start_optuna_dashboard,
-    'write_schemas_from_js_2_sm' : write_schemas_from_js_2_sm
-}
-
-def run(task: str, *args, **kws):
-    task_ = TASKS.get(task)
-    task_(*args, **kws)
-    
 if __name__ == '__main__':
-    fire.Fire(run)
+    app()
