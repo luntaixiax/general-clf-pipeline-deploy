@@ -1,7 +1,7 @@
 from typing import Generator
 import json
 import pathlib
-from src.data_layer.data_connection import Connection
+from src.dao.data_connection import Connection
 from luntaiDs.CommonTools.schema_manager import BaseSchemaManager
 from luntaiDs.CommonTools.dtyper import DSchema
 from luntaiDs.ProviderTools.mongo.schema_manager import MongoSchemaManager

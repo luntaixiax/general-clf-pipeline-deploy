@@ -19,8 +19,7 @@ from luntaiDs.ModelingTools.FeatureEngineer.transformers import NamedTransformer
     SelectThreshold, SelectKBestByCluster, BinaryConverter, \
     MyFeatureSelector, PreSelectSelector
 from luntaiDs.ModelingTools.utils.support import make_present_col_selector
-from src.data_layer.dbapi import EDA_FSEL_REGISTRY
-from src.data_layer.table_schemas import TableSchema
+from src.dao.table_schemas import TableSchema
 from src.model_layer.base import HyperMode
 
 # for numeric features
@@ -42,6 +41,8 @@ class _EdaBackedFselSklearn:
         :param HyperMode hyper_mode: hyper tuning mode and params
         :return BaseEstimator: sklearn-compatible feature selector
         """
+        from src.dao.dbapi import EDA_FSEL_REGISTRY
+        
         if self.eda_model_id not in EDA_FSEL_REGISTRY.get_model_list():
             raise ValueError(f"Given eda_model_id={self.eda_model_id} not found in registry")
         

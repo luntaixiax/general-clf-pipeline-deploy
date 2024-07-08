@@ -2,8 +2,11 @@ from datetime import datetime, timezone
 from typing import List, Literal, Tuple
 import pymongo
 import json
+import mlflow
+import optuna
 from luntaiDs.ProviderTools.mongo.serving import _BaseModelRegistryMongo
 from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import TabularPreprocModel
+from src.model_layer.composite import CompositePipeline, HyperMode
 
 class EdaPreprocRegistryMongo(_BaseModelRegistryMongo):
     """EDA based preprocessing model registry
@@ -182,4 +185,127 @@ class EdaFeatureSelRegistryMongo(_BaseModelRegistryMongo):
             'db' : self.db,
             'collection' : self.DATA_COLLECTION,
             'last_update_ts' : datetime.now(timezone.utc),
+        }
+        
+        
+class MlflowCompositePipeline(mlflow.pyfunc.PythonModel, CompositePipeline):
+    def predict(self, context, model_input, params):
+        return self.score(model_input)
+    
+class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
+    def delete_model_files(self, model_id: str):
+        """delete model related files/data
+            note for mlflow implementation, only registry record will be deleted,
+            but not the underlying logged files
+
+        :param str model_id: model id to be deleted
+        """
+        client = mlflow.MlflowClient()
+        client.delete_registered_model(name = model_id)
+
+    def load_model_by_config(self, config: dict) -> MlflowCompositePipeline:
+        """load the model using configuration file
+
+        :param dict config: configuration for given model to help load model data back
+        :return MlflowCompositePipeline: the mlflow implementation of composite pipeline
+        """
+        run_id = config['tracking_info']['model_info']['model_uri']
+        loaded_model = mlflow.pyfunc.load_model(run_id)
+        return loaded_model.unwrap_python_model()
+    
+    def load_mlflow_pyfunc_model(self, model_id: str) -> mlflow.pyfunc.PythonModel:
+        config = self.get_model_config(model_id = model_id)
+        run_id = config['tracking_info']['model_info']['model_uri']
+        loaded_model = mlflow.pyfunc.load_model(run_id)
+        return loaded_model
+
+    def save_model_and_generate_config(self, model_id: str, data_id: str,
+            cp: MlflowCompositePipeline, hyper_mode: HyperMode, 
+            signature: mlflow.models.ModelSignature | None = None) -> dict:
+        """save model and generate configuration for this model
+
+        :param str model_id: model id to be generated 
+            (will be used as mlflow model deployment name)
+        :param str data_id: data id which used to train the model
+        :param HyperMode hyper_mode: hyper parameter tuning info
+        :param MlflowCompositePipeline cp: the composite pipeline object (mlflow implementation)
+        :param mlflow.models.ModelSignature signature: mlflow signature object
+        """
+        # retrieve optuna study
+        study_name = hyper_mode.attrs['study_name']
+        study = optuna.study.load_study(
+            study_name=study_name, 
+            storage=hyper_mode.hyper_storage
+        )
+        best_run_id = study.user_attrs.get('mlflow_best_run_id')
+        
+        # log model to tracking server
+        with mlflow.start_run(run_id = best_run_id) as run:
+            model_info = mlflow.pyfunc.log_model(
+                python_model=cp, 
+                artifact_path="composite_pipeline", 
+                signature=signature,
+                metadata=cp.get_logging_params()
+            )
+            # log pipeline parameters and attributes
+            mlflow.log_dict(
+                dictionary=cp.get_logging_params(),
+                artifact_file='extras/pipeline_params.json'
+            )
+            mlflow.log_dict(
+                dictionary=cp.get_logging_attrs(),
+                artifact_file='extras/pipeline_attrs.json'
+            )
+            # log optuna tuning table
+            mlflow.log_table(
+                data=study.trials_dataframe(),
+                artifact_file='extras/tuning_result.json'
+            )
+        
+        # register model to mlflow registry
+        mlflow.register_model(
+            model_uri = model_info.model_uri,
+            name = model_id,
+        )
+            
+        run_info: mlflow.entities.RunInfo = mlflow.get_run(run_id=best_run_id).info
+        return {
+            'model_id': model_id,
+            'data_id': data_id,
+            'params': cp.get_logging_params(),
+            # optuna info
+            'tuning_info': {
+                'study_id': hyper_mode.hyper_storage.get_study_id_from_name(
+                    study_name=study_name
+                ),
+                'study_name': study_name,
+                'direction': study.direction.value, # int enum
+                'best_trial': {
+                    'number': study.best_trial.number,
+                    'value': study.best_trial.value,
+                    'start': study.best_trial.datetime_start,
+                    'end': study.best_trial.datetime_complete,
+                }
+            },
+            # mlflow info
+            'tracking_info': {
+                'best_run_id': best_run_id,
+                'best_run_info': {
+                    'experiment_id': run_info.experiment_id,
+                    'run_id': run_info.run_id,
+                    'run_name': run_info.run_name,
+                    'user_id': run_info.user_id,
+                    'artifact_uri': run_info.artifact_uri,
+                    
+                },
+                'model_info' : {
+                    'model_uri': model_info.model_uri,
+                    'created_time': model_info.utc_time_created,
+                    'artifact_path': model_info.artifact_path,
+                    'metadata': model_info.metadata,
+                    'flavors': model_info.flavors,
+                    'signature': model_info.signature_dict
+                }
+            }
+            
         }

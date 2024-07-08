@@ -1,9 +1,10 @@
 
 import optuna
 from luntaiDs.ProviderTools.clickhouse.dbapi import WarehouseHandlerCHSQL
-from src.data_layer.data_connection import Connection
-from src.data_layer.model_registry import EdaPreprocRegistryMongo, EdaFeatureSelRegistryMongo
-from src.data_layer.training_data import ConvModelingDataRegistry
+from src.dao.data_connection import Connection
+from src.dao.model_registry import EdaPreprocRegistryMongo, EdaFeatureSelRegistryMongo, \
+        MlflowMongoWholeModelRegistry
+from src.dao.data_registry import ConvModelingDataRegistry
 
 WarehouseHandlerCHSQL.connect(db_conf = Connection().CH_CONF)
 CH_HANDLER = WarehouseHandlerCHSQL()
@@ -30,4 +31,9 @@ EDA_FSEL_REGISTRY = EdaFeatureSelRegistryMongo(
     db = 'modeling',
     collection = 'registry_eda_fsel'
 )
-    
+
+MODEL_REGISTRY = MlflowMongoWholeModelRegistry(
+    mongo_client=Connection().MONGO,
+    db = 'modeling',
+    collection = 'registry_model'
+)

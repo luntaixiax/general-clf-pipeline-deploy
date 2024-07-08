@@ -9,7 +9,7 @@ from luntaiDs.ModelingTools.CustomModel.splitter import SimpleSplitterIbis, Stra
 from luntaiDs.CommonTools.dtyper import DSchema, DSchemaField
 from luntaiDs.ProviderTools.clickhouse.dbapi import WarehouseHandlerCHSQL
 from luntaiDs.ProviderTools.clickhouse.serving import _BaseModelDataRegistryCH
-from src.data_layer.table_schemas import TableSchema
+from src.dao.table_schemas import TableSchema
 
     
 class ConvModelingDataRegistry(_BaseModelDataRegistryCH):

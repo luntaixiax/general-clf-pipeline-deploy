@@ -1,7 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Any, Dict, Literal
 from datetime import datetime
 import optuna
+import mlflow
 from sklearn.base import clone, BaseEstimator
 from lightgbm import LGBMClassifier
 from luntaiDs.ModelingTools.CustomModel.custom import GroupStratifiedOptunaSearchCV
@@ -55,6 +56,65 @@ class _BaseModel:
             e.g., {'learning_rate': optuna.distributions.FloatDistribution(0.001, 0.35, log=True)}
         """
         raise NotImplementedError("")
+    
+    @classmethod
+    def get_logging_attrs(cls, model: Any) -> dict:
+        """generate attributes that used to be logged to some system after training
+
+        :param Any model: the trained model 
+        :return dict: attributes that used to be logged
+        """
+        return {}
+
+    # create mlflow tracking
+    def log_callback(self, study: optuna.Study, frozen_trial: optuna.trial.FrozenTrial):
+        exp = mlflow.get_experiment_by_name(study.study_name)
+        if exp is None:
+            exp_id = mlflow.create_experiment(
+                name = study.study_name,
+                tags = {'source': 'optuna'}
+            )
+        else:
+            exp_id = exp.experiment_id
+        with mlflow.start_run(experiment_id = exp_id) as run:
+            # set mlflow metrics into optuna storage
+            study.set_user_attr(
+                key = 'mlflow_experiment_id', 
+                value = run.info.experiment_id
+            )
+
+            best_metric = study.user_attrs.get("best_metric", None)
+            if best_metric and study.best_value:
+                if study.direction == optuna.study.StudyDirection.MAXIMIZE:
+                    if study.best_value > best_metric:
+                        study.set_user_attr("mlflow_best_run_id", run.info.run_id)
+                elif study.direction == optuna.study.StudyDirection.MINIMIZE:
+                    if study.best_value < best_metric:
+                        study.set_user_attr("mlflow_best_run_id", run.info.run_id)
+                else:
+                    raise ValueError("optuna direction not set")
+            study.set_user_attr("best_metric", study.best_value)
+            
+            mlflow.log_params(frozen_trial.params)
+            mlflow.log_params(asdict(self._model_params))
+            mlflow.log_dict(
+                dictionary = {
+                    'run_order' : frozen_trial.number,
+                    'trial_id' : frozen_trial._trial_id,
+                    'start_ts' : frozen_trial.datetime_start,
+                    'end_ts' : frozen_trial.datetime_complete,
+                    'duration' : frozen_trial.duration.seconds,
+                },
+                artifact_file = 'extras/trial_info.json'
+            )
+            mlflow.log_metric(
+                key = self._cv_params.scoring, 
+                value = frozen_trial.value
+            )
+            mlflow.log_metric(
+                key = 'duration',
+                value = frozen_trial.duration.seconds,
+            )
         
     def __call__(self, hyper_mode: HyperMode) -> BaseEstimator:
         """build modeling pipeline
@@ -73,9 +133,11 @@ class _BaseModel:
                 storage = hyper_mode.hyper_storage,
                 study_name = study_name,
                 pruner = optuna.pruners.MedianPruner(),
-                direction = 'maximize',
+                direction = optuna.study.StudyDirection.MAXIMIZE,
                 sampler = optuna.samplers.TPESampler()
             )
+            
+            # create optuna cv search
             model = GroupStratifiedOptunaSearchCV(
                 estimator = self._get_base_model({}),
                 group_col = self.GROUP_COL,
@@ -86,7 +148,8 @@ class _BaseModel:
                 refit = True,
                 scoring = self._cv_params.scoring,
                 study = study,
-                verbose = 3
+                verbose = 3,
+                callbacks = [self.log_callback]
             )
             
         else:
@@ -117,7 +180,7 @@ class _SingleLayerLGBM(_BaseModel):
         """
         return "lgbm-single"
         
-    def _get_base_model(self, selected_hparams: dict | None = None) -> BaseEstimator:
+    def _get_base_model(self, selected_hparams: dict | None = None) -> LGBMClassifier:
         """get model instance, taking self._model_params and selected_hparams as input
 
         :param dict | None selected_hparams: if not given, will return base model
@@ -129,6 +192,7 @@ class _SingleLayerLGBM(_BaseModel):
             boosting_type = self._model_params.boosting_type, 
             importance_type = 'split',
             class_weight = self._model_params.class_weight,
+            verbosity = -1,
             **selected_hparams
         )
         
@@ -151,8 +215,21 @@ class _SingleLayerLGBM(_BaseModel):
             'min_child_weight': optuna.distributions.IntDistribution(1, 20),
             'colsample_bytree': optuna.distributions.FloatDistribution(0.3, 1, step=0.1),
         }
-        
-        
+    
+    @classmethod
+    def get_logging_attrs(cls, model: LGBMClassifier) -> dict:
+        """generate attributes that used to be logged to some system after training
+
+        :param LGBMClassifier model: the trained lgbm model 
+        :return dict: attributes that used to be logged
+        """
+        return {
+            'classes_': model.classes_.tolist(),
+            'feature_names_in_': model.feature_name_,
+            'feature_importances_': model.feature_importances_.tolist(),
+            'n_estimators_': model.n_estimators_,
+            'n_features_': model.n_features_,
+        }
 
     
 @dataclass
@@ -219,6 +296,21 @@ class _SingleLayerSGD(_BaseModel):
             base_params['n_iter_no_change'] = optuna.distributions.IntDistribution(3, 20)
             
         return base_params
+    
+    @classmethod
+    def get_logging_attrs(cls, model: SGDClassifier) -> dict:
+        """generate attributes that used to be logged to some system after training
+
+        :param SGDClassifier model: the trained sgd model 
+        :return dict: attributes that used to be logged
+        """
+        return {
+            'classes_': model.classes_.tolist(),
+            'feature_names_in_': model.feature_names_in_.tolist(),
+            'coef_': model.coef_.tolist(),
+            'intercept_': model.intercept_.tolist(),
+            'n_features_in_': model.n_features_in_,
+        }
 
 
 

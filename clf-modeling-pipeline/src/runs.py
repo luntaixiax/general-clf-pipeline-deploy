@@ -2,7 +2,7 @@ import typer
 from datetime import date, timedelta
 from luntaiDs.CommonTools.utils import str2dt
 from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
-from src.data_layer.dbapi import HYPER_STORAGE
+
 
 app = typer.Typer(
     name = "clf-modeling-pipeline"
@@ -19,6 +19,7 @@ def start_optuna_dashboard(
     :param int port: target port for dashboard, defaults to 6543
     """
     from optuna_dashboard import run_server
+    from src.dao.dbapi import HYPER_STORAGE
 
     run_server(
         storage = HYPER_STORAGE,
@@ -37,7 +38,7 @@ def write_schemas_from_js_2_sm(
 
     :param str schema_root_file_path: folder for schemas, defaults to 'src/pipeline/schemas'
     """
-    from src.data_layer.table_schemas import TableSchema
+    from src.dao.table_schemas import TableSchema
     
     TableSchema.write_schemas_from_js_2_sm(schema_root_file_path)
     

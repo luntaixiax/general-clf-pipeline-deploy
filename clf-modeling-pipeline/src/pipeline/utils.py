@@ -5,8 +5,8 @@ from luntaiDs.CommonTools.utils import render_sql_from_file
 from luntaiDs.CommonTools.dtyper import DSchema
 from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
 from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-from src.data_layer.table_schemas import TableSchema
-from src.data_layer.data_connection import Connection
+from src.dao.table_schemas import TableSchema
+from src.dao.data_connection import Connection
 
 SnapshotDataManagerCHSQL.setup(db_conf = Connection().CH_CONF)
     

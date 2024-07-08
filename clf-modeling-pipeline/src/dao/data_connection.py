@@ -3,6 +3,7 @@ import logging
 import hvac
 import pymongo
 import toml
+import mlflow
 from luntaiDs.CommonTools.dbapi import MySQL
 from luntaiDs.ProviderTools.aws.s3 import S3Accessor
 from luntaiDs.ProviderTools.clickhouse.dbapi import ClickHouse
@@ -16,6 +17,7 @@ VAULT_MOUNT_PATH = {
     'mongo' : f"{ENV}/mongo",
     'airflow' : f"{ENV}/airflow",
     'mysql' : f"{ENV}/mysql",
+    'mlflow' : f"{ENV}/mlflow"
 }
 SECRET_PATH = os.environ.get("SECRET_TOML_PATH", "../secrets.toml") # vault credentials
 
@@ -112,6 +114,15 @@ def get_optuna_storage() -> MySQL:
     )
     return db_conf
 
+def set_mlflow_server():
+    response = get_vault_resp(
+        mount_point = VAULT_MOUNT_POINT,
+        path = VAULT_MOUNT_PATH['mlflow'],
+    )
+    tracking_uri = f"http://{response['TRACKING_HOST']}:{response['TRACKING_PORT']}"
+    serving_uri = f"http://{response['SERVING_HOST']}:{response['SERVING_PORT']}"
+    mlflow.set_tracking_uri(tracking_uri)
+    mlflow.set_registry_uri(serving_uri)
     
 class Singleton(type):
     _instances = {}
@@ -130,6 +141,7 @@ class Connection(metaclass=Singleton):
         self._mongo = get_mongo_client()
         self._airflow_api = get_airflow_api()
         self._mysql_conf = get_optuna_storage()
+        set_mlflow_server()
         
     @property
     def S3A(self):

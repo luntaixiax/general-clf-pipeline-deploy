@@ -12,8 +12,8 @@ from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import BinaryFeaturePr
     NumericFeaturePreproc, NominalCategFeaturePreproc, OrdinalCategFeaturePreproc, \
     BinaryFeaturePreprocModel, NominalFeaturePreprocModel, OrdinalFeaturePreprocModel, \
     NumericFeaturePreprocModel, TabularPreprocModel
-from src.data_layer.data_connection import Connection
-from src.data_layer.dbapi import CH_HANDLER, EDA_PREPROC_REGISTRY, CONV_MODEL_DATA_REGISTRY
+from src.dao.data_connection import Connection
+from src.dao.dbapi import CH_HANDLER, EDA_PREPROC_REGISTRY, CONV_MODEL_DATA_REGISTRY
 
 
 OBJ_HANDLE = Connection().S3A

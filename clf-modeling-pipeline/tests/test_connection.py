@@ -9,6 +9,6 @@ from pandas.api.types import is_datetime64_any_dtype
 @pytest.mark.skipif(os.environ.get('ENV') != 'dev',
                     reason="not correct env")
 def test_connection():
-    from src.data_layer.data_connection import Connection
+    from src.dao.data_connection import Connection
     
     c = Connection()

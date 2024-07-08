@@ -1,7 +1,8 @@
+from dataclasses import asdict
 import pandas as pd
 from sklearn.base import BaseEstimator
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, FunctionTransformer
 from src.model_layer.base import HyperMode
 from src.model_layer.feature_sel_hub import FSelParam, FSelBaseSklearn
 from src.model_layer.preprocess_hub import PreprocessParam, PreprocessingBaseSklearn
@@ -15,8 +16,36 @@ class CompositePipeline:
         self._preproc_param = preproc_param
         self._model_param = model_param
         self._calib_param = calib_param
+        
+    def get_logging_params(self) -> dict:
+        return {
+            'fsel' : asdict(self._fsel_param),
+            'preproc' : asdict(self._preproc_param),
+            'model' : asdict(self._model_param),
+            'calib' : asdict(self._calib_param),
+        }
+        
+    def get_logging_attrs(self) -> dict:
+        model_builder_cls = ModelingBaseSklearn.TEMPLATE_IDS.get(
+            self._model_param.template_id
+        )
+        return {
+            'model': model_builder_cls.get_logging_attrs(
+                model = self.getPipe()['model']
+            )
+        }
+        
     
     def buildPipe(self, hyper_mode: HyperMode) -> Pipeline:
+        group_col = ModelingBaseSklearn.TEMPLATE_IDS.get(
+                self._model_param.template_id
+        ).GROUP_COL
+        
+        def floatfy(X: pd.DataFrame) -> pd.DataFrame:
+            columns = X.columns.difference(other = [group_col])
+            X[columns] = X[columns].astype('float')
+            return X    
+        
         fsel_pipe = FSelBaseSklearn.build(
             hyper_mode,
             param = self._fsel_param
@@ -33,6 +62,9 @@ class CompositePipeline:
         pipeline = Pipeline([
             ('fsel', fsel_pipe),
             ('preproc', preproc_pipe),
+            ('floatfy', FunctionTransformer(
+                func = floatfy, check_inverse = False
+            )),
             ('model', model_pipe)
         ])
         
@@ -42,7 +74,7 @@ class CompositePipeline:
         self.__pipe = pipe
         self.__fsel = FSelBaseSklearn(pipe[0])
         self.__preproc = PreprocessingBaseSklearn(pipe[1])
-        self.__modeling = ModelingBaseSklearn(pipe[2])
+        self.__modeling = ModelingBaseSklearn(pipe[3])
         
     def getPipe(self) -> Pipeline:
         try:
