@@ -1,6 +1,6 @@
 from dataclasses import asdict
 import pandas as pd
-from sklearn.base import BaseEstimator
+from sklearn.base import BaseEstimator, estimator_html_repr
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder, FunctionTransformer
 from src.model_layer.base import HyperMode
@@ -142,4 +142,7 @@ class CompositePipeline:
         df[calib_cols] = probs_calib
         
         return df
+    
+    def renderStructureHTML(self) -> str:
+        return estimator_html_repr(self.getCalib())
         

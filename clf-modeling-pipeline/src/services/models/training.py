@@ -1,6 +1,4 @@
-from datetime import date
 import logging
-from typing import List, Literal
 import mlflow
 from sklearn.metrics import roc_auc_score
 from luntaiDs.ProviderTools.mlflow.dtyper import ibis_schema_2_mlflow_schema
@@ -10,37 +8,8 @@ from src.model_layer.feature_sel_hub import FSelParam
 from src.model_layer.calibrator_hub import CalibParam
 from src.model_layer.modeling_hub import ModelPipeParam
 from src.dao.model_registry import MlflowCompositePipeline
-from src.dao.dbapi import CONV_MODEL_DATA_REGISTRY, HYPER_STORAGE, MODEL_REGISTRY
-
-def create_train_data(data_id: str, use_snap_dts: List[date],
-        sample_method: Literal['simple', 'stratify'] = 'stratify',
-        split_method: Literal['simple', 'stratify', 'group', 'timeseries'] = 'group',
-        sample_frac: float = 0.25, train_size: float = 0.8, random_seed: int = 0):
-    """generate train and test set from database
-
-    :param str data_id: the data id for the generated train/test dataset
-    :param List[date] use_snap_dts: list of snap dates to use (sample from)
-    :param str sample_method: one of 'simple', 'stratify', defaults to 'stratify'
-    :param str split_method: one of 'simple', 'stratify', 'group', 'timeseries', defaults to 'group'
-    :param float sample_frac: down sampling size, defaults to 0.25
-    :param float train_size: train sample size as of total size, defaults to 0.8
-    :param int random_seed: control randomness, defaults to 0
-    """
-    train_ds, test_ds = CONV_MODEL_DATA_REGISTRY.generate(
-        use_snap_dts=use_snap_dts,
-        sample_method = sample_method,
-        split_method = split_method,
-        sample_frac = sample_frac,
-        train_size = train_size,
-        random_seed = random_seed
-    )
-    CONV_MODEL_DATA_REGISTRY.register(
-        data_id = data_id,
-        train_ds = train_ds,
-        test_ds = test_ds,
-        replace = True
-    )
-    
+from src.dao.dbapi import HYPER_STORAGE, MODEL_REGISTRY
+from src.services.models.training_data import fetch_train_data
 
 def train(data_id: str, model_id: str,
         fsel_param: FSelParam, preproc_param: PreprocessParam, 
@@ -55,9 +24,8 @@ def train(data_id: str, model_id: str,
     :param CalibParam calib_param: calibration parameter
     """
     # fetch training data
-    X_train, y_train, X_test, y_test = CONV_MODEL_DATA_REGISTRY.fetch(
-        data_id = data_id, 
-        target_col = CONV_MODEL_DATA_REGISTRY.TARGET_COL
+    X_train, y_train, X_test, y_test = fetch_train_data(
+        data_id = data_id
     )
     
     X_train_pd = X_train.to_pandas()

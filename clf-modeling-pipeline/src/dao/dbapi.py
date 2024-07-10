@@ -1,6 +1,7 @@
 
 import optuna
 from luntaiDs.ProviderTools.clickhouse.dbapi import WarehouseHandlerCHSQL
+from luntaiDs.ProviderTools.mongo.serving import ModelTimeTableMongo
 from src.dao.data_connection import Connection
 from src.dao.model_registry import EdaPreprocRegistryMongo, EdaFeatureSelRegistryMongo, \
         MlflowMongoWholeModelRegistry
@@ -36,4 +37,10 @@ MODEL_REGISTRY = MlflowMongoWholeModelRegistry(
     mongo_client=Connection().MONGO,
     db = 'modeling',
     collection = 'registry_model'
+)
+
+MODEL_TIMETABLE = ModelTimeTableMongo(
+    mongo_client = Connection().MONGO,
+    db = 'modeling',
+    collection = 'timetable_model'
 )

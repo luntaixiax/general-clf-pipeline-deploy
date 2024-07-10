@@ -261,9 +261,14 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
                 data=study.trials_dataframe(),
                 artifact_file='extras/tuning_result.json'
             )
+            # log model structure
+            mlflow.log_text(
+                text=cp.renderStructureHTML(),
+                artifact_file='extras/structure.html'
+            )
         
         # register model to mlflow registry
-        mlflow.register_model(
+        model_version = mlflow.register_model(
             model_uri = model_info.model_uri,
             name = model_id,
         )
@@ -305,6 +310,17 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
                     'metadata': model_info.metadata,
                     'flavors': model_info.flavors,
                     'signature': model_info.signature_dict
+                },
+                'registry_info' : {
+                    'name' : model_version.name,
+                    'aliases' : model_version.aliases,
+                    'creation_timestamp': model_version.creation_timestamp,
+                    'last_updated_timestamp': model_version.last_updated_timestamp,
+                    'current_stage': model_version.current_stage,
+                    'run_id' : model_version.run_id,
+                    'run_link': model_version.run_link,
+                    'source': model_version.source,
+                    'version': model_version.version
                 }
             }
             
