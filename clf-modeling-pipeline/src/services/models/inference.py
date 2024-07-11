@@ -25,7 +25,7 @@ def predict_batch(model_id: str, df: pd.DataFrame) -> pd.DataFrame:
     :param str model_id: model id of the trained model
     :param pd.DataFrame df: input pandas dataframe
     :return pd.DataFrame: prediction df, of columns 
-        [prob_class0, prob_class1,..., calib_class0, calib_class1, ...]
+        [PROB_CLS0, PROB_CLS1,..., CALIB_CLS0, CALIB_CLS1, ...]
     """
     loaded_model = _load_model(
         model_id = model_id
@@ -39,7 +39,7 @@ def predict_online(model_id: str, X: List[dict]) -> List[dict]:
     :param str model_id: model id of the trained model
     :param List[dict] X: list of input feature dictionaries
     :return List[dict]: list of predict outcomes, each of columns 
-        [prob_class0, prob_class1,..., calib_class0, calib_class1, ...]
+        [PROB_CLS0, PROB_CLS1,..., CALIB_CLS0, CALIB_CLS1, ...]
     """
     
     loaded_model = _load_model(

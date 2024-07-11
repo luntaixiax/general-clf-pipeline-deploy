@@ -102,6 +102,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
     upstreams = [_CurrentStream(CustFeatureSnap())]
     # generator param
     INIT_DT = date(2024, 1, 1)
+    
     @classmethod
     def execute(cls, snap_dt: date):
         if snap_dt < cls.INIT_DT:

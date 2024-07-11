@@ -14,7 +14,7 @@ class TableSchema:
     def get_schema_manager(cls) -> BaseSchemaManager:
         return MongoSchemaManager(
             mongo_client = Connection().MONGO, 
-            database = 'table_schema_ch', 
+            database = 'settings', 
             collection = 'schemas'
         )
         

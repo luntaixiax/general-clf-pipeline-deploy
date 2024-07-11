@@ -1,0 +1,135 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : true,
+        "partition_key" : true
+    },
+    "NAME" : {
+        "dtype":"String",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "first and last name",
+        "primary_key" : false
+    },
+    "GENDER" : {
+        "dtype":"String",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "Male (M) or Female (F)",
+        "primary_key" : false
+    },
+    "BIRTH_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "birthday",
+        "primary_key" : false
+    },
+    "PHONE" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "telephone number",
+        "primary_key" : false
+    },
+    "EMAIL" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "email",
+        "primary_key" : false
+    },
+    "BLOOD_GRP" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "blood group (A+, A-, O, etc.)",
+        "primary_key" : false
+    },
+    "JOB" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "occupation",
+        "primary_key" : false
+    },
+    "OFFICE" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "city of the office",
+        "primary_key" : false
+    },
+    "ADDRESS" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "detailed address",
+        "primary_key" : false
+    },
+    "ORG" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "organization",
+        "primary_key" : false
+    },
+    "TITLE" : {
+        "dtype":"String",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "title of the position",
+        "primary_key" : false
+    },
+    "SINCE_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": true
+        },
+        "descr" : "the start date at current company",
+        "primary_key" : false
+    },
+    "SALARY" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 10,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "base salary in dollar amount",
+        "primary_key" : false
+    },
+    "BONUS" : {
+        "dtype":"Decimal",
+        "args":{
+            "precision" : 10,
+            "scale" : 2,
+            "nullable" : false
+        },
+        "descr" : "bonus in dollar amount",
+        "primary_key" : false
+    }
+}

@@ -12,12 +12,13 @@ from luntaiDs.ModelingTools.FeatureEngineer.transformers import NamedTransformer
 from luntaiDs.ModelingTools.utils.support import make_present_col_selector
 from src.dao.table_schemas import TableSchema
 from src.model_layer.base import HyperMode
+from src.utils.settings import ENTITY_CFG
 
 
 class _EdaBasedPreprocessingSklearn:
     """build preprocessing pipeline based on EDA result
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, eda_model_id: str):
         self.eda_model_id = eda_model_id
@@ -58,7 +59,7 @@ class _EdaBasedPreprocessingSklearn:
 class _DtypeBasedPreprocessingSklearn:
     """build preprocessing pipeline based on data schema
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __call__(self, hyper_mode: HyperMode) -> TransformerMixin:
         """build preprocessing pipeline

@@ -1,4 +1,4 @@
-luntaiDs==1.0.34
+luntaiDs==1.0.37
 hvac==2.1.0
 faker==22.2.0
 ring==0.10.1

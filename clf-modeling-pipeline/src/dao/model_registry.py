@@ -245,15 +245,15 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
                 python_model=cp, 
                 artifact_path="composite_pipeline", 
                 signature=signature,
-                metadata=cp.get_logging_params()
+                metadata=cp.getLoggingParams()
             )
             # log pipeline parameters and attributes
             mlflow.log_dict(
-                dictionary=cp.get_logging_params(),
+                dictionary=cp.getLoggingParams(),
                 artifact_file='extras/pipeline_params.json'
             )
             mlflow.log_dict(
-                dictionary=cp.get_logging_attrs(),
+                dictionary=cp.getLoggingAttrs(),
                 artifact_file='extras/pipeline_attrs.json'
             )
             # log optuna tuning table
@@ -277,7 +277,7 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
         return {
             'model_id': model_id,
             'data_id': data_id,
-            'params': cp.get_logging_params(),
+            'params': cp.getLoggingParams(),
             # optuna info
             'tuning_info': {
                 'study_id': hyper_mode.hyper_storage.get_study_id_from_name(

@@ -10,12 +10,12 @@ from luntaiDs.CommonTools.dtyper import DSchema, DSchemaField
 from luntaiDs.ProviderTools.clickhouse.dbapi import WarehouseHandlerCHSQL
 from luntaiDs.ProviderTools.clickhouse.serving import _BaseModelDataRegistryCH
 from src.dao.table_schemas import TableSchema
+from src.utils.settings import ENTITY_CFG, TARGET_CFG
 
-    
 class ConvModelingDataRegistry(_BaseModelDataRegistryCH):
-    TARGET_COL = 'CONV_7D'
-    ENTITY_COL = 'CUST_ID'
-    TS_COL = 'SNAP_DT'
+    TARGET_COL = TARGET_CFG.target_key
+    ENTITY_COL = ENTITY_CFG.entity_key
+    TS_COL = ENTITY_CFG.dt_key
     
     def __init__(self, handler: WarehouseHandlerCHSQL, schema: str, table: str):
         """initialize

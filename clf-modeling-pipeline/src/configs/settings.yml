@@ -1,0 +1,6 @@
+entities:
+  entity_key: CUST_ID # customer column name
+  dt_key: SNAP_DT # date key
+targets:
+  target_key: CONV_7D # target column name
+  num_cls: 2 # number of class

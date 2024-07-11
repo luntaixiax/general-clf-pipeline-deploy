@@ -21,6 +21,7 @@ from luntaiDs.ModelingTools.FeatureEngineer.transformers import NamedTransformer
 from luntaiDs.ModelingTools.utils.support import make_present_col_selector
 from src.dao.table_schemas import TableSchema
 from src.model_layer.base import HyperMode
+from src.utils.settings import ENTITY_CFG
 
 # for numeric features
 def distance_1_corr(m):
@@ -30,7 +31,7 @@ def distance_1_corr(m):
 class _EdaBackedFselSklearn:
     """build feature selection pipeline backed by EDA result
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, eda_model_id: str):
         self.eda_model_id = eda_model_id
@@ -81,7 +82,7 @@ class _FilterFselSklearn:
     """build feature selection pipeline based on custom fsel pipeline
     and use filter based method - univariate correlation with target
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, method_options: FilterMethodOptions):
         self.method_options = method_options
@@ -231,7 +232,7 @@ class _WrapperFselSklearn:
     """build feature selection pipeline based on custom fsel pipeline
     and use wrapper based method - recursive or sequential feature selection
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, method_options: WrapperMethodOptions):
         if method_options.method in ('RFE', 'backward', 'forward'):
@@ -369,7 +370,7 @@ class _EmbeddedFselSklearn:
     """build feature selection pipeline based on custom fsel pipeline
     and use Embedded based method - use a meta learner with auto importance getter
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, method_options: EmbeddedMethodOptions):        
         self.method_options = method_options

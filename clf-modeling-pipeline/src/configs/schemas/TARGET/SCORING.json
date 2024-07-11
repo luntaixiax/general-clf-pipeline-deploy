@@ -1,0 +1,51 @@
+{
+    "CUST_ID" : {
+        "dtype":"Int64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "customer id",
+        "primary_key" : true
+    },
+    "SNAP_DT" : {
+        "dtype":"Date",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "observation snapshot date",
+        "primary_key" : true,
+        "partition_key" : true
+    },
+    "PROB_CLS0" : {
+        "dtype":"Float64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "probability of class 0",
+        "primary_key" : false
+    },
+    "PROB_CLS1" : {
+        "dtype":"Float64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "probability of class 1",
+        "primary_key" : false
+    },
+    "CALIB_CLS0" : {
+        "dtype":"Float64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "calibrated probability of class 0",
+        "primary_key" : false
+    },
+    "CALIB_CLS1" : {
+        "dtype":"Float64",
+        "args":{
+            "nullable": false
+        },
+        "descr" : "calibrated probability of class 1",
+        "primary_key" : false
+    }
+}

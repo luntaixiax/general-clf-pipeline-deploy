@@ -17,7 +17,7 @@ class CompositePipeline:
         self._model_param = model_param
         self._calib_param = calib_param
         
-    def get_logging_params(self) -> dict:
+    def getLoggingParams(self) -> dict:
         return {
             'fsel' : asdict(self._fsel_param),
             'preproc' : asdict(self._preproc_param),
@@ -25,12 +25,12 @@ class CompositePipeline:
             'calib' : asdict(self._calib_param),
         }
         
-    def get_logging_attrs(self) -> dict:
+    def getLoggingAttrs(self) -> dict:
         model_builder_cls = ModelingBaseSklearn.TEMPLATE_IDS.get(
             self._model_param.template_id
         )
         return {
-            'model': model_builder_cls.get_logging_attrs(
+            'model': model_builder_cls.getLoggingAttrs(
                 model = self.getPipe()['model']
             )
         }
@@ -136,8 +136,8 @@ class CompositePipeline:
         le = self.getLabelEncoder()
         if probs.shape[1] != len(le.classes_) or probs_calib.shape[1] != len(le.classes_):
             raise ValueError(f"LabelEncoder implies n_class = {len(le.classes_)} while you gave {probs.shape[1]}")
-        prob_cols = [f"prob_class{i}" for i in range(len(le.classes_))]
-        calib_cols = [f"calib_class{i}" for i in range(len(le.classes_))]
+        prob_cols = [f"PROB_CLS{i}" for i in range(len(le.classes_))]
+        calib_cols = [f"CALIB_CLS{i}" for i in range(len(le.classes_))]
         df[prob_cols] = probs
         df[calib_cols] = probs_calib
         

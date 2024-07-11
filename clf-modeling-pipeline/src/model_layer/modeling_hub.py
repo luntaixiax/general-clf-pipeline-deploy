@@ -8,6 +8,7 @@ from lightgbm import LGBMClassifier
 from luntaiDs.ModelingTools.CustomModel.custom import GroupStratifiedOptunaSearchCV
 from sklearn.linear_model import SGDClassifier
 from src.model_layer.base import HyperMode
+from src.utils.settings import ENTITY_CFG
 
 @dataclass
 class CVParams:
@@ -28,7 +29,7 @@ class LGBMHparam(_ModelParam):
 
 
 class _BaseModel:
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, cv_params: CVParams, model_params: _ModelParam):
         self._cv_params = cv_params
@@ -58,7 +59,7 @@ class _BaseModel:
         raise NotImplementedError("")
     
     @classmethod
-    def get_logging_attrs(cls, model: Any) -> dict:
+    def getLoggingAttrs(cls, model: Any) -> dict:
         """generate attributes that used to be logged to some system after training
 
         :param Any model: the trained model 
@@ -168,7 +169,7 @@ class _BaseModel:
 class _SingleLayerLGBM(_BaseModel):
     """build modeling pipeline (single layer)
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, cv_params: CVParams, model_params: LGBMHparam):
         super().__init__(cv_params, model_params)
@@ -217,7 +218,7 @@ class _SingleLayerLGBM(_BaseModel):
         }
     
     @classmethod
-    def get_logging_attrs(cls, model: LGBMClassifier) -> dict:
+    def getLoggingAttrs(cls, model: LGBMClassifier) -> dict:
         """generate attributes that used to be logged to some system after training
 
         :param LGBMClassifier model: the trained lgbm model 
@@ -248,7 +249,7 @@ class SGDHparam(_ModelParam):
 class _SingleLayerSGD(_BaseModel):
     """build modeling pipeline (single layer)
     """
-    GROUP_COL = 'CUST_ID'
+    GROUP_COL = ENTITY_CFG.entity_key
     
     def __init__(self, cv_params: CVParams, model_params: SGDHparam):
         super().__init__(cv_params, model_params)
@@ -298,7 +299,7 @@ class _SingleLayerSGD(_BaseModel):
         return base_params
     
     @classmethod
-    def get_logging_attrs(cls, model: SGDClassifier) -> dict:
+    def getLoggingAttrs(cls, model: SGDClassifier) -> dict:
         """generate attributes that used to be logged to some system after training
 
         :param SGDClassifier model: the trained sgd model 
