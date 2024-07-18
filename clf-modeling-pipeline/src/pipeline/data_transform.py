@@ -457,13 +457,13 @@ class PurchaseWindow(SnapTableTransfomer):
             .aggregate(
                 _['PUR_TS'].count().name('NUM_PUR_F7D'),
                 _['PUR_NUM'].sum().name('TOTAL_PUR_NUM_F7D'),
-                _['PUR_AMT'].sum().name('PUR_AMT'),
+                _['PUR_AMT'].sum().name('TOTAL_PUR_AMT_F7D'),
             )
             .select(
                 ENTITY_CFG.entity_key,
                 ibis.literal(snap_dt).name(ENTITY_CFG.dt_key),
                 'NUM_PUR_F7D',
                 'TOTAL_PUR_NUM_F7D',
-                'PUR_AMT'
+                'TOTAL_PUR_AMT_F7D'
             )
         )

@@ -6,3 +6,4 @@ secrets.toml
 .vscode
 *local_test_run.py
 datastack/configs/secrets/*
+*mlruns*
