@@ -7,7 +7,7 @@ import pymongo
 import toml
 import mlflow
 from luntaiDs.CommonTools.dbapi import MySQL
-from luntaiDs.ProviderTools.aws.s3 import S3Accessor
+from luntaiDs.CommonTools.warehouse import baseDbInf
 from luntaiDs.ProviderTools.clickhouse.dbapi import ClickHouse
 from luntaiDs.ProviderTools.airflow.api import AirflowAPI
 
@@ -58,7 +58,7 @@ def get_fs_storage_accessor() -> AbstractFileSystem:
     )
     return s3a
 
-def get_warehouse_connect() -> ClickHouse:
+def get_warehouse_connect() -> baseDbInf:
     response = get_vault_resp(
         mount_point = VAULT_MOUNT_POINT,
         path = VAULT_MOUNT_PATH['clickhouse'],
@@ -139,7 +139,7 @@ class Connection(metaclass=Singleton):
     
     def __init__(self) -> None:
         self._fs = get_fs_storage_accessor()
-        self._ch_conf = get_warehouse_connect()
+        self._warehouse_conf = get_warehouse_connect()
         self._mongo = get_mongo_client()
         self._airflow_api = get_airflow_api()
         self._mysql_conf = get_optuna_storage()
@@ -150,8 +150,8 @@ class Connection(metaclass=Singleton):
         return self._fs
     
     @property
-    def CH_CONF(self):
-        return self._ch_conf
+    def DWH_CONF(self):
+        return self._warehouse_conf
     
     @property
     def MONGO(self):

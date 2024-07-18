@@ -7,7 +7,7 @@ from src.dao.model_registry import EdaPreprocRegistryMongo, EdaFeatureSelRegistr
         MlflowMongoWholeModelRegistry
 from src.dao.data_registry import ConvModelingDataRegistry
 
-WarehouseHandlerCHSQL.connect(db_conf = Connection().CH_CONF)
+WarehouseHandlerCHSQL.connect(db_conf = Connection().DWH_CONF)
 CH_HANDLER = WarehouseHandlerCHSQL()
 
 HYPER_STORAGE = optuna.storages.RDBStorage(

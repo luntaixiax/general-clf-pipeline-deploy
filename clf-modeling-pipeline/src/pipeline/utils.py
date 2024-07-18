@@ -10,7 +10,7 @@ import pandas as pd
 from src.dao.table_schemas import TableSchema
 from src.dao.data_connection import Connection
 
-SnapshotDataManagerCHSQL.setup(db_conf = Connection().CH_CONF)
+SnapshotDataManagerCHSQL.setup(db_conf = Connection().DWH_CONF)
 
 class _BaseSnapTableWarehouse(SnapTableStreamGenerator):
     dm: SnapshotDataManagerCHSQL = None

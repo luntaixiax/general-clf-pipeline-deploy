@@ -1,9 +1,11 @@
 import os
 import logging
+from fsspec import AbstractFileSystem
 import hvac
 import pymongo
 import toml
-from luntaiDs.ProviderTools.aws.s3 import S3Accessor
+from s3fs import S3FileSystem
+from luntaiDs.CommonTools.warehouse import baseDbInf
 from luntaiDs.ProviderTools.clickhouse.dbapi import ClickHouse
 from luntaiDs.ProviderTools.airflow.api import AirflowAPI
 
@@ -39,19 +41,20 @@ def get_vault_resp(mount_point: str, path: str) -> dict:
     else:
         raise PermissionError("Vault Permission Error")
 
-def get_fs_storage_accessor() -> S3Accessor:
+def get_fs_storage_accessor() -> AbstractFileSystem:
     response = get_vault_resp(
         mount_point = VAULT_MOUNT_POINT,
         path = VAULT_MOUNT_PATH['s3'],
     )
-    s3a = S3Accessor(
-        aws_access_key_id=response['ACCESS_KEY'],
-        aws_secret_access_key=response['SECRET_ACCESS_KEY'],
+    s3a = S3FileSystem(
+        anon=False,
+        key=response['ACCESS_KEY'],
+        secret=response['SECRET_ACCESS_KEY'],
         endpoint_url=f"http://{response['endpoint']}:{response['port']}",
     )
     return s3a
 
-def get_warehouse_connect() -> ClickHouse:
+def get_warehouse_connect() -> baseDbInf:
     response = get_vault_resp(
         mount_point = VAULT_MOUNT_POINT,
         path = VAULT_MOUNT_PATH['clickhouse'],
@@ -107,8 +110,7 @@ class Connection(metaclass=Singleton):
     
     def __init__(self) -> None:
         self._fs = get_fs_storage_accessor()
-        self._fs.enter_bucket(self.DATA_BUCKET)
-        self._ch_conf = get_warehouse_connect()
+        self._warehouse_conf = get_warehouse_connect()
         self._mongo = get_mongo_client()
         self._airflow_api = get_airflow_api()
         
@@ -117,8 +119,8 @@ class Connection(metaclass=Singleton):
         return self._fs
     
     @property
-    def CH_CONF(self):
-        return self._ch_conf
+    def DWH_CONF(self):
+        return self._warehouse_conf
     
     @property
     def MONGO(self):
