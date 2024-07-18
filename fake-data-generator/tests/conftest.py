@@ -22,7 +22,7 @@ def acct_table(client_table) -> pd.DataFrame:
             mock.patch('random.randint') as mock_rnd:
         
         n_rows_client = 10 + 2 - 1
-        mock_dm.read.return_value = client_table
+        mock_dm.read_pd.return_value = client_table
         mock_rnd.side_effect = list(range(1, n_rows_client + 1))
         
         df = AcctFeatureSnap.init(date(2024, 1, 1))

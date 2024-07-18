@@ -1,16 +1,16 @@
 import logging
 from datetime import date
-import pandas as pd
+import ibis
+from ibis import _
 from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerObjStorage
+from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerFileSystem
 from src.dao.data_connection import Connection
 from src.pipeline.utils import SnapTableIngestor
 from src.utils.settings import ENTITY_CFG
 
-SnapshotDataManagerObjStorage.setup(
-    bucket = Connection.DATA_BUCKET,
-    root_dir = "/fake/data",
-    obja = Connection().S3A
+SnapshotDataManagerFileSystem.setup(
+    fs = Connection().FS_STORAGE,
+    root_dir = f"{Connection.DATA_BUCKET}/fake/data",
 ) 
 
 class CustomerRaw(SnapTableIngestor):
@@ -21,14 +21,15 @@ class CustomerRaw(SnapTableIngestor):
     )
     
     @classmethod
-    def read(cls, snap_dt: date) -> pd.DataFrame:
-        return SnapshotDataManagerObjStorage(
-            schema='FEATURES', table='CUST'
-        ).read(
-            snap_dt,
-            columns = [
-                "CUST_ID",
-                "SNAP_DT",
+    def read(cls, snap_dt: date) -> ibis.expr.types.Table:
+        return (
+            SnapshotDataManagerFileSystem(
+                schema='FEATURES', table='CUST'
+            )
+            .read(snap_dt)
+            .select(
+                _["CUST_ID"].name(ENTITY_CFG.entity_key),
+                _["SNAP_DT"].name(ENTITY_CFG.dt_key),
                 "NAME",
                 "GENDER",
                 "BIRTH_DT",
@@ -43,13 +44,8 @@ class CustomerRaw(SnapTableIngestor):
                 "SINCE_DT",
                 "SALARY",
                 "BONUS"
-            ]
-        ).rename(
-            columns = {
-                "CUST_ID": ENTITY_CFG.entity_key,
-                "SNAP_DT": ENTITY_CFG.dt_key,
-            }
-        ).reset_index(drop=True) # avoid __index_level_0__ column
+            )
+        )
         
 class AcctRaw(SnapTableIngestor):
     dm = SnapshotDataManagerCHSQL(
@@ -59,27 +55,23 @@ class AcctRaw(SnapTableIngestor):
     )
     
     @classmethod
-    def read(cls, snap_dt: date) -> pd.DataFrame:
-        accts =  SnapshotDataManagerObjStorage(
-            schema='FEATURES', table='ACCT'
-        ).read(
-            snap_dt,
-            columns = [
-                "CUST_ID",
+    def read(cls, snap_dt: date) -> ibis.expr.types.Table:
+        accts = (
+            SnapshotDataManagerFileSystem(
+                schema='FEATURES', table='ACCT'
+            )
+            .read(snap_dt)
+            .select(
+                _["CUST_ID"].name(ENTITY_CFG.entity_key),
                 "ACCT_ID",
-                "SNAP_DT",
+                _["SNAP_DT"].name(ENTITY_CFG.dt_key),
                 "ACCT_TYPE_CD",
                 "END_BAL",
                 "DR_AMT",
                 "CR_AMT",
                 "CR_LMT"
-            ]
-        ).rename(
-            columns = {
-                "CUST_ID": ENTITY_CFG.entity_key,
-                "SNAP_DT": ENTITY_CFG.dt_key,
-            }
-        ).reset_index(drop=True) # avoid __index_level_0__ column
+            )
+        )
         return accts
         
 class EventRaw(SnapTableIngestor):
@@ -90,24 +82,21 @@ class EventRaw(SnapTableIngestor):
     )
     
     @classmethod
-    def read(cls, snap_dt: date) -> pd.DataFrame:
-        return SnapshotDataManagerObjStorage(
-            schema='EVENTS', table='ENGAGE'
-        ).read(
-            snap_dt,
-            columns = [
-                "CUST_ID",
-                "SNAP_DT",
+    def read(cls, snap_dt: date) -> ibis.expr.types.Table:
+        return (
+            SnapshotDataManagerFileSystem(
+                schema='EVENTS', table='ENGAGE'
+            )
+            .read(snap_dt)
+            .select(
+                _["CUST_ID"].name(ENTITY_CFG.entity_key),
+                _["SNAP_DT"].name(ENTITY_CFG.dt_key),
                 "EVENT_TS",
                 "EVENT_CD",
                 "EVENT_CHANNEL",
-            ]
-        ).rename(
-            columns = {
-                "CUST_ID": ENTITY_CFG.entity_key,
-                "SNAP_DT": ENTITY_CFG.dt_key,
-            }
-        ).reset_index(drop=True) # avoid __index_level_0__ column
+            )
+        )
+        
         
 class PurchaseRaw(SnapTableIngestor):
     dm = SnapshotDataManagerCHSQL(
@@ -117,22 +106,18 @@ class PurchaseRaw(SnapTableIngestor):
     )
     
     @classmethod
-    def read(cls, snap_dt: date) -> pd.DataFrame:
-        return SnapshotDataManagerObjStorage(
-            schema='EVENTS', table='CONVERSION'
-        ).read(
-            snap_dt,
-            columns = [
-                "CUST_ID",
-                "SNAP_DT",
+    def read(cls, snap_dt: date) -> ibis.expr.types.Table:
+        return (
+            SnapshotDataManagerFileSystem(
+                schema='EVENTS', table='CONVERSION'
+            )
+            .read(snap_dt)
+            .select(
+                _["CUST_ID"].name(ENTITY_CFG.entity_key),
+                _["SNAP_DT"].name(ENTITY_CFG.dt_key),
                 "PUR_TS",
                 "PUR_NUM",
                 "PUR_AMT",
-            ]
-        ).rename(
-            columns = {
-                "CUST_ID": ENTITY_CFG.entity_key,
-                "SNAP_DT": ENTITY_CFG.dt_key,
-            }
-        ).reset_index(drop=True) # avoid __index_level_0__ column
+            )
+        )
         

@@ -39,7 +39,7 @@ def get_vault_resp(mount_point: str, path: str) -> dict:
     else:
         raise PermissionError("Vault Permission Error")
 
-def get_obj_storage_accessor() -> S3Accessor:
+def get_fs_storage_accessor() -> S3Accessor:
     response = get_vault_resp(
         mount_point = VAULT_MOUNT_POINT,
         path = VAULT_MOUNT_PATH['s3'],
@@ -106,15 +106,15 @@ class Connection(metaclass=Singleton):
     DATA_BUCKET = "general-clf-pipeline-project"
     
     def __init__(self) -> None:
-        self._s3a = get_obj_storage_accessor()
-        self._s3a.enter_bucket(self.DATA_BUCKET)
+        self._fs = get_fs_storage_accessor()
+        self._fs.enter_bucket(self.DATA_BUCKET)
         self._ch_conf = get_warehouse_connect()
         self._mongo = get_mongo_client()
         self._airflow_api = get_airflow_api()
         
     @property
-    def S3A(self):
-        return self._s3a
+    def FS_STORAGE(self):
+        return self._fs
     
     @property
     def CH_CONF(self):

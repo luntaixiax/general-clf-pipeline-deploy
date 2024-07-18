@@ -44,14 +44,14 @@ class _BaseSnapTableWarehouse(SnapTableStreamGenerator):
 class SnapTableIngestor(_BaseSnapTableWarehouse):
     
     @classmethod
-    def read(cls, snap_dt: date) -> pd.DataFrame:
+    def read(cls, snap_dt: date) -> ibis.expr.types.Table:
         raise NotImplementedError("")
     
     @classmethod
     def transform(cls, snap_dt: date):
         # load table into data wareshouse
         df = cls.read(snap_dt=snap_dt)
-        cls.dm.save_pandas(
+        cls.dm.save_ibis(
             df,
             schema = cls.dm.schema,
             table = cls.dm.table,

@@ -22,7 +22,7 @@ class Scoring(SnapTableTransfomer):
                 or get_prod_model_id() is None:
             raise ValueError("model id not defined in either time table or deployed as prod")
             
-        df = Features.dm.read(snap_dt=snap_dt)
+        df = Features.dm.read_pd(snap_dt=snap_dt)
         predict_df = predict_batch(model_id=model_id, df=df)
         
         predict_df[ENTITY_CFG.pk] = df[ENTITY_CFG.pk]

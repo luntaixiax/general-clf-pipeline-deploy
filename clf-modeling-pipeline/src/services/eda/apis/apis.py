@@ -16,7 +16,7 @@ from src.dao.data_connection import Connection
 from src.dao.dbapi import CH_HANDLER, EDA_PREPROC_REGISTRY, CONV_MODEL_DATA_REGISTRY
 
 
-OBJ_HANDLE = Connection().S3A
+OBJ_HANDLE = Connection().FS_STORAGE
 
 class _BaseDataManager:
     DATA_SOURCE: str = None

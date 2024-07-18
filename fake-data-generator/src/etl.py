@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator, \
     _CurrentStream, _FutureStream, _PastStream, ExecPlan
-from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerObjStorage
+from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerFileSystem
 from luntaiDs.CommonTools.utils import dt2str, str2dt
 
 from src.data_connection import Connection
@@ -14,14 +14,13 @@ from src.model import CustFeature, AcctFeature, lognormal2normal
 from src.registry import load_fake_model_by_timetable
 
 
-SnapshotDataManagerObjStorage.setup(
-    bucket = Connection.DATA_BUCKET,
-    root_dir = "/fake/data",
-    obja = Connection().S3A
-)
+SnapshotDataManagerFileSystem.setup(
+    fs = Connection().FS_STORAGE,
+    root_dir = f"{Connection.DATA_BUCKET}/fake/data",
+) 
 
 class CustFeatureSnap(SnapTableStreamGenerator):
-    dm = SnapshotDataManagerObjStorage(schema='FEATURES', table='CUST')
+    dm = SnapshotDataManagerFileSystem(schema='FEATURES', table='CUST')
     # generator param
     INIT_DT = date(2024, 1, 1)
     INIT_CUST_SIZE = 10000
@@ -64,7 +63,7 @@ class CustFeatureSnap(SnapTableStreamGenerator):
 
     @classmethod
     def generate(cls, snap_dt: date) -> pd.DataFrame:
-        last_custs = cls.dm.read(snap_dt=snap_dt - timedelta(days=1))
+        last_custs = cls.dm.read_pd(snap_dt=snap_dt - timedelta(days=1))
         last_custs = last_custs.to_dict(orient='records')
 
         new_custs = []
@@ -98,7 +97,7 @@ class CustFeatureSnap(SnapTableStreamGenerator):
         return cls.dm.count(snap_dt) > 0
 
 class AcctFeatureSnap(SnapTableStreamGenerator):
-    dm = SnapshotDataManagerObjStorage(schema='FEATURES', table='ACCT')
+    dm = SnapshotDataManagerFileSystem(schema='FEATURES', table='ACCT')
     upstreams = [_CurrentStream(CustFeatureSnap())]
     # generator param
     INIT_DT = date(2024, 1, 1)
@@ -126,7 +125,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
     @classmethod
     def init(cls, snap_dt: date) -> pd.DataFrame:
         sdp_cust = CustFeatureSnap.dm
-        custs = sdp_cust.read(snap_dt)
+        custs = sdp_cust.read_pd(snap_dt)
 
         accts = []
         for idx, cust in custs.iterrows():
@@ -143,7 +142,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
 
     @classmethod
     def generate(cls, snap_dt: date) -> pd.DataFrame:
-        last_accts = cls.dm.read(snap_dt=snap_dt - timedelta(days=1))
+        last_accts = cls.dm.read_pd(snap_dt=snap_dt - timedelta(days=1))
 
         new_accts = []
         # augment last records
@@ -153,7 +152,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
 
         # generate new accts for new custs
         sdp_cust = CustFeatureSnap.dm
-        custs = sdp_cust.read(snap_dt)
+        custs = sdp_cust.read_pd(snap_dt)
         new_custs = custs[~custs['CUST_ID'].isin(last_accts['CUST_ID'])]
         for idx, new_cust in new_custs.iterrows():
             num_acct = random.randint(1, 5)
@@ -175,7 +174,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
 
 
 class EngagementFeatureSnap(SnapTableStreamGenerator):
-    dm = SnapshotDataManagerObjStorage(schema='FEATURES', table='ENGAGE_FE')
+    dm = SnapshotDataManagerFileSystem(schema='FEATURES', table='ENGAGE_FE')
     upstreams = [
         _CurrentStream(CustFeatureSnap()),
         _PastStream(AcctFeatureSnap(), history=7, freq='d')
@@ -186,9 +185,9 @@ class EngagementFeatureSnap(SnapTableStreamGenerator):
         sdp_cust = CustFeatureSnap.dm
         sdp_acct = AcctFeatureSnap.dm
         # get feature
-        cust_past = sdp_cust.read(snap_dt)  # customer feature
+        cust_past = sdp_cust.read_pd(snap_dt)  # customer feature
         past_7ds = [snap_dt - timedelta(days=d) for d in range(7)]
-        accts_past_7d = sdp_acct.reads(past_7ds)  # account feature
+        accts_past_7d = sdp_acct.reads_pd(past_7ds)  # account feature
 
         # feature engineering
         cust_past['AGE'] = (cust_past['SNAP_DT'] - cust_past['BIRTH_DT']).dt.days / 365
@@ -311,7 +310,7 @@ class EngagementFeatureSnap(SnapTableStreamGenerator):
 
 class EngagementEventSnap(SnapTableStreamGenerator):
     # each event df @ snap date will record future events between snap_date + 1 to snap_date + 8
-    dm = SnapshotDataManagerObjStorage(schema='EVENTS', table='ENGAGE')
+    dm = SnapshotDataManagerFileSystem(schema='EVENTS', table='ENGAGE')
     upstreams = [_CurrentStream(EngagementFeatureSnap())]
     
     @classmethod
@@ -326,7 +325,7 @@ class EngagementEventSnap(SnapTableStreamGenerator):
     def execute(cls, snap_dt: date):
         # get features
         sdp_feat = EngagementFeatureSnap.dm
-        features_df = sdp_feat.read(snap_dt)
+        features_df = sdp_feat._pd(snap_dt)
 
         # get model
         model = cls.load_model(snap_dt)
@@ -406,7 +405,7 @@ class EngagementEventSnap(SnapTableStreamGenerator):
 
 class EngagementEventFeatureSnap(SnapTableStreamGenerator):
     # features built from past 7d engagement events
-    dm = SnapshotDataManagerObjStorage(schema='FEATURES', table='ENGAGE_EVENT_FE')
+    dm = SnapshotDataManagerFileSystem(schema='FEATURES', table='ENGAGE_EVENT_FE')
     upstreams = [
         _PastStream(EngagementEventSnap(), history=14, freq='d')
     ]
@@ -417,7 +416,7 @@ class EngagementEventFeatureSnap(SnapTableStreamGenerator):
         # events table records event during snap_dt+1 to snap_dt+8
         # so event data for snap_dt-14 contain events from snap_dt-13 to snap_dt-6
         past_14ds = [snap_dt - timedelta(days=d) for d in range(14)]
-        eng_evnts_past7d = sdp_eng_evnts.reads(past_14ds)
+        eng_evnts_past7d = sdp_eng_evnts.reads_pd(past_14ds)
         eng_evnts_past7d = eng_evnts_past7d[
             eng_evnts_past7d['EVENT_TS'].between(
                 dt2str(snap_dt - timedelta(6)),
@@ -490,7 +489,7 @@ class EngagementEventFeatureSnap(SnapTableStreamGenerator):
 
 class ConversionEventSnap(SnapTableStreamGenerator):
 
-    dm = SnapshotDataManagerObjStorage(schema='EVENTS', table='CONVERSION')
+    dm = SnapshotDataManagerFileSystem(schema='EVENTS', table='CONVERSION')
     upstreams = [
         _CurrentStream(EngagementFeatureSnap()),
         _CurrentStream(EngagementEventFeatureSnap()),
@@ -518,9 +517,9 @@ class ConversionEventSnap(SnapTableStreamGenerator):
     def execute(cls, snap_dt: date):
         # get features
         sdp_eng_feat = EngagementFeatureSnap.dm
-        eng_feat = sdp_eng_feat.read(snap_dt)
+        eng_feat = sdp_eng_feat.read_pd(snap_dt)
         sdp_engevet_feat = EngagementEventFeatureSnap.dm
-        engevet_feat = sdp_engevet_feat.read(snap_dt)
+        engevet_feat = sdp_engevet_feat.read_pd(snap_dt)
 
         # get model
         event_model = cls.load_event_model(snap_dt)

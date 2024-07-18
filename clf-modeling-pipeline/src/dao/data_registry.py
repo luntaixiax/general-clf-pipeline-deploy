@@ -58,35 +58,7 @@ class ConvModelingDataRegistry(_BaseModelDataRegistryCH):
         )
         
         ## step 2. create structure and validate
-        # create schema
-        self.handler.create_schema(schema = self.schema)
-        
-        # validate if table already exists
-        if self.handler.is_exist(schema = self.schema, table = self.table):
-            # if exists, check if schema changes
-            existing_schema = self.handler.get_dtypes(
-                schema = self.schema, 
-                table = self.table
-            )
-            current_schema = schema_features.ibis_schema
-            if not current_schema.equals(existing_schema):
-                msg = f"""
-                {self.schema}.{self.table} table schema changed:
-                Current in DB:
-                {existing_schema}
-                Now:
-                {current_schema}
-                
-                Recreate table schema or fix it
-                """
-                raise TypeError(msg)
-            return
-        
-        self.handler.create_table(
-            schema = self.schema,
-            table = self.table,
-            col_schemas = schema_features
-        )
+        self.init(schema_features)
         
     def get_joined_X_y(self, use_snap_dts: List[date]) -> ibis.expr.types.Table:
         """get joined feature (X) and target (y) data for given dates

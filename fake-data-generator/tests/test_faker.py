@@ -20,14 +20,14 @@ def test_cust_feature(client_table):
                 
         from src.etl import CustFeatureSnap
             
-        mock_dm.read.return_value = client_table
+        mock_dm.read_pd.return_value = client_table
         mock_rnd.return_value = 2
         
         run_dt = date(2024, 1, 1)
         df = CustFeatureSnap.generate(run_dt)
         
         # test if read method has been called
-        mock_dm.read.assert_called_once()
+        mock_dm.read_pd.assert_called_once()
         
         assert len(df) == CustFeatureSnap.INIT_CUST_SIZE \
                             + 2 - CustFeatureSnap.CUST_DIMINISH_SPEED
@@ -44,14 +44,14 @@ def test_acct_feature(acct_table, client_table):
                 
         from src.etl import AcctFeatureSnap
             
-        mock_acct_dm.read.return_value = acct_table
-        mock_client_dm.read.return_value = client_table
+        mock_acct_dm.read_pd.return_value = acct_table
+        mock_client_dm.read_pd.return_value = client_table
         mock_rnd.return_value = 2
         
         run_dt = date(2024, 1, 2)
         df = AcctFeatureSnap.generate(run_dt)
         
         # test if read method has been called
-        mock_acct_dm.read.assert_called_once()
-        mock_client_dm.read.assert_called_once()
+        mock_acct_dm.read_pd.assert_called_once()
+        mock_client_dm.read_pd.assert_called_once()
         assert is_datetime64_any_dtype(df['SNAP_DT'])

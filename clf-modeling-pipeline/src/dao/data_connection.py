@@ -1,5 +1,7 @@
 import os
 import logging
+from fsspec import AbstractFileSystem
+from s3fs import S3FileSystem
 import hvac
 import pymongo
 import toml
@@ -43,14 +45,15 @@ def get_vault_resp(mount_point: str, path: str) -> dict:
     else:
         raise PermissionError("Vault Permission Error")
 
-def get_obj_storage_accessor() -> S3Accessor:
+def get_fs_storage_accessor() -> AbstractFileSystem:
     response = get_vault_resp(
         mount_point = VAULT_MOUNT_POINT,
         path = VAULT_MOUNT_PATH['s3'],
     )
-    s3a = S3Accessor(
-        aws_access_key_id=response['ACCESS_KEY'],
-        aws_secret_access_key=response['SECRET_ACCESS_KEY'],
+    s3a = S3FileSystem(
+        anon=False,
+        key=response['ACCESS_KEY'],
+        secret=response['SECRET_ACCESS_KEY'],
         endpoint_url=f"http://{response['endpoint']}:{response['port']}",
     )
     return s3a
@@ -135,8 +138,7 @@ class Connection(metaclass=Singleton):
     DATA_BUCKET = "general-clf-pipeline-project"
     
     def __init__(self) -> None:
-        self._s3a = get_obj_storage_accessor()
-        self._s3a.enter_bucket(self.DATA_BUCKET)
+        self._fs = get_fs_storage_accessor()
         self._ch_conf = get_warehouse_connect()
         self._mongo = get_mongo_client()
         self._airflow_api = get_airflow_api()
@@ -144,8 +146,8 @@ class Connection(metaclass=Singleton):
         set_mlflow_server()
         
     @property
-    def S3A(self):
-        return self._s3a
+    def FS_STORAGE(self):
+        return self._fs
     
     @property
     def CH_CONF(self):
