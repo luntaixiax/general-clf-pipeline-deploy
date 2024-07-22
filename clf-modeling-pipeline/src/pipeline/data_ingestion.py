@@ -2,28 +2,18 @@ import logging
 from datetime import date
 import ibis
 from ibis import _
-from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerFileSystem
-from src.dao.data_connection import Connection
 from src.pipeline.utils import SnapTableIngestor
 from src.utils.settings import ENTITY_CFG
 
-SnapshotDataManagerFileSystem.setup(
-    fs = Connection().FS_STORAGE,
-    root_dir = f"{Connection.DATA_BUCKET}/fake/data",
-) 
 
 class CustomerRaw(SnapTableIngestor):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'RAW', 
-        table = 'CUSTOMER', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'RAW'
+    table = 'CUSTOMER'
     
     @classmethod
     def read(cls, snap_dt: date) -> ibis.expr.types.Table:
         return (
-            SnapshotDataManagerFileSystem(
+            cls.get_src_dm(
                 schema='FEATURES', table='CUST'
             )
             .read(snap_dt)
@@ -48,16 +38,13 @@ class CustomerRaw(SnapTableIngestor):
         )
         
 class AcctRaw(SnapTableIngestor):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'RAW', 
-        table = 'ACCOUNT', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'RAW'
+    table = 'ACCOUNT'
     
     @classmethod
     def read(cls, snap_dt: date) -> ibis.expr.types.Table:
         accts = (
-            SnapshotDataManagerFileSystem(
+            cls.get_src_dm(
                 schema='FEATURES', table='ACCT'
             )
             .read(snap_dt)
@@ -75,16 +62,13 @@ class AcctRaw(SnapTableIngestor):
         return accts
         
 class EventRaw(SnapTableIngestor):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'RAW', 
-        table = 'EVENTS', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'RAW'
+    table = 'EVENTS'
     
     @classmethod
     def read(cls, snap_dt: date) -> ibis.expr.types.Table:
         return (
-            SnapshotDataManagerFileSystem(
+            cls.get_src_dm(
                 schema='EVENTS', table='ENGAGE'
             )
             .read(snap_dt)
@@ -99,16 +83,13 @@ class EventRaw(SnapTableIngestor):
         
         
 class PurchaseRaw(SnapTableIngestor):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'RAW', 
-        table = 'PURCHASES', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'RAW'
+    table = 'PURCHASES'
     
     @classmethod
     def read(cls, snap_dt: date) -> ibis.expr.types.Table:
         return (
-            SnapshotDataManagerFileSystem(
+            cls.get_src_dm(
                 schema='EVENTS', table='CONVERSION'
             )
             .read(snap_dt)

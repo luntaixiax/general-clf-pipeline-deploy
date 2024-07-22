@@ -2,7 +2,7 @@ from typing import List
 import json
 import pandas as pd
 from mlflow.pyfunc import scoring_server, PythonModel
-from src.utils.cache import timed_lru_cache
+from src.utils.decorators import timed_lru_cache
 from src.dao.dbapi import MODEL_REGISTRY
 
 @timed_lru_cache(seconds=3600, maxsize=128)

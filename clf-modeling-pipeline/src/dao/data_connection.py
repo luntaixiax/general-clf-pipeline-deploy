@@ -100,7 +100,7 @@ def get_airflow_api() -> AirflowAPI:
         password = response['password'],
     )
 
-def get_optuna_storage() -> MySQL:
+def get_optuna_storage() -> baseDbInf:
     response = get_vault_resp(
         mount_point = VAULT_MOUNT_POINT,
         path = VAULT_MOUNT_PATH['mysql'],
@@ -142,7 +142,7 @@ class Connection(metaclass=Singleton):
         self._warehouse_conf = get_warehouse_connect()
         self._mongo = get_mongo_client()
         self._airflow_api = get_airflow_api()
-        self._mysql_conf = get_optuna_storage()
+        self._optuna_storage = get_optuna_storage()
         set_mlflow_server()
         
     @property
@@ -163,4 +163,4 @@ class Connection(metaclass=Singleton):
     
     @property
     def OPTUNA_STORAGE(self):
-        return self._mysql_conf
+        return self._optuna_storage

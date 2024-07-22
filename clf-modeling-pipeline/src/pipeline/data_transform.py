@@ -1,7 +1,6 @@
 import ibis
 from ibis import _
 from datetime import date, timedelta
-from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
 from luntaiDs.CommonTools.SnapStructure.dependency import _CurrentStream, _PastStream, _FutureStream
 from luntaiDs.CommonTools.SnapStructure.tools import get_past_period_ends
 from src.pipeline.utils import static_ibis_arr_avg, static_ibis_arr_max, static_ibis_arr_sum, \
@@ -11,11 +10,8 @@ from src.pipeline.data_extraction import CustomerExtract, AcctExtract, EventExtr
     
 # Features - X
 class CustBase(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'FEATURE', 
-        table = 'CUST_BASE', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'FEATURE'
+    table = 'CUST_BASE'
     upstreams = [_CurrentStream(CustomerExtract())]
     
     @classmethod
@@ -85,11 +81,8 @@ class CustBase(SnapTableTransfomer):
         )
 
 class AcctBase(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'FEATURE', 
-        table = 'ACCT_BASE', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'FEATURE'
+    table = 'ACCT_BASE'
     upstreams = [_CurrentStream(AcctExtract())]
     
     @classmethod
@@ -168,11 +161,8 @@ class AcctBase(SnapTableTransfomer):
         )
     
 class AcctWindow(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'FEATURE', 
-        table = 'ACCT_WINDOW', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'FEATURE'
+    table = 'ACCT_WINDOW'
     upstreams = [_PastStream(AcctBase(), history = 7, freq = 'D')]
     
     @classmethod
@@ -300,11 +290,8 @@ class AcctWindow(SnapTableTransfomer):
         )
     
 class EventWindow(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'FEATURE', 
-        table = 'EVENT_WINDOW', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'FEATURE'
+    table = 'EVENT_WINDOW'
     upstreams = [_PastStream(EventExtract(), history = 7, freq = 'D')]
     
     @classmethod
@@ -348,11 +335,8 @@ class EventWindow(SnapTableTransfomer):
         )
 
 class Features(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'FEATURE', 
-        table = 'FEATURES', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'FEATURE'
+    table = 'FEATURES'
     upstreams = [_CurrentStream(CustBase()), _CurrentStream(AcctWindow()),
                  _CurrentStream(EventWindow())]
     
@@ -435,11 +419,8 @@ class Features(SnapTableTransfomer):
 
 # Targets - Y
 class PurchaseWindow(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'TARGET', 
-        table = 'PURCHASE_WINDOW', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'TARGET'
+    table = 'PURCHASE_WINDOW'
     upstreams = [_FutureStream(PurchaseExtract(), offset = 1, future = 7, freq = 'D')]
     
     @classmethod

@@ -1,25 +1,40 @@
-from typing import Tuple, Dict, Any, Union, Callable, Generator
 import logging
 import ibis
 from datetime import date
-from luntaiDs.CommonTools.utils import render_sql_from_file
 from luntaiDs.CommonTools.dtyper import DSchema
 from luntaiDs.CommonTools.SnapStructure.dependency import SnapTableStreamGenerator
+from luntaiDs.CommonTools.SnapStructure.structure import SnapshotDataManagerWarehouseMixin, SnapshotDataManagerFileSystem
 from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-import pandas as pd
+from src.utils.decorators import classproperty
+from src.utils.settings import ENTITY_CFG
 from src.dao.table_schemas import TableSchema
 from src.dao.data_connection import Connection
 
-SnapshotDataManagerCHSQL.setup(db_conf = Connection().DWH_CONF)
-
+SnapshotDataManagerCHSQL.setup(
+    db_conf = Connection().DWH_CONF
+)
+SnapshotDataManagerFileSystem.setup(
+    fs = Connection().FS_STORAGE,
+    root_dir = f"{Connection.DATA_BUCKET}/fake/data",
+)
+    
 class _BaseSnapTableWarehouse(SnapTableStreamGenerator):
-    dm: SnapshotDataManagerCHSQL = None
+    schema: str
+    table: str
+    
+    @classproperty
+    def dm(cls) -> SnapshotDataManagerWarehouseMixin:
+        return SnapshotDataManagerCHSQL(
+            schema = cls.schema,
+            table = cls.table,
+            snap_dt_key = ENTITY_CFG.dt_key
+        )
 
     @classmethod
     def init_table(cls, snap_dt: date):
         col_schemas: DSchema = TableSchema.read_schema(
-            schema = cls.dm.schema,
-            table = cls.dm.table
+            schema = cls.schema,
+            table = cls.table
         )
         cls.dm.init_table(
             col_schemas = col_schemas,
@@ -44,6 +59,13 @@ class _BaseSnapTableWarehouse(SnapTableStreamGenerator):
 class SnapTableIngestor(_BaseSnapTableWarehouse):
     
     @classmethod
+    def get_src_dm(cls, schema: str, table: str) -> SnapshotDataManagerFileSystem:
+        return SnapshotDataManagerFileSystem(
+            schema = schema,
+            table = table
+        )
+    
+    @classmethod
     def read(cls, snap_dt: date) -> ibis.expr.types.Table:
         raise NotImplementedError("")
     
@@ -53,14 +75,12 @@ class SnapTableIngestor(_BaseSnapTableWarehouse):
         df = cls.read(snap_dt=snap_dt)
         cls.dm.save_ibis(
             df,
-            schema = cls.dm.schema,
-            table = cls.dm.table,
+            schema = cls.schema,
+            table = cls.table,
         )
         
 
 class SnapTableTransfomer(_BaseSnapTableWarehouse):
-    # sql_template: str = None
-    # add_sql_args: Dict[str, Union[str, int, float, Callable[[date], Any]]] = {}
         
     @classmethod
     def query(cls, snap_dt: date) -> ibis.expr.types.Table:
@@ -68,20 +88,6 @@ class SnapTableTransfomer(_BaseSnapTableWarehouse):
     
     @classmethod
     def transform(cls, snap_dt: date):
-        # process additonal sql arguments, in case some have callable values
-        # sql_args = dict()
-        # for k, v in cls.add_sql_args.items():
-        #     if callable(v):
-        #         # render at runtime
-        #         sql_args[k] = v(snap_dt) # v must be date -> args
-        #     else:
-        #         sql_args[k] = v
-        # # compile the SQL query
-        # sql = render_sql_from_file(
-        #     cls.sql_template, 
-        #     snap_dt = snap_dt,
-        #     **sql_args
-        # )
         df = cls.query(snap_dt=snap_dt)
         sql = ibis.to_sql(df)
         # run the SQL query insert into select

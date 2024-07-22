@@ -1,20 +1,14 @@
 import ibis
 from ibis import _
 from datetime import date
-from luntaiDs.ProviderTools.clickhouse.snap_struct import SnapshotDataManagerCHSQL
-from luntaiDs.CommonTools.SnapStructure.dependency import _CurrentStream, _PastStream, _FutureStream
-from src.dao.data_connection import VAULT_MOUNT_POINT, VAULT_MOUNT_PATH, Connection,\
-        get_vault_resp
+from luntaiDs.CommonTools.SnapStructure.dependency import _CurrentStream, _PastStream
 from src.pipeline.utils import SnapTableTransfomer
 from src.utils.settings import ENTITY_CFG
 from src.pipeline.data_ingestion import CustomerRaw, AcctRaw, EventRaw, PurchaseRaw
 
 class CustomerExtract(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'EXTRACT', 
-        table = 'CUSTOMER',
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'EXTRACT'
+    table = 'CUSTOMER'
     upstreams = [_CurrentStream(CustomerRaw())]
     
     @classmethod
@@ -27,11 +21,8 @@ class CustomerExtract(SnapTableTransfomer):
     
     
 class AcctExtract(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'EXTRACT', 
-        table = 'ACCOUNT', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'EXTRACT'
+    table = 'ACCOUNT'
     upstreams = [_CurrentStream(AcctRaw())]
     
     @classmethod
@@ -53,11 +44,8 @@ class AcctExtract(SnapTableTransfomer):
         )
     
 class EventExtract(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'EXTRACT', 
-        table = 'EVENTS', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'EXTRACT'
+    table = 'EVENTS'
     # need events generated on fake between [t-7, t-1]
     upstreams = [_PastStream(EventRaw(), history=7, offset=-1, freq='D')]
     
@@ -79,11 +67,8 @@ class EventExtract(SnapTableTransfomer):
     
     
 class PurchaseExtract(SnapTableTransfomer):
-    dm = SnapshotDataManagerCHSQL(
-        schema = 'EXTRACT', 
-        table = 'PURCHASES', 
-        snap_dt_key = ENTITY_CFG.dt_key
-    )
+    schema = 'EXTRACT'
+    table = 'PURCHASES'
     # need events generated on fake between [t-7, t-1]
     upstreams = [_PastStream(PurchaseRaw(), history=7, offset=-1, freq='D')]
     

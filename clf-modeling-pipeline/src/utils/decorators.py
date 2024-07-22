@@ -18,3 +18,15 @@ def timed_lru_cache(seconds: int, maxsize: int = 128):
         return wrapped_func
 
     return wrapper_cache
+
+
+class classproperty(object):
+    """python property is usually set for object (instance)
+    it is great that you can also have property for class variable
+    https://stackoverflow.com/questions/5189699/how-to-make-a-class-property
+    """
+    def __init__(self, f):
+        self.f = f
+        
+    def __get__(self, obj, owner):
+        return self.f(owner)
