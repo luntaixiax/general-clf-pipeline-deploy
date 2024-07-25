@@ -3,8 +3,10 @@ from typing import Any, Dict, Literal
 from datetime import datetime
 import optuna
 import mlflow
+import pandas as pd
 from sklearn.base import clone, BaseEstimator
 from lightgbm import LGBMClassifier
+import shap
 from luntaiDs.ModelingTools.CustomModel.custom import GroupStratifiedOptunaSearchCV
 from sklearn.linear_model import SGDClassifier
 from src.model_layer.base import HyperMode
@@ -164,6 +166,16 @@ class _BaseModel:
             )
             
         return model
+    
+    @classmethod
+    def get_shap_explainer(cls, model: Any, data: pd.DataFrame) -> shap.Explainer:
+        """return shap explainer for each type of model
+
+        :param Any model: model that shap supports
+        :param pd.DataFrame data: training data the model belongs to
+        :return shap.Explainer: the shap explainer and its subclass
+        """
+        raise NotImplementedError("")
         
 
 class _SingleLayerLGBM(_BaseModel):
@@ -231,6 +243,21 @@ class _SingleLayerLGBM(_BaseModel):
             'n_estimators_': model.n_estimators_,
             'n_features_': model.n_features_,
         }
+        
+    @classmethod
+    def get_shap_explainer(cls, model: Any, data: pd.DataFrame) -> shap.TreeExplainer:
+        """return shap explainer for each type of model
+
+        :param Any model: model that shap supports
+        :param pd.DataFrame data: training data the model belongs to
+        :return shap.TreeExplainer: the shap tree explainer optimized for GBM
+        """
+        return shap.TreeExplainer(
+            model = model,
+            data = data, # specify this
+            model_output = 'probability'  # explain the output of the model transformed into probability space 
+            # (note that this means the SHAP values now sum to the probability output of the model)
+        )
 
     
 @dataclass
@@ -312,6 +339,20 @@ class _SingleLayerSGD(_BaseModel):
             'intercept_': model.intercept_.tolist(),
             'n_features_in_': model.n_features_in_,
         }
+        
+    @classmethod
+    def get_shap_explainer(cls, model: Any, data: pd.DataFrame) -> shap.LinearExplainer:
+        """return shap explainer for each type of model
+
+        :param Any model: model that shap supports
+        :param pd.DataFrame data: training data the model belongs to
+        :return shap.LinearExplainer: the shap linear explainer optimized for linear model
+        """
+        return shap.LinearExplainer(
+            model = model,
+            masker = data,
+            link = shap.links.logit # link to logit space for easier intepretation
+        )
 
 
 

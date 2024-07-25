@@ -89,12 +89,7 @@ def train(data_id: str, model_id: str,
     MODEL_REGISTRY.register(
         model_id = model_id,
         data_id = data_id,
+        X_train = X_train,
         cp = cp,
         hyper_mode = hyper_mode,
-        signature = mlflow.models.ModelSignature(
-            inputs = ibis_schema_2_mlflow_schema(X_train.schema()),
-            outputs = mlflow.models.infer_signature(
-                model_output = cp.score(X_train_pd.sample(1))
-            ).outputs
-        )
     )

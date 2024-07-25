@@ -1,10 +1,16 @@
 from datetime import datetime, timezone
 from typing import List, Literal, Tuple
+from pathlib import Path
+import ibis
 import pymongo
 import json
 import mlflow
 import optuna
+import shap
+import tempfile
+import joblib
 from luntaiDs.ProviderTools.mongo.serving import _BaseModelRegistryMongo
+from luntaiDs.ProviderTools.mlflow.dtyper import ibis_schema_2_mlflow_schema
 from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import TabularPreprocModel
 from src.model_layer.composite import CompositePipeline, HyperMode
 
@@ -186,8 +192,8 @@ class EdaFeatureSelRegistryMongo(_BaseModelRegistryMongo):
             'collection' : self.DATA_COLLECTION,
             'last_update_ts' : datetime.now(timezone.utc),
         }
-        
-        
+
+
 class MlflowCompositePipeline(mlflow.pyfunc.PythonModel, CompositePipeline):
     def predict(self, context, model_input, params):
         return self.score(model_input)
@@ -214,22 +220,52 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
         return loaded_model.unwrap_python_model()
     
     def load_mlflow_pyfunc_model(self, model_id: str) -> mlflow.pyfunc.PythonModel:
+        """load the mlflow wrapped python flavor model
+
+        :param str model_id: model id to be loaded
+        :return mlflow.pyfunc.PythonModel: the mlflow wrapped flavor model
+        """
         config = self.get_model_config(model_id = model_id)
         run_id = config['tracking_info']['model_info']['model_uri']
         loaded_model = mlflow.pyfunc.load_model(run_id)
         return loaded_model
+    
+    def load_shap_explainer(self, model_id: str) -> shap.Explainer:
+        """load back shap explainer saved during training/registry
+
+        :param str model_id: model id for the relevant shap explainer
+        :return shap.Explainer: the shap explainer trained on the training data
+        """
+        from mlflow import MlflowClient
+        
+        config = self.get_model_config(model_id = model_id)
+        run_id = config['tracking_info']['best_run_id']
+        
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            client = MlflowClient()
+            client.download_artifacts(
+                run_id = run_id,
+                path = 'shaps/explainer.sav',
+                dst_path = tmp_dir
+            )
+            with open(Path(tmp_dir) / 'shaps/explainer.sav', "rb") as f:
+                explainer = joblib.load(f)
+                
+        return explainer
+            
 
     def save_model_and_generate_config(self, model_id: str, data_id: str,
+            X_train: ibis.expr.types.Table,
             cp: MlflowCompositePipeline, hyper_mode: HyperMode, 
-            signature: mlflow.models.ModelSignature | None = None) -> dict:
+            ) -> dict:
         """save model and generate configuration for this model
 
         :param str model_id: model id to be generated 
             (will be used as mlflow model deployment name)
         :param str data_id: data id which used to train the model
+        :param ibis.expr.types.Table X_train: training data in ibis dataframe format
         :param HyperMode hyper_mode: hyper parameter tuning info
         :param MlflowCompositePipeline cp: the composite pipeline object (mlflow implementation)
-        :param mlflow.models.ModelSignature signature: mlflow signature object
         """
         # retrieve optuna study
         study_name = hyper_mode.attrs['study_name']
@@ -241,10 +277,16 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
         
         # log model to tracking server
         with mlflow.start_run(run_id = best_run_id) as run:
+            X_train_pd = X_train.to_pandas()
             model_info = mlflow.pyfunc.log_model(
                 python_model=cp, 
                 artifact_path="composite_pipeline", 
-                signature=signature,
+                signature = mlflow.models.ModelSignature(
+                    inputs = ibis_schema_2_mlflow_schema(X_train.schema()),
+                    outputs = mlflow.models.infer_signature(
+                        model_output = cp.score(X_train_pd.sample(1))
+                    ).outputs
+                ),
                 metadata=cp.getLoggingParams()
             )
             # log pipeline parameters and attributes
@@ -266,6 +308,23 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
                 text=cp.renderStructureHTML(),
                 artifact_file='extras/structure.html'
             )
+            # log shap explainer
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                X_train_premodel = cp.transformPreModel(X_train_pd)
+                explainer = cp.getShapExplainer(
+                    X_train_premodel, 
+                    premodel = True
+                )
+            
+                # save to local temp file 1st
+                tmp_path = Path(tmp_dir) / "explainer.sav"
+                with open(tmp_path, "wb") as f:
+                    joblib.dump(explainer, f)
+                
+                mlflow.log_artifact(
+                    local_path=tmp_path.as_posix(),
+                    artifact_path='shaps'
+                )
         
         # register model to mlflow registry
         model_version = mlflow.register_model(

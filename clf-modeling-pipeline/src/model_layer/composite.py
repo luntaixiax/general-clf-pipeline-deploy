@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.base import BaseEstimator, estimator_html_repr
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder, FunctionTransformer
+import shap
 from src.model_layer.base import HyperMode
 from src.model_layer.feature_sel_hub import FSelParam, FSelBaseSklearn
 from src.model_layer.preprocess_hub import PreprocessParam, PreprocessingBaseSklearn
@@ -85,6 +86,18 @@ class CompositePipeline:
                 "setPipe() or build a new one by calling .buildPipe() first and load the trained model to setPipe()"
             )
     
+    def getFselSK(self) -> FSelBaseSklearn:
+        return self.__fsel
+    
+    def getPreprocSK(self) -> PreprocessingBaseSklearn:
+        return self.__preproc
+    
+    def getModelingSK(self) -> ModelingBaseSklearn:
+        return self.__modeling
+    
+    def getCalibSK(self) -> CalibratorBaseSklearn:
+        return self.__calib
+    
     def buildCalib(self, base_pipe: BaseEstimator | None = None) -> BaseEstimator:
         return CalibratorBaseSklearn.build(
             param = self._calib_param,
@@ -119,6 +132,11 @@ class CompositePipeline:
                 "setLabelEncoder() or build a new one by calling .buildLabelEncoder() first "
                 "and load the trained one to setLabelEncoder()"
             )
+            
+    def transformPreModel(self, X: pd.DataFrame) -> pd.DataFrame:
+        pre_modeling_pipe = self.getPipe()[:-1]
+        X_premodel = pre_modeling_pipe.transform(X)
+        return X_premodel
     
     def score(self, X: pd.DataFrame) -> pd.DataFrame:
         df = pd.DataFrame(index = X.index)
@@ -145,4 +163,26 @@ class CompositePipeline:
     
     def renderStructureHTML(self) -> str:
         return estimator_html_repr(self.getCalib())
+    
+    def getShapExplainer(self, X: pd.DataFrame, premodel: bool = False) -> shap.Explainer:
+        """get shap explainer for each type of model
+
+        :param pd.DataFrame X: the training data for shap explainer, depend on premodel param
+        :param bool premodel: if True, X will be the premodeling X, if False, will be X for whole pipeline
+        :return shap.Explainer: the underlying shap explainer
+        """
+        
+        modeling_pipe = self.getModelingSK().getPipe()
+        if premodel is False:
+            X_pretrain = self.transformPreModel(X)
+        else:
+            X_pretrain = X
+        
+        model_builder_cls = ModelingBaseSklearn.TEMPLATE_IDS.get(
+            self._model_param.template_id
+        )
+        return model_builder_cls.get_shap_explainer(
+            model = modeling_pipe,
+            data = X_pretrain,
+        )
         
