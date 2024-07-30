@@ -196,7 +196,7 @@ class EdaFeatureSelRegistryMongo(_BaseModelRegistryMongo):
 
 class MlflowCompositePipeline(mlflow.pyfunc.PythonModel, CompositePipeline):
     def predict(self, context, model_input, params):
-        return self.score(model_input)
+        return self.inference(model_input)
     
 class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
     def delete_model_files(self, model_id: str):
@@ -284,7 +284,7 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
                 signature = mlflow.models.ModelSignature(
                     inputs = ibis_schema_2_mlflow_schema(X_train.schema()),
                     outputs = mlflow.models.infer_signature(
-                        model_output = cp.score(X_train_pd.sample(1))
+                        model_output = cp.inference(X_train_pd.sample(1))
                     ).outputs
                 ),
                 metadata=cp.getLoggingParams()

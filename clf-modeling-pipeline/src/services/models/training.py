@@ -71,14 +71,14 @@ def train(data_id: str, model_id: str,
     
     # get predition and testing
     logging.info("Getting Prediction and Testing")
-    y_train_pred = cp.score(X_train_pd)
+    y_train_pred = cp.inference(X_train_pd)
     y_train_pred = y_train_pred.loc[:, y_train_pred.columns.str.startswith('CALIB_')]
     if y_train_pred.shape[1] == 2:
         y_train_pred = y_train_pred['CALIB_CLS1']
     roc_auc_train = roc_auc_score(y_train_pd, y_train_pred)
     logging.info(f"ROC AUC on training set = {roc_auc_train}")
 
-    y_test_pred = cp.score(X_test_pd)
+    y_test_pred = cp.inference(X_test_pd)
     y_test_pred = y_test_pred.loc[:, y_test_pred.columns.str.startswith('CALIB_')]
     if y_test_pred.shape[1] == 2:
         y_test_pred = y_test_pred['CALIB_CLS1']

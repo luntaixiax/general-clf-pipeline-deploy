@@ -1,8 +1,10 @@
 from dataclasses import asdict
+import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, estimator_html_repr
+from sklearn.metrics import get_scorer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import LabelEncoder, FunctionTransformer
+from sklearn.preprocessing import LabelEncoder, FunctionTransformer, LabelBinarizer
 import shap
 from src.model_layer.base import HyperMode
 from src.model_layer.feature_sel_hub import FSelParam, FSelBaseSklearn
@@ -138,7 +140,7 @@ class CompositePipeline:
         X_premodel = pre_modeling_pipe.transform(X)
         return X_premodel
     
-    def score(self, X: pd.DataFrame) -> pd.DataFrame:
+    def inference(self, X: pd.DataFrame) -> pd.DataFrame:
         df = pd.DataFrame(index = X.index)
         pipe = self.getPipe()
         probs = pipe.predict_proba(X) # (n, n_class)
@@ -160,6 +162,41 @@ class CompositePipeline:
         df[calib_cols] = probs_calib
         
         return df
+    
+    def score(self, X: pd.DataFrame, y_true: pd.Series, 
+            metric: str = 'balanced_accuracy', use_calibrated_pred: bool = True):
+        
+        le = self.getLabelEncoder()
+        pred_df = self.inference(X)
+        y_true = le.transform(y_true) # 1d array -> 1d array
+        # take calibrated or uncalibrated score columns
+        if use_calibrated_pred:
+            y_pred = pred_df[pred_df.columns.str.startswith('CALIB_CLS')]  
+        else:
+            y_pred = pred_df[pred_df.columns.str.startswith('PROB_CLS')]  
+        
+        if y_pred.shape[1] != len(le.classes_):
+            raise ValueError(f"LabelEncoder implies n_class = {len(le.classes_)} while you gave {y_pred.shape[1]}")
+        
+        # binary classification just use default scorer
+        if len(le.classes_) == 1:
+            # TODO
+            pass
+            
+        
+        if metric in ['accuracy', 'balanced_accuracy', 'precision', 'recall']:
+            y_pred = np.argmax(y_pred, axis = 1)
+        if metric in ['roc_auc', 'roc_auc_ovr', 'roc_auc_ovo', 'roc_auc_ovr_weighted', 'roc_auc_ovo_weighted']:
+            y_true = LabelBinarizer().fit_transform(y_true) # 1d -> nd
+        
+        
+        if len(le.classes_) > 1:
+            # multi class problem, only limited number of metrics are supported
+            # and some need to convert y_true to n-d array
+            # some metric need predict rather than predict_proba
+            
+            
+        
     
     def renderStructureHTML(self) -> str:
         return estimator_html_repr(self.getCalib())
@@ -186,3 +223,33 @@ class CompositePipeline:
             data = X_pretrain,
         )
         
+    def getCoeffImp(self) -> pd.Series:
+        """get coefficient or feature importance, or raise TypeError if not found
+
+        :return pd.Series: if possible, return feature importance or coefficient
+        """
+        # get modeling part
+        model = self.getModelingSK().getPipe()
+        # deconstruct nested structure
+        if hasattr(model, "best_estimator_"):
+            model = model.best_estimator_
+        if hasattr(model, "calibrated_classifiers_"):
+            model = model.calibrated_classifiers_[0].base_estimator
+        # infer if there is coef or importance getter
+        if hasattr(model, 'feature_name_'):
+            # light gbm
+            cols = list(model.feature_name_)
+        else:
+            cols = model.feature_names_in_.tolist()
+        if hasattr(model, 'coef_'):
+            coefs = model.coef_.flatten().tolist()
+            if hasattr(model, 'intercept_'):
+                intercept = model.intercept_[0]
+                coefs = [intercept] + coefs
+                cols = ['INTERCEPT_'] + cols
+        elif hasattr(model, 'feature_importances_'):
+            coefs = model.feature_importances_.tolist()
+        else:
+            raise TypeError("Model does not have coef_ or feature_importances_")
+        
+        return pd.Series(coefs, index = cols)
