@@ -6,6 +6,8 @@ from sklearn.metrics import get_scorer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder, FunctionTransformer, LabelBinarizer
 import shap
+from luntaiDs.ModelingTools.Evaluation.metrics import SKMultiClfMetricsCalculator, \
+    SKClfMetricsEnum
 from src.model_layer.base import HyperMode
 from src.model_layer.feature_sel_hub import FSelParam, FSelBaseSklearn
 from src.model_layer.preprocess_hub import PreprocessParam, PreprocessingBaseSklearn
@@ -163,39 +165,45 @@ class CompositePipeline:
         
         return df
     
-    def score(self, X: pd.DataFrame, y_true: pd.Series, 
-            metric: str = 'balanced_accuracy', use_calibrated_pred: bool = True):
-        
+    def getMetricCalculator(self, X: pd.DataFrame, y_true: pd.Series, 
+            use_calibrated_pred: bool = True) -> SKMultiClfMetricsCalculator:
+        """get the score calculator to ease usage of score, roc_auc_curve, etc.
+
+        :param pd.DataFrame X: features X
+        :param pd.Series y_true: target ground truth y, 1-D array, support multi-class
+        :param bool use_calibrated_pred: whether to use calibrated preds or uncalibrated preds, defaults to True
+        :return SKMultiClfMetricsCalculator: the score calculator to ease usage of score, roc_auc_curve, etc.
+        """
         le = self.getLabelEncoder()
         pred_df = self.inference(X)
         y_true = le.transform(y_true) # 1d array -> 1d array
         # take calibrated or uncalibrated score columns
         if use_calibrated_pred:
-            y_pred = pred_df[pred_df.columns.str.startswith('CALIB_CLS')]  
+            y_pred = pred_df[pred_df.columns[pred_df.columns.str.startswith('CALIB_CLS')]]
         else:
-            y_pred = pred_df[pred_df.columns.str.startswith('PROB_CLS')]  
+            y_pred = pred_df[pred_df.columns[pred_df.columns.str.startswith('PROB_CLS')]]
         
         if y_pred.shape[1] != len(le.classes_):
             raise ValueError(f"LabelEncoder implies n_class = {len(le.classes_)} while you gave {y_pred.shape[1]}")
         
-        # binary classification just use default scorer
-        if len(le.classes_) == 1:
-            # TODO
-            pass
-            
-        
-        if metric in ['accuracy', 'balanced_accuracy', 'precision', 'recall']:
-            y_pred = np.argmax(y_pred, axis = 1)
-        if metric in ['roc_auc', 'roc_auc_ovr', 'roc_auc_ovo', 'roc_auc_ovr_weighted', 'roc_auc_ovo_weighted']:
-            y_true = LabelBinarizer().fit_transform(y_true) # 1d -> nd
-        
-        
-        if len(le.classes_) > 1:
-            # multi class problem, only limited number of metrics are supported
-            # and some need to convert y_true to n-d array
-            # some metric need predict rather than predict_proba
-            
-            
+        return SKMultiClfMetricsCalculator(y_true, y_pred)
+    
+    def score(self, X: pd.DataFrame, y_true: pd.Series, 
+            metric: SKClfMetricsEnum, use_calibrated_pred: bool = True) -> float:
+        """score on the given X and y_true using given metric
+
+        :param pd.DataFrame X: features X
+        :param pd.Series y_true: target ground truth y, 1-D array, support multi-class
+        :param SKClfMetricsEnum metric: the metrics should use values from this enum
+        :param bool use_calibrated_pred: whether to use calibrated preds or uncalibrated preds, defaults to True
+        :return float: the given metric calculated on given X and ground truth y
+        """        
+        scorer = self.getMetricCalculator(
+            X = X,
+            y_true = y_true,
+            use_calibrated_pred = use_calibrated_pred
+        )
+        return scorer.score(metric)
         
     
     def renderStructureHTML(self) -> str:
