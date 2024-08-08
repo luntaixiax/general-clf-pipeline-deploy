@@ -3,8 +3,7 @@ from ibis import _
 from datetime import date, timedelta
 from luntaiDs.CommonTools.SnapStructure.dependency import _CurrentStream, _PastStream, _FutureStream
 from luntaiDs.CommonTools.SnapStructure.tools import get_past_period_ends
-from src.pipeline.utils import static_ibis_arr_avg, static_ibis_arr_max, static_ibis_arr_sum, \
-    SnapTableTransfomer
+from src.pipeline.utils import SnapTableTransfomer
 from src.utils.settings import ENTITY_CFG
 from src.pipeline.data_extraction import CustomerExtract, AcctExtract, EventExtract, PurchaseExtract
     
@@ -181,7 +180,7 @@ class AcctWindow(SnapTableTransfomer):
             )
             .select(ENTITY_CFG.entity_key, 'DT')
         )
-        WINDOW = (
+        return (
             CATESIAN
             .left_join(
                 ACCT_BASE,
@@ -225,40 +224,20 @@ class AcctWindow(SnapTableTransfomer):
             .group_by(ENTITY_CFG.entity_key)
             .aggregate(
                 # past 7d features
-                _['NUM_ACCTS'].collect()[:7].name('NUM_ACCTS'),
-                _['TOTAL_FLOW'].collect()[:7].name('TOTAL_FLOW'),
-                _['TOTAL_DEB_FLOW'].collect()[:7].name('TOTAL_DEB_FLOW'),
-                _['TOTAL_CRE_FLOW'].collect()[:7].name('TOTAL_CRE_FLOW'),
-                _['END_BAL_CRE'].cast('float').collect()[:7].name('END_BAL_CRE_7D'),
-                _['CR_LMT'].collect()[:7].name('CR_LMT'),
+                _['NUM_ACCTS'].collect()[:7].maxs().name('MAX_NUM_ACCT_7D'),
+                _['TOTAL_FLOW'].collect()[:7].sums().name('TOTAL_FLOW_7D'),
+                _['TOTAL_DEB_FLOW'].collect()[:7].sums().name('TOTAL_DEB_FLOW_7D'),
+                _['TOTAL_CRE_FLOW'].collect()[:7].sums().name('TOTAL_CRE_FLOW_7D'),
+                _['END_BAL_CRE'].cast('float').collect()[:7].means().name('AVG_END_BAL_CRE_7D'),
+                _['END_BAL_CRE'].cast('float').collect()[:7].maxs().name('MAX_END_BAL_CRE_7D'),
+                _['CR_LMT'].collect()[:7].maxs().name('MAX_CR_LMT_7D'),
                 # past 3d features
-                _['DR_AMT_DEB'].collect()[:3].name('DR_AMT_DEB'),
-                _['CR_AMT_DEB'].collect()[:3].name('CR_AMT_DEB'),
-                _['END_BAL_DEB'].cast('float').collect()[:3].name('END_BAL_DEB'),
-                _['DR_AMT_CRE'].collect()[:3].name('DR_AMT_CRE'),
-                _['CR_AMT_CRE'].collect()[:3].name('CR_AMT_CRE'),
-                _['END_BAL_CRE'].cast('float').collect()[:3].name('END_BAL_CRE_3D'),
-            )
-        )
-        return (
-            WINDOW
-            .group_by(ENTITY_CFG.entity_key)
-            .mutate(
-                # past 7d features
-                static_ibis_arr_max(_['NUM_ACCTS'], 7).name('MAX_NUM_ACCT_7D'),
-                static_ibis_arr_sum(_['TOTAL_FLOW'], 7).name('TOTAL_FLOW_7D'),
-                static_ibis_arr_sum(_['TOTAL_DEB_FLOW'], 7).name('TOTAL_DEB_FLOW_7D'),
-                static_ibis_arr_sum(_['TOTAL_CRE_FLOW'], 7).name('TOTAL_CRE_FLOW_7D'),
-                static_ibis_arr_avg(_['END_BAL_CRE_7D'], 7).name('AVG_END_BAL_CRE_7D'),
-                static_ibis_arr_max(_['END_BAL_CRE_7D'], 7).name('MAX_END_BAL_CRE_7D'),
-                static_ibis_arr_max(_['CR_LMT'], 7).name('MAX_CR_LMT_7D'),
-                # past 3d features
-                static_ibis_arr_sum(_['DR_AMT_DEB'], 3).name('TOTAL_DR_AMT_DEB_3D'),
-                static_ibis_arr_sum(_['CR_AMT_DEB'], 3).name('TOTAL_CR_AMT_DEB_3D'),
-                static_ibis_arr_avg(_['END_BAL_DEB'], 3).name('AVG_END_BAL_DEB_3D'),
-                static_ibis_arr_sum(_['DR_AMT_CRE'], 3).name('TOTAL_DR_AMT_CRE_3D'),
-                static_ibis_arr_sum(_['CR_AMT_CRE'], 3).name('TOTAL_CR_AMT_CRE_3D'),
-                static_ibis_arr_avg(_['END_BAL_CRE_3D'], 3).name('AVG_END_BAL_CRE_3D'),
+                _['DR_AMT_DEB'].collect()[:3].sums().name('TOTAL_DR_AMT_DEB_3D'),
+                _['CR_AMT_DEB'].collect()[:3].sums().name('TOTAL_CR_AMT_DEB_3D'),
+                _['END_BAL_DEB'].cast('float').collect()[:3].means().name('AVG_END_BAL_DEB_3D'),
+                _['DR_AMT_CRE'].collect()[:3].sums().name('TOTAL_DR_AMT_CRE_3D'),
+                _['CR_AMT_CRE'].collect()[:3].sums().name('TOTAL_CR_AMT_CRE_3D'),
+                _['END_BAL_CRE'].cast('float').collect()[:3].means().name('AVG_END_BAL_CRE_3D'),
             )
             .select(
                 ENTITY_CFG.entity_key,
@@ -288,6 +267,7 @@ class AcctWindow(SnapTableTransfomer):
                 ).fill_null(0).name('AVG_CR_CRE_3D'),
             )
         )
+        
     
 class EventWindow(SnapTableTransfomer):
     schema = 'FEATURE'

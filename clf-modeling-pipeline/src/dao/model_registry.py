@@ -9,6 +9,7 @@ import optuna
 import shap
 import tempfile
 import joblib
+from PIL import Image
 from luntaiDs.ProviderTools.mongo.serving import _BaseModelRegistryMongo
 from luntaiDs.ProviderTools.mlflow.dtyper import ibis_schema_2_mlflow_schema
 from luntaiDs.ModelingTools.FeatureEngineer.preprocessing import TabularPreprocModel
@@ -252,6 +253,34 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
                 explainer = joblib.load(f)
                 
         return explainer
+    
+    def load_shap_global_plots(self, model_id: str) -> Tuple[Image.Image, Image.Image]:
+        """load shap global bar and beeswarm chart on the training set
+
+        :param str model_id: model id for the relevant shap explainer
+        :return Tuple[Image.Image, Image.Image]: (bar plot, beeswarm plot)
+        """
+        from mlflow import MlflowClient
+        
+        config = self.get_model_config(model_id = model_id)
+        run_id = config['tracking_info']['best_run_id']
+        
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            client = MlflowClient()
+            client.download_artifacts(
+                run_id = run_id,
+                path = 'shaps/global_bar.png',
+                dst_path = tmp_dir
+            )
+            client.download_artifacts(
+                run_id = run_id,
+                path = 'shaps/global_beeswarm.png',
+                dst_path = tmp_dir
+            )
+            bar_img = Image.open(Path(tmp_dir) / 'shaps/global_bar.png')
+            beeswar_img = Image.open(Path(tmp_dir) / 'shaps/global_beeswarm.png')
+            
+        return bar_img, beeswar_img
             
 
     def save_model_and_generate_config(self, model_id: str, data_id: str,
@@ -324,6 +353,37 @@ class MlflowMongoWholeModelRegistry(_BaseModelRegistryMongo):
                 mlflow.log_artifact(
                     local_path=tmp_path.as_posix(),
                     artifact_path='shaps'
+                )
+                
+                # save shap global plots
+                from matplotlib import pyplot as plt
+                from io import BytesIO
+                from PIL import Image
+                
+                exps = explainer(X_train_premodel)
+                
+                f, ax = plt.subplots(figsize = (25, 10), dpi = 72)
+                bar_plot = shap.plots.bar(
+                    exps, 
+                    max_display = 50, 
+                    show = False, 
+                    ax = ax
+                )
+                mlflow.log_figure(
+                    figure = f,
+                    artifact_file='shaps/global_bar.png'
+                )
+                
+                f, ax = plt.subplots(figsize = (25, 10), dpi = 72)
+                beeswarm_plot = shap.plots.beeswarm(
+                    exps, 
+                    max_display = 50, 
+                    show = False,
+                    plot_size = (25, 10)
+                )
+                mlflow.log_figure(
+                    figure = f,
+                    artifact_file='shaps/global_beeswarm.png'
                 )
         
         # register model to mlflow registry

@@ -15,12 +15,12 @@ class CVCalibParam:
 class CVCalibratorSklearn:
     """build sigmoid calibration
     """
-    def __init__(self, cv_param: CVCalibParam, base_pipe: BaseEstimator):
+    def __init__(self, calib_param: CVCalibParam, base_pipe: BaseEstimator):
         self.__base_pipe = base_pipe
-        self.__cv_param = cv_param
+        self.__calib_param = calib_param
         
     def __call__(self) -> BaseEstimator:
-        if self.__cv_param.logit:
+        if self.__calib_param.logit:
             base = ClfTransformer(
                 estimator = self.__base_pipe,
                 predict_method = 'predict_proba',
@@ -36,7 +36,7 @@ class CVCalibratorSklearn:
             base_estimator = self.__base_pipe
         return CalibratedClassifierCV(
             base_estimator,
-            method = self.__cv_param.method,
+            method = self.__calib_param.method,
             cv = 'prefit', # estimator has been fitted already and all data is used for calibration
             #ensemble = False,
         )
@@ -45,7 +45,7 @@ class CVCalibratorSklearn:
 class CalibParam:
     mode: Literal['Free', 'CV'] = 'CV'
     template_id: str | None = None
-    cv_param: CVCalibParam | None = None
+    calib_param: CVCalibParam | None = None
     
     @property
     def use_origin_x(self) -> bool:
@@ -74,14 +74,14 @@ class CalibratorBaseSklearn:
         :return BaseEstimator: sklearn calibration model
         """
         if param.mode == 'CV':
-            if param.cv_param is None:
-                raise ValueError("Must provide cv_param if use CV mode calibration")
+            if param.calib_param is None:
+                raise ValueError("Must provide calib_param if use CV mode calibration")
             if base_pipe is None:
                 raise ValueError("Must provide base_pipe if use CV mode calibration")
             
             
             calib_builder = CVCalibratorSklearn(
-                cv_param = param.cv_param,
+                calib_param = param.calib_param,
                 base_pipe = base_pipe
             )
         else:

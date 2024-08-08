@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from typing import Tuple
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, estimator_html_repr
@@ -165,28 +166,36 @@ class CompositePipeline:
         
         return df
     
-    def getMetricCalculator(self, X: pd.DataFrame, y_true: pd.Series, 
-            use_calibrated_pred: bool = True) -> SKMultiClfMetricsCalculator:
+    def getMetricCalculator(self, X: pd.DataFrame, y_true: pd.Series) \
+                -> Tuple[SKMultiClfMetricsCalculator, SKMultiClfMetricsCalculator]:
         """get the score calculator to ease usage of score, roc_auc_curve, etc.
 
         :param pd.DataFrame X: features X
         :param pd.Series y_true: target ground truth y, 1-D array, support multi-class
         :param bool use_calibrated_pred: whether to use calibrated preds or uncalibrated preds, defaults to True
-        :return SKMultiClfMetricsCalculator: the score calculator to ease usage of score, roc_auc_curve, etc.
+        :return Tuple[SKMultiClfMetricsCalculator, SKMultiClfMetricsCalculator]: 
+                the score calculator to ease usage of score, roc_auc_curve, etc.
+                1st element is for calibrated, 2nd element is for uncalibrated
         """
         le = self.getLabelEncoder()
         pred_df = self.inference(X)
         y_true = le.transform(y_true) # 1d array -> 1d array
         # take calibrated or uncalibrated score columns
-        if use_calibrated_pred:
-            y_pred = pred_df[pred_df.columns[pred_df.columns.str.startswith('CALIB_CLS')]]
-        else:
-            y_pred = pred_df[pred_df.columns[pred_df.columns.str.startswith('PROB_CLS')]]
+        calib_cols = pred_df.columns[pred_df.columns.str.startswith('CALIB_CLS')]
+        y_pred_calib = pred_df[calib_cols]
+        uncalib_cols = pred_df.columns[pred_df.columns.str.startswith('PROB_CLS')]
+        y_pred_uncalib = pred_df[uncalib_cols]
         
-        if y_pred.shape[1] != len(le.classes_):
-            raise ValueError(f"LabelEncoder implies n_class = {len(le.classes_)} while you gave {y_pred.shape[1]}")
+        if y_pred_calib.shape[1] != len(le.classes_):
+            raise ValueError(f"LabelEncoder implies n_class = {len(le.classes_)} "
+                             f"while you gave {y_pred_calib.shape[1]}")
+        if y_pred_uncalib.shape[1] != len(le.classes_):
+            raise ValueError(f"LabelEncoder implies n_class = {len(le.classes_)} "
+                             f"while you gave {y_pred_uncalib.shape[1]}")
         
-        return SKMultiClfMetricsCalculator(y_true, y_pred)
+        calc_calib = SKMultiClfMetricsCalculator(y_true, y_pred_calib)
+        calc_uncalib = SKMultiClfMetricsCalculator(y_true, y_pred_uncalib)
+        return calc_calib, calc_uncalib
     
     def score(self, X: pd.DataFrame, y_true: pd.Series, 
             metric: SKClfMetricsEnum, use_calibrated_pred: bool = True) -> float:
@@ -198,10 +207,9 @@ class CompositePipeline:
         :param bool use_calibrated_pred: whether to use calibrated preds or uncalibrated preds, defaults to True
         :return float: the given metric calculated on given X and ground truth y
         """        
-        scorer = self.getMetricCalculator(
+        scorer, uncalib_scorer = self.getMetricCalculator(
             X = X,
-            y_true = y_true,
-            use_calibrated_pred = use_calibrated_pred
+            y_true = y_true
         )
         return scorer.score(metric)
         

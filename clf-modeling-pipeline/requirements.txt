@@ -1,3 +1,6 @@
 luntaiDs==1.0.39
 hvac==2.1.0
 ring==0.10.1
+email-validator==2.2.0
+shap==0.46.0
+git+https://github.com/ibis-project/ibis@main

@@ -1,0 +1,2 @@
+# streamlit work with latest bokeh
+https://github.com/streamlit/streamlit/issues/5858

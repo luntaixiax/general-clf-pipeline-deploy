@@ -2,6 +2,7 @@ from datetime import datetime, date
 from typing import List
 import pandas as pd
 from mlflow.pyfunc import PythonModel
+from shap import Explainer
 from src.model_layer.composite import CompositePipeline
 from src.dao.dbapi import MODEL_REGISTRY, MODEL_TIMETABLE
 from src.utils.decorators import timed_lru_cache
@@ -26,6 +27,20 @@ def load_cp_model(model_id: str) -> CompositePipeline:
     :return CompositePipeline: the loaded composite pipeline python model
     """
     return load_mlflow_model(model_id=model_id).unwrap_python_model()
+
+@timed_lru_cache(seconds=3600, maxsize=128)
+def load_shap_explainer(model_id: str) -> Explainer:
+    """load shap explainer using model id, use timed lru_cache to avoid repetitive loading
+
+    note if model_id is same, the cache will:
+        - not reload for 1 hour
+        - cache up to 128 different model ids
+    :param str model_id: model id of the trained model
+    :return Explainer: the trained shap explainer
+    """
+    return MODEL_REGISTRY.load_shap_explainer(
+        model_id = model_id
+    )
     
 def list_model_ids() -> List[str]:
     return MODEL_REGISTRY.get_model_list()
@@ -37,7 +52,7 @@ def delete_model(model_id: str):
     MODEL_REGISTRY.remove(model_id=model_id)
     # clear cache on update any model
     load_mlflow_model.__wrapped__.cache_clear()
-    
+    load_shap_explainer.__wrapped__.cache_clear()
     
 def get_model_config(model_id: str) -> dict:
     return MODEL_REGISTRY.get_model_config(model_id=model_id)
