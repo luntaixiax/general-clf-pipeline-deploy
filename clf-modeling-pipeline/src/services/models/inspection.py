@@ -10,6 +10,7 @@ from PIL.Image import Image
 from luntaiDs.ModelingTools.Evaluation.metrics import SKClfMetricsEnum, SKMultiClfMetricsCalculator
 from src.services.models.registry import load_cp_model, load_mlflow_model, load_shap_explainer
 from src.services.models.training_data import fetch_train_data
+from src.utils.settings import TARGET_CFG
 
 def get_coeff_impl(model_id: str) -> pd.Series:
     """get model coefficient or feature importance
@@ -37,14 +38,16 @@ def get_metric_calculators(model_ids: List[str], data_id: str, use_train: bool =
             return is {model_id: [calib_scorer, uncalib_scorer]}
     """
     
-    X_train, y_train, X_test, y_test = fetch_train_data(data_id=data_id)
+    train_ds, test_ds = fetch_train_data(data_id=data_id)
     # get actual / pred data
     if use_train:
-        X = X_train.to_pandas()
-        y_true = y_train.to_pandas()
+        ds = train_ds.to_pandas()
+        X = ds.drop(columns = [TARGET_CFG.target_key])
+        y_true = ds[TARGET_CFG.target_key]
     else:
-        X = X_test.to_pandas()
-        y_true = y_test.to_pandas()
+        ds = test_ds.to_pandas()
+        X = ds.drop(columns = [TARGET_CFG.target_key])
+        y_true = ds[TARGET_CFG.target_key]
     
     # get models
     r = dict()
@@ -301,5 +304,9 @@ def get_shap_local_exp(model_id: str, input_dict: Dict[str, Any]) -> shap._expla
 
 def get_shap_local_waterfall_plot(exp: shap._explanation.Explanation):
     waterfall = shap.plots.waterfall(exp, max_display = 50, show = False)
+    return waterfall
+
+def get_shap_local_beeswarm_plot(exp: shap._explanation.Explanation):
+    waterfall = shap.plots.beeswarm(exp, max_display = 50, show = False)
     return waterfall
     

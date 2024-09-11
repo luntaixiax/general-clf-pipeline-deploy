@@ -8,7 +8,7 @@ from src.model_layer.feature_sel_hub import FSelParam
 from src.model_layer.calibrator_hub import CalibParam
 from src.model_layer.modeling_hub import ModelPipeParam
 from src.dao.model_registry import MlflowCompositePipeline
-from src.dao.dbapi import HYPER_STORAGE, MODEL_REGISTRY
+from src.dao.dbapi import HYPER_STORAGE, MODEL_REGISTRY, CONV_MODEL_DATA_REGISTRY
 from src.services.models.training_data import fetch_train_data
 
 def train(data_id: str, model_id: str,
@@ -24,14 +24,16 @@ def train(data_id: str, model_id: str,
     :param CalibParam calib_param: calibration parameter
     """
     # fetch training data
-    X_train, y_train, X_test, y_test = fetch_train_data(
+    train_ds, test_ds = fetch_train_data(
         data_id = data_id
     )
+    train_pd = train_ds.to_pandas()
+    test_pd = test_ds.to_pandas()
     
-    X_train_pd = X_train.to_pandas()
-    y_train_pd = y_train.to_pandas()
-    X_test_pd = X_test.to_pandas()
-    y_test_pd = y_test.to_pandas()
+    X_train_pd = train_pd.drop(columns = [CONV_MODEL_DATA_REGISTRY.TARGET_COL])
+    y_train_pd = train_pd[CONV_MODEL_DATA_REGISTRY.TARGET_COL]
+    X_test_pd = test_pd.drop(columns = [CONV_MODEL_DATA_REGISTRY.TARGET_COL])
+    y_test_pd = test_pd[CONV_MODEL_DATA_REGISTRY.TARGET_COL]
     
     # create static pipeline graph
     cp = MlflowCompositePipeline(
@@ -89,7 +91,7 @@ def train(data_id: str, model_id: str,
     MODEL_REGISTRY.register(
         model_id = model_id,
         data_id = data_id,
-        X_train = X_train,
+        X_train = train_ds.drop(CONV_MODEL_DATA_REGISTRY.TARGET_COL),
         cp = cp,
         hyper_mode = hyper_mode,
     )

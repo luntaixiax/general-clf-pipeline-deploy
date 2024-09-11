@@ -47,11 +47,11 @@ def fetch_train_data(data_id: str) -> tuple:
     if data_id not in CONV_MODEL_DATA_REGISTRY.get_existing_ids():
         raise ValueError(f"{data_id} does not exist in data registry")
     
-    X_train, y_train, X_test, y_test = CONV_MODEL_DATA_REGISTRY.fetch(
+    train_ds, test_ds = CONV_MODEL_DATA_REGISTRY.fetch(
         data_id = data_id, 
-        target_col = CONV_MODEL_DATA_REGISTRY.TARGET_COL
+        #target_col = CONV_MODEL_DATA_REGISTRY.TARGET_COL
     )
-    return X_train, y_train, X_test, y_test
+    return train_ds, test_ds
     
     
 def remove_train_data(data_id: str):
