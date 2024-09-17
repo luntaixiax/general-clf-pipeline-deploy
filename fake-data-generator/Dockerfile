@@ -3,7 +3,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install libpq-dev -y \
+    && apt-get -y install libpq-dev gcc \
     && apt-get autoremove
 
 COPY requirements.txt requirements.txt
