@@ -30,7 +30,7 @@ def start_optuna_dashboard(
 @app.command(help="Write table schemas from local JSON file to schema manager")
 def write_schemas_from_js_2_sm(
     schema_root_file_path: str = typer.Option(
-        default='src/pipeline/schemas',
+        default='src/configs/schemas',
         help='folder for schemas'
     )
 ):

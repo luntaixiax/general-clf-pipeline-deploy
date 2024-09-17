@@ -115,5 +115,7 @@ jobs:
           envs: IMAGE
           script: |
             echo "Login to $(hostname)"
+            echo "trying to remove existing docker image: $IMAGE"
+            /Volume1/@apps/DockerEngine/dockerd/bin/docker rmi -f $IMAGE
             echo "trying to pull docker image: $IMAGE"
             /Volume1/@apps/DockerEngine/dockerd/bin/docker pull $IMAGE

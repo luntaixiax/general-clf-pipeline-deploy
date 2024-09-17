@@ -7,7 +7,7 @@ services:
       - 9001:9000
       - 8123:8123
     volumes:
-      - ${CH_VOLUME_MAPPING:-./docker-volume-mapping/clickhouse}:/var/lib/clickhouse:z
+      - dw-clickhouse-volume:/var/lib/clickhouse:z
       #- ${CH_STATIC_FOLDER:-./docker-volume-mapping/clickhouse/user_files}:/var/lib/clickhouse/user_files:z
       - ${CH_CONFIG_FOLDER:-./configs/clickhouse}/users.xml:/etc/clickhouse-server/users.d/users.xml
       - ${CH_CONFIG_FOLDER:-./configs/clickhouse}/config.xml:/etc/clickhouse-server/config.d/config.xml
@@ -23,45 +23,18 @@ services:
       timeout: 10s
       retries: 5
 
-  optuna_storage:
-    image: mysql:latest
-    container_name: mysql
-    volumes:
-      - ${MYSQL_DATA_PATH:-./docker-volume-mapping/mysql}/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_USER: "root"
-      MYSQL_ROOT_PASSWORD_FILE: "/run/secrets/mysql_root_password"
-      MYSQL_USER: "luntaixia"
-      MYSQL_PASSWORD: "luntaixia"
-    secrets:
-      - mysql_root_password
-    ports:
-      - 3307:3306
-    command:
-      --default-authentication-plugin=caching_sha2_password
-      --log-error-verbosity=1
-    restart: always
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD']
-      #test: ["CMD", "whoami"]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-
-
   nosql_storage:
     image: mongo
     container_name: mongodb
     ports:
       - 27017:27017
     volumes:
-      - ${MONGO_VOLUME_MAPPING:-./docker-volume-mapping/mongodb}/configdb:/data/configdb  # the below volumes part
-      - ${MONGO_VOLUME_MAPPING:-./docker-volume-mapping/mongodb}/db:/data/db  # the below volumes part
-    secrets:
-      - mongodb_root_password
-    environment:
-        MONGO_INITDB_ROOT_USERNAME: rootuser
-        MONGO_INITDB_ROOT_PASSWORD_FILE: "/run/secrets/mongodb_root_password"
+      # mongodb have 2 mount points
+      - nosql-mongo-db-volume:/data/db
+      - nosql-mongo-conf-volume:/data/configdb
+    env_file:
+    - path: ./configs/secrets/mongo.env
+      required: true
     healthcheck:
       test: |
         echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
@@ -75,13 +48,98 @@ services:
     restart: always
     ports:
       - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: rootuser
-      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpass
-      ME_CONFIG_MONGODB_SERVER: mongodb
+    env_file:
+    - path: ./configs/secrets/mongo.env
+      required: true
 
-secrets:
-  mysql_root_password:
-    file: ./configs/secrets/mysql_root_password.txt
-  mongodb_root_password:
-    file: ./configs/secrets/mongo_root_password.txt
+  optuna_storage:
+    image: mysql:latest
+    container_name: mysql
+    volumes:
+      - optuna-mysql-volume:/var/lib/mysql
+    env_file:
+    - path: ./configs/secrets/mysql.env
+      required: true
+    ports:
+      - 3306:3306
+    command:
+      --log-error-verbosity=1
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD']
+      #test: ["CMD", "whoami"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+  mlflow_backend_store:
+    image: postgres:13
+    env_file:
+    - path: ./configs/secrets/mlflow.env
+      required: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - mlflow-pg-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "$$POSTGRES_USER"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+
+  mlflow_tracking_server:
+    restart: always
+    build: ./mlflow
+    #image: mlflow_server
+    container_name: mlflow_server
+    ports:
+      - "5000:5000"
+    env_file:
+    - path: ./configs/secrets/mlflow.env
+      required: true
+    # as we are using env_file, we need to 
+    # - use $$ instead of $, otherwise compose will not have access
+    # - and need to use bash -c to wrap the command, otherwise the compose will not render it
+    command: >
+      bash -c "mlflow server \
+      --backend-store-uri postgresql://$$POSTGRES_USER:$$POSTGRES_PASSWORD@mlflow_backend_store:5432/$$POSTGRES_DB \
+      --host 0.0.0.0 \
+      --serve-artifacts \
+      --artifacts-destination s3://$$MLFLOW_BUCKET_NAME"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  dw-clickhouse-volume:
+    driver_opts:
+      type: "nfs"
+      o: "addr=${NFS_HOST},nolock,rw,soft,nfsvers=4"
+      device: ":${NFS_VOLUME_DW_CLICKHOUSE}"
+  
+  nosql-mongo-db-volume:
+    driver_opts:
+      type: "nfs"
+      o: "addr=${NFS_HOST},nolock,rw,soft,nfsvers=4"
+      device: ":${NFS_VOLUME_NOSQL_MONGO_DB}"
+  
+  nosql-mongo-conf-volume:
+    driver_opts:
+      type: "nfs"
+      o: "addr=${NFS_HOST},nolock,rw,soft,nfsvers=4"
+      device: ":${NFS_VOLUME_NOSQL_MONGO_CONF}"
+
+  mlflow-pg-volume:
+    driver_opts:
+      type: "nfs"
+      o: "addr=${NFS_HOST},nolock,rw,soft,nfsvers=4"
+      device: ":${NFS_VOLUME_MLFLOW_PG}"
+ 
+  optuna-mysql-volume:
+    driver_opts:
+      type: "nfs"
+      o: "addr=${NFS_HOST},nolock,rw,soft,nfsvers=4"
+      device: ":${NFS_VOLUME_OPTUNA_MYSQL}"
