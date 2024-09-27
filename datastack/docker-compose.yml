@@ -51,10 +51,12 @@ services:
     env_file:
     - path: ./configs/secrets/mongo.env
       required: true
+    depends_on:
+      - nosql_storage
 
   optuna_storage:
     image: mysql:latest
-    container_name: mysql
+    container_name: optuna_db
     volumes:
       - optuna-mysql-volume:/var/lib/mysql
     env_file:
@@ -73,16 +75,22 @@ services:
       start_period: 5s
 
   mlflow_backend_store:
-    image: postgres:13
+    image: mysql:latest
+    container_name: mlflow_backend
     env_file:
     - path: ./configs/secrets/mlflow.env
       required: true
     ports:
-      - "5432:5432"
+      - "3307:3306"
+    command:
+      --init-file=/data/application/mysql_init.sql
+      --log-error-verbosity=1
     volumes:
-      - mlflow-pg-volume:/var/lib/postgresql/data
+      - mlflow-db-volume:/var/lib/mysql
+      - ./configs/mlflow_backend/mysql_init.sql:/data/application/mysql_init.sql
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "$$POSTGRES_USER"]
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD']
+      #test: ["CMD", "whoami"]
       interval: 10s
       retries: 5
       start_period: 5s
@@ -103,10 +111,12 @@ services:
     # - and need to use bash -c to wrap the command, otherwise the compose will not render it
     command: >
       bash -c "mlflow server \
-      --backend-store-uri postgresql://$$POSTGRES_USER:$$POSTGRES_PASSWORD@mlflow_backend_store:5432/$$POSTGRES_DB \
+      --backend-store-uri mysql+pymysql://$$MYSQL_USER:$$MYSQL_PASSWORD@mlflow_backend:3306/mlflow_db \
       --host 0.0.0.0 \
       --serve-artifacts \
       --artifacts-destination s3://$$MLFLOW_BUCKET_NAME"
+    depends_on:
+      - mlflow_backend_store
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/"]
       interval: 30s
@@ -132,11 +142,11 @@ volumes:
       o: "addr=${NFS_HOST},nolock,rw,soft,nfsvers=4"
       device: ":${NFS_VOLUME_NOSQL_MONGO_CONF}"
 
-  mlflow-pg-volume:
+  mlflow-db-volume:
     driver_opts:
       type: "nfs"
       o: "addr=${NFS_HOST},nolock,rw,soft,nfsvers=4"
-      device: ":${NFS_VOLUME_MLFLOW_PG}"
+      device: ":${NFS_VOLUME_MLFLOW_DB}"
  
   optuna-mysql-volume:
     driver_opts:

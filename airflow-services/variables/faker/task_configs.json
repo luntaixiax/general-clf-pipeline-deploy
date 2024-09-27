@@ -1,0 +1,68 @@
+{
+    "CustFeatureSnap": {
+        "command": [
+            "python",
+            "-m",
+            "src.dag_run",
+            "run-pipeline",
+            "CustFeatureSnap"
+        ],
+        "cpus": 2,
+        "mem_limit": 1024
+    },
+    "AcctFeatureSnap": {
+        "command": [
+            "python",
+            "-m",
+            "src.dag_run",
+            "run-pipeline",
+            "AcctFeatureSnap"
+        ],
+        "cpus": 2,
+        "mem_limit": 1024
+    },
+    "EngagementFeatureSnap": {
+        "command": [
+            "python",
+            "-m",
+            "src.dag_run",
+            "run-pipeline",
+            "EngagementFeatureSnap"
+        ],
+        "cpus": 2,
+        "mem_limit": 1024
+    },
+    "EngagementEventSnap": {
+        "command": [
+            "python",
+            "-m",
+            "src.dag_run",
+            "run-pipeline",
+            "EngagementEventSnap"
+        ],
+        "cpus": 2,
+        "mem_limit": 1024
+    },
+    "EngagementEventFeatureSnap": {
+        "command": [
+            "python",
+            "-m",
+            "src.dag_run",
+            "run-pipeline",
+            "EngagementEventFeatureSnap"
+        ],
+        "cpus": 2,
+        "mem_limit": 1024
+    },
+    "ConversionEventSnap": {
+        "command": [
+            "python",
+            "-m",
+            "src.dag_run",
+            "run-pipeline",
+            "ConversionEventSnap"
+        ],
+        "cpus": 2,
+        "mem_limit": 1024
+    }
+}

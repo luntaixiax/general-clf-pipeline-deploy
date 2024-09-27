@@ -1,4 +1,4 @@
-luntaiDs==1.0.41
+luntaiDs==1.0.42
 typer==0.12.5
 hvac==2.1.0
 ring==0.10.1
