@@ -124,7 +124,7 @@ with DAG(
         # 'trigger_rule': 'all_success'
     },
     description="fake data generator for general clf pipeline running",
-    start_date=datetime(2024, 8, 1),
+    start_date=datetime(2024, 9, 1),
     catchup=True,
     schedule_interval="00 09 * * *",
     max_active_runs=1,

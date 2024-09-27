@@ -23,7 +23,7 @@ def test_cust_feature(client_table):
         mock_dm.read_pd.return_value = client_table
         mock_rnd.return_value = 2
         
-        run_dt = date(2024, 1, 1)
+        run_dt = date(2024, 8, 1)
         df = CustFeatureSnap.generate(run_dt)
         
         # test if read method has been called
@@ -48,7 +48,7 @@ def test_acct_feature(acct_table, client_table):
         mock_client_dm.read_pd.return_value = client_table
         mock_rnd.return_value = 2
         
-        run_dt = date(2024, 1, 2)
+        run_dt = date(2024, 8, 2)
         df = AcctFeatureSnap.generate(run_dt)
         
         # test if read method has been called

@@ -1,4 +1,6 @@
 import logging
+
+import ibis
 logging.basicConfig(level=logging.INFO)
 from datetime import date, timedelta
 import random
@@ -22,7 +24,7 @@ SnapshotDataManagerFileSystem.setup(
 class CustFeatureSnap(SnapTableStreamGenerator):
     dm = SnapshotDataManagerFileSystem(schema='FEATURES', table='CUST')
     # generator param
-    INIT_DT = date(2024, 1, 1)
+    INIT_DT = date(2024, 8, 1)
     INIT_CUST_SIZE = 10000
     CUST_GROW_SPEED = 50 # per day
     CUST_DIMINISH_SPEED = 5 # per day
@@ -37,7 +39,7 @@ class CustFeatureSnap(SnapTableStreamGenerator):
         if snap_dt == cls.INIT_DT:
             logging.info(f"Initializing Cust Data @ {snap_dt}...")
             cust_df = cls.init(snap_dt)
-            cls.dm.save(cust_df, snap_dt, overwrite=True)
+            cls.dm.save(ibis.memtable(cust_df), snap_dt, overwrite=True)
         else:
             last_snap_dt = snap_dt - timedelta(days=1)
             if last_snap_dt not in existing_dts:
@@ -45,7 +47,7 @@ class CustFeatureSnap(SnapTableStreamGenerator):
 
             logging.info(f"Generating Cust Data @ {snap_dt}...")
             cust_df = cls.generate(snap_dt)
-            cls.dm.save(cust_df, snap_dt, overwrite=True)
+            cls.dm.save(ibis.memtable(cust_df), snap_dt, overwrite=True)
 
     @classmethod
     def init(cls, snap_dt: date) -> pd.DataFrame:
@@ -100,7 +102,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
     dm = SnapshotDataManagerFileSystem(schema='FEATURES', table='ACCT')
     upstreams = [_CurrentStream(CustFeatureSnap())]
     # generator param
-    INIT_DT = date(2024, 1, 1)
+    INIT_DT = date(2024, 8, 1)
     
     @classmethod
     def execute(cls, snap_dt: date):
@@ -112,7 +114,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
         if snap_dt == cls.INIT_DT:
             logging.info(f"Initializing Acct Data @ {snap_dt}...")
             acct_df = cls.init(snap_dt)
-            cls.dm.save(acct_df, snap_dt, overwrite=True)
+            cls.dm.save(ibis.memtable(acct_df), snap_dt, overwrite=True)
         else:
             last_snap_dt = snap_dt - timedelta(days=1)
             if last_snap_dt not in existing_dts:
@@ -120,7 +122,7 @@ class AcctFeatureSnap(SnapTableStreamGenerator):
 
             logging.info(f"Generating Acct Data @ {snap_dt}...")
             acct_df = cls.generate(snap_dt)
-            cls.dm.save(acct_df, snap_dt, overwrite=True)
+            cls.dm.save(ibis.memtable(acct_df), snap_dt, overwrite=True)
 
     @classmethod
     def init(cls, snap_dt: date) -> pd.DataFrame:
@@ -302,7 +304,7 @@ class EngagementFeatureSnap(SnapTableStreamGenerator):
             .fillna(0)
         )  # TODO: do more careful imputation
 
-        cls.dm.save(merged.reset_index(), snap_dt)
+        cls.dm.save(ibis.memtable(merged.reset_index()), snap_dt)
 
     @classmethod
     def if_success(cls, snap_dt: date) -> bool:
@@ -325,7 +327,7 @@ class EngagementEventSnap(SnapTableStreamGenerator):
     def execute(cls, snap_dt: date):
         # get features
         sdp_feat = EngagementFeatureSnap.dm
-        features_df = sdp_feat._pd(snap_dt)
+        features_df = sdp_feat.read_pd(snap_dt)
 
         # get model
         model = cls.load_model(snap_dt)
@@ -397,7 +399,7 @@ class EngagementEventSnap(SnapTableStreamGenerator):
             .drop(columns=['CUST_IDX', 'EVENT_DAY'])
         )
 
-        cls.dm.save(daily_event_matrix, snap_dt)
+        cls.dm.save(ibis.memtable(daily_event_matrix), snap_dt)
 
     @classmethod
     def if_success(cls, snap_dt: date) -> bool:
@@ -480,7 +482,7 @@ class EngagementEventFeatureSnap(SnapTableStreamGenerator):
                 validate = '1:1'
             )
         )
-        cls.dm.save(agg_master.reset_index(), snap_dt)
+        cls.dm.save(ibis.memtable(agg_master.reset_index()), snap_dt)
 
     @classmethod
     def if_success(cls, snap_dt: date) -> bool:
@@ -597,7 +599,7 @@ class ConversionEventSnap(SnapTableStreamGenerator):
             .drop(columns=['CUST_IDX', 'PUR_DAY'])
         )
 
-        cls.dm.save(daily_purchase_matrix, snap_dt)
+        cls.dm.save(ibis.memtable(daily_purchase_matrix), snap_dt)
 
     @classmethod
     def if_success(cls, snap_dt: date) -> bool:

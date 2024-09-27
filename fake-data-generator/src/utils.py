@@ -17,7 +17,7 @@ def exec_plan(exec, run_dt: date) -> dict:
     }
     
 def update_exec_plan():
-    random_date = date(2024, 1, 1) # a random date works
+    random_date = date(2024, 8, 1) # a random date works
     exec = ConversionEventSnap.get_exec_plan(random_date)
     plan = exec_plan(exec, random_date)
     
