@@ -10,3 +10,4 @@ datastack/configs/secrets/*
 *mlruns*
 airflow-services/data
 airflow-services/logs
+datastack/ray/examples

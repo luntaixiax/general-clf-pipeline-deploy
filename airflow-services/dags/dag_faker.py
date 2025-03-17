@@ -69,12 +69,12 @@ def generate_task(conf: dict, task_name: str, dag_dt: str, lag: int) -> Kubernet
             'ENV' : 'prod',
             'SECRET_TOML_PATH' : '/mnt/secrets/secrets.toml' # match with secret mount point
         },
-        # container_resources=V1ResourceRequirements(
-        #     limits={
-        #         'cpu': cpu,
-        #         'memory': f"{memory}m"
-        #     }
-        # )
+        container_resources=V1ResourceRequirements(
+            limits={
+                'cpu': cpu,
+                'memory': f"{memory}Mi"
+            }
+        )
     )
     # add task into TASKS global var
     TASKS[task_id] = task
